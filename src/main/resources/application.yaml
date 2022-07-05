@@ -1,0 +1,32 @@
+server:
+  port: 8080
+logging:
+  level:
+    com:
+      xjtu:
+        dbc:
+          robserver: debug
+    root: info
+    web: trace
+mybatis:
+  mapper-locations: /mapper/**/*.xml
+corona:
+  token:
+    claim-userid-name: UserID
+    expired: 172800000 # Token 2天秒过期
+    header-name: Token
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: mysqladmin
+    url: jdbc:mysql://106.15.91.23:3306/robdb
+    hikari:
+      max-lifetime: 180000
+  servlet:
+    multipart:
+      maxFileSize: 30MB
+      maxRequestSize: 30MB

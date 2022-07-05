@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan({"com.xjtu.dbc.robserver.*.*.*.dao"})
 public class RobServerApplication {
     public static void main(String[] args) {
-        123；
         SpringApplication.run(RobServerApplication.class, args);
     }
 

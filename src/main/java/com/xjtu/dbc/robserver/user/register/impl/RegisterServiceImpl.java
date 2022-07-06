@@ -39,7 +39,6 @@ public class RegisterServiceImpl implements RegisterService {
      * 用户注册
      *
      * @param registerDto {用户名, 用户邮箱, 用户生日, 用户性别}
-     * @return 用户 ID
      */
     @Override
     public void addUser(RegisterDto registerDto) {

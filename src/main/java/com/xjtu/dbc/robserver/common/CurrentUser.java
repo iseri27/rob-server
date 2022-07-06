@@ -2,8 +2,9 @@ package com.xjtu.dbc.robserver.common;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class CurrentUser {
     public static final String SESSION_ATTR_NAME="CurrentUser";
 
@@ -11,8 +12,7 @@ public class CurrentUser {
     private String username;
     private String useravatar;
 
-    public CurrentUser() {
-    }
+    public CurrentUser() { }
 
     public CurrentUser(Integer userId) {
         this.userid = userId;

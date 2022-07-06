@@ -38,4 +38,5 @@ public class DynamicReportServiceImpl implements DynamicReportService {
     public Integer getMaxReportId() {
         return dynamicReportDao.getMaxReportId();
     }
+
 }

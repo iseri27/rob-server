@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.question.create.dao.QuestionCreateDao">
+
+    <!-- 创建问题 -->
+    <insert id="createQuestion">
+        insert into article (articleid, articletype, articlestatus, title, content, cost, createtime,lastmodifytime,authorid,categoryid,rootid)
+        values(#{questionid}, 302, #{questionstatus}, #{questiontitle}, #{questioncontent}, #{cost}, now(),now(),#{authorid},null,null)
+    </insert>
+
+    <!-- 修改问题 -->
+    <update id="modifyQuestion">
+        update article
+        <set>
+            articlestatus = #{questionstatus},
+            title = #{questiontitle},
+            content = #{questioncontent},
+            cost = #{cost},
+            lastmodifytime = now()
+
+        </set>
+        where articleid = #{questionid}
+    </update>
+
+    <!-- 通过id查找问题 -->
+    <select id="findQuestionById" resultType="com.xjtu.dbc.robserver.question.create.entity.QuestionCreateDto">
+        select  content questioncontent,
+                title questiontitle,
+                cost cost,
+                articlestatus questionstatus,
+                createtime createtime,
+                lastmodifytime lastmodifytime,
+                categoryid categoryid
+        from article
+        where articleid = #{questionid} and articletype = 302
+    </select>
+</mapper>

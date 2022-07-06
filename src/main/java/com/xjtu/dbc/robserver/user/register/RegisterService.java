@@ -11,6 +11,13 @@ public interface RegisterService {
     Integer getUserCountByName(String userName);
 
     /**
+     * 根据用户邮箱获取用户数量
+     * @param useremail  用户邮箱
+     * @return 持有该邮箱的用户数量
+     */
+    int getUserCountByEmail(String useremail);
+
+    /**
      * 用户注册
      * @param registerDto {用户名, 用户邮箱, 用户生日, 用户性别}
      * @return 用户的 ID
@@ -22,5 +29,4 @@ public interface RegisterService {
      * @return 最大用户 ID
      */
     Integer getMaxId();
-
 }

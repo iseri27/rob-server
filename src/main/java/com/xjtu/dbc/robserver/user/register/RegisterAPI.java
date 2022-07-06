@@ -17,19 +17,20 @@ public class RegisterAPI {
 
     @PostMapping("")
     public Result register(@RequestBody RegisterDto registerDto) {
-        if (registerDto == null) {
-            System.out.println("为什么是 NULL ? ");
-            return Result.fail(Result.ERR_CODE_BUSINESS, "NULL");
-        }
-        int cnt = registerService.getUserCountByName(registerDto.getUsername());
-        if (cnt > 0) {
+        int userNameCount = registerService.getUserCountByName(registerDto.getUsername());
+        if (userNameCount > 0) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "该用户名已注册");
+        }
+
+        int userEmailCount = registerService.getUserCountByEmail(registerDto.getUseremail());
+        if (userEmailCount > 0) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "该邮箱已被注册");
         }
 
         Integer maxId = registerService.getMaxId();
         registerDto.setUserid(maxId + 1);
 
         registerService.addUser(registerDto);
-        return Result.success();
+        return Result.success("注册成功!", registerDto.getUserid());
     }
 }

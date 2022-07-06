@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.user.login.dao.LoginDao">
+    <!-- 根据用户 ID 与密码获取用户数量 -->
+    <select id="getUserCountByIdAndPwd" resultType="java.lang.Integer">
+        select count(*)
+        from user
+        where userid = #{userid} and userpwd = #{userpwd}
+    </select>
+
+    <!-- 根据用户邮箱获取用户 ID -->
+    <select id="getUserIdByName" resultType="java.lang.Integer">
+        select userid
+        from user
+        where useremail = #{useremail}
+    </select>
+
+     <!-- 根据用户昵称获取用户 ID -->
+    <select id="getUserIdByEmail" resultType="java.lang.Integer">
+        select userid
+        from user
+        where username = #{username}
+    </select>
+</mapper>

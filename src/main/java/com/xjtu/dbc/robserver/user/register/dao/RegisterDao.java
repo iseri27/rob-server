@@ -24,10 +24,15 @@ public interface RegisterDao {
     void addUser(RegisterDto registerDto);
 
     /**
-     * 获取当前最大的用户的 ID
-     * @return 最大用户 ID
+     * 为用户创建用户列表
+     * @param userId 用户 ID
+     * @param userListType 用户列表的类型
      */
-    Integer getMaxId();
+    void addUserList(Integer userId, Integer userListType);
 
-
+    /**
+     * 为用户创建收藏夹
+     * @param userId 用户 ID
+     */
+    void addBookmark(Integer userId);
 }

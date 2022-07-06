@@ -12,8 +12,7 @@ public class CurrentUser {
     private String username;
     private String useravatar;
 
-    public CurrentUser() {
-    }
+    public CurrentUser() { }
 
     public CurrentUser(Integer userId) {
         this.userid = userId;

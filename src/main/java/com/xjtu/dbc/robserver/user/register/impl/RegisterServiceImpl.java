@@ -37,7 +37,6 @@ public class RegisterServiceImpl implements RegisterService {
 
     /**
      * 用户注册
-     *
      * @param registerDto {用户名, 用户邮箱, 用户生日, 用户性别}
      */
     @Override
@@ -46,11 +45,22 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     /**
-     * 获取当前最大的用户的 ID
-     * @return 最大用户 ID
+     * 为用户创建关注列表
+     *
+     * @param userId       用户 ID
+     * @param userListType 用户列表的类型
      */
     @Override
-    public Integer getMaxId() {
-        return registerDao.getMaxId();
+    public void createUserList(Integer userId, Integer userListType) {
+        registerDao.addUserList(userId, userListType);
+    }
+
+    /**
+     * 为用户创建收藏夹
+     * @param userId 用户 ID
+     */
+    @Override
+    public void createBookmark(Integer userId) {
+        registerDao.addBookmark(userId);
     }
 }

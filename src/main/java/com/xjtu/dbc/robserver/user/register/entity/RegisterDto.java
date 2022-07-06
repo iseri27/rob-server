@@ -18,6 +18,9 @@ public class RegisterDto {
     private String useremail;
     private Integer roleid;
     private Integer userstatus;
+    private String sessionid;
+    // 验证码
+    private String code;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

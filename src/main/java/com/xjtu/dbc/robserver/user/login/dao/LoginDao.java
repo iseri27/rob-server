@@ -9,7 +9,6 @@ public interface LoginDao {
      */
     Integer getUserCountByIdAndPwd(Integer userid, String userpwd);
 
-
     /**
      * 根据用户名获取用户的 ID
      * @param username 用户名

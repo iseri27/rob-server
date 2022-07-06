@@ -10,17 +10,17 @@
         where userid = #{userid} and userpwd = #{userpwd}
     </select>
 
-    <!-- 根据用户邮箱获取用户 ID -->
+    <!-- 根据用户昵称获取用户 ID -->
     <select id="getUserIdByName" resultType="java.lang.Integer">
         select userid
         from user
-        where useremail = #{useremail}
+        where username = #{username}
     </select>
 
-     <!-- 根据用户昵称获取用户 ID -->
+     <!-- 根据用户邮箱获取用户 ID -->
     <select id="getUserIdByEmail" resultType="java.lang.Integer">
         select userid
         from user
-        where username = #{username}
+        where useremail = #{useremail}
     </select>
 </mapper>

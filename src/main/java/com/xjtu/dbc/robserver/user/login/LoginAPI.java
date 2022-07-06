@@ -31,7 +31,7 @@ public class LoginAPI {
 
         cnt = loginService.verifyById(userId, loginDto.getUserpwd());
         if (cnt == 1) {
-            String token = TokenUtils.loginSign(Integer.toString(loginDto.getUserid()), loginDto.getUserpwd());
+            String token = TokenUtils.loginSign(Integer.toString(userId), loginDto.getUserpwd());
             return Result.success("登录成功", token);
         } else {
             return Result.fail(Result.ERR_CODE_BUSINESS, "帐号或密码错误");

@@ -9,4 +9,23 @@
         from user
         where username = #{username}
     </select>
+
+    <!-- 根据用户的邮箱获取用户数量 -->
+    <select id="getUserCountByEmail" resultType="java.lang.Integer">
+        select count(userid)
+        from user
+        where useremail = #{useremail}
+    </select>
+
+    <!-- 添加新的用户 -->
+    <insert id="addUser">
+        insert into user (userid, userpwd, username, usersex, useremail, userbirth, regtime)
+        values(#{userid}, #{userpwd}, #{username}, #{usersex}, #{useremail}, #{userbirth}, now())
+    </insert>
+
+    <!-- 获取当前最大的用户 ID -->
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select ifnull(max(userid), 0)
+        from user;
+    </select>
 </mapper>

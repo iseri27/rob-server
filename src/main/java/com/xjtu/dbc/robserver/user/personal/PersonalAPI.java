@@ -22,15 +22,17 @@ public class PersonalAPI {
     /**
      *
      * @param avatar 头像
-     * @param token
+
      * @return
      */
     @RequestMapping("/avatar")
-    public Result getAvatar(@RequestBody Avatar avatar, @RequestHeader("Token") String token){
-        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
-        Integer userId = currentUser.getU_id();
+    public Result getAvatar(@RequestBody Avatar avatar /**,@RequestHeader("Token") String token**/){
+        //CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        //Integer userId = currentUser.getUserid();
+
         String url = avatar.getUrl();
-        personalService.getMyAvatar(userId, url);
+        //personalService.getMyAvatar(userId, url);
+        personalService.getMyAvatar(1,url);
         return Result.successMsg("头像修改成功");
     }
 }

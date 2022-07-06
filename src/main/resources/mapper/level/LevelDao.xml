@@ -3,6 +3,27 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.level.dao.LevelDao">
+    <select id="getExp" resultType="java.lang.Integer">
+        select `userexp`
+        from `user`
+        where `userid` = #{userID}
+    </select>
 
+    <update id="updateExp">
+        update `user`
+        set `userexp` = `userexp` + #{num}
+        where `userid` = #{userID}
+    </update>
 
+    <select id="getCans" resultType="java.lang.Integer">
+        select `coins`
+        from `user`
+        where `userid` = #{userID}
+    </select>
+
+    <update id="updateCans">
+        update `user`
+        set `coins` = `coins` + #{num}
+        where `userid` = #{userID}
+    </update>
 </mapper>

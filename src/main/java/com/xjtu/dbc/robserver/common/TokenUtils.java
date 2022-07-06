@@ -23,11 +23,11 @@ public class TokenUtils {
     public static final String CLAIM_USERID_NAME = getClaimUseridName();
 
     private static String getClaimUseridName() {
-        String claimUseridName = com.xjtu.dbc.robserver.common.CommonConfig.getEnv().getProperty("corona.token.claim-userid-name");
-        if(claimUseridName==null){
+        String claimUserIdName = com.xjtu.dbc.robserver.common.CommonConfig.getEnv().getProperty("corona.token.claim-userid-name");
+        if(claimUserIdName==null){
             return "UserID";
         }
-        return claimUseridName;
+        return claimUserIdName;
     }
 
     private static int getExpiredTime(){
@@ -58,11 +58,8 @@ public class TokenUtils {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        //System.out.println("开始清理。。。");
                         clearExpiredToken(expiredMap.size()/5+1);
-                        //System.out.println("清理结束。。。");
                     }
-
                 }
             };
             task.setDaemon(true);
@@ -122,22 +119,21 @@ public class TokenUtils {
 
     private static String sign(String userId,String password){
         Algorithm algorithm = Algorithm.HMAC256(password);
-        String token = JWT.create()
-                .withClaim(CLAIM_USERID_NAME,userId)
+        return JWT.create()
+                .withClaim(CLAIM_USERID_NAME, userId)
                 .withExpiresAt(new Date(System.currentTimeMillis()+EXPIRED_TIME/2))
                 .sign(algorithm);
-        return token;
     }
 
     /**
      * 生成一个登录用户签名token
-     * @param userId
+     * @param userId 用户 ID
      * @param password
      * @return
      */
     public static String loginSign(String userId,String password){
         String token = sign(userId,password);
-        cache.putToken(token,token);
+        cache.putToken(token, token);
         return token;
     }
 
@@ -149,8 +145,11 @@ public class TokenUtils {
      */
     public static com.xjtu.dbc.robserver.common.CurrentUser getUserInfo(String clientToken, com.xjtu.dbc.robserver.common.CommonService commonService){
         DecodedJWT decodedJWT = JWT.decode(clientToken);
-        Integer userId = decodedJWT.getClaim(CLAIM_USERID_NAME).asInt();
-        User user = commonService.getUserById(userId);
+        String userId = decodedJWT.getClaim(CLAIM_USERID_NAME).asString();
+
+        System.out.println("User ID = " + userId);
+
+        User user = commonService.getUserById(Integer.parseInt(userId));
         return new com.xjtu.dbc.robserver.common.CurrentUser(user.getUserid(), user.getUsername(), user.getUseravatar());
     }
 

@@ -20,7 +20,7 @@ public class Article {
     private Date createtime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date lastmodifiedtime;
+    private Date lastmodifytime;
     private Integer replyto;
     private Integer authorid;
     private Integer category;

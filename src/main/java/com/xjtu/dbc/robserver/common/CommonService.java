@@ -1,7 +1,7 @@
 package com.xjtu.dbc.robserver.common;
 
 
-import com.xjtu.dbc.robserver.common.model.User;
+import com.xjtu.dbc.robserver.common.model.user.User;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface CommonService {

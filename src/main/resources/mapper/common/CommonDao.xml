@@ -4,14 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.common.dao.CommonDao">
     <!-- 根据 ID 获取用户 -->
-    <select id="getUserById" resultType="com.xjtu.dbc.robserver.common.model.User">
+    <select id="getUserById" resultType="com.xjtu.dbc.robserver.common.model.user.User">
         select *
         from user
         where userid = #{userid}
     </select>
 
     <!-- 根据 ID 获取用户（不包含密码） -->
-    <select id="getUserWithoutPwdById" resultType="com.xjtu.dbc.robserver.common.model.User">
+    <select id="getUserWithoutPwdById" resultType="com.xjtu.dbc.robserver.common.model.user.User">
         select *
         from user
         where userid = #{userid}

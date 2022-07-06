@@ -1,6 +1,6 @@
 package com.xjtu.dbc.robserver.common.dao;
 
-import com.xjtu.dbc.robserver.common.model.User;
+import com.xjtu.dbc.robserver.common.model.user.User;
 
 public interface CommonDao {
 

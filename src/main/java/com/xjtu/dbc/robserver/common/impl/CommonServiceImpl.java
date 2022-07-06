@@ -2,7 +2,7 @@ package com.xjtu.dbc.robserver.common.impl;
 
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.dao.CommonDao;
-import com.xjtu.dbc.robserver.common.model.User;
+import com.xjtu.dbc.robserver.common.model.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

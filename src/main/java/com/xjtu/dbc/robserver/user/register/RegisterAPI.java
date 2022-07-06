@@ -15,6 +15,8 @@ public class RegisterAPI {
     @Resource
     private RegisterService registerService;
 
+
+
     @PostMapping("")
     public Result register(@RequestBody RegisterDto registerDto) {
         int userNameCount = registerService.getUserCountByName(registerDto.getUsername());
@@ -33,4 +35,8 @@ public class RegisterAPI {
         registerService.addUser(registerDto);
         return Result.success("注册成功!", registerDto.getUserid());
     }
+
+
+
+
 }

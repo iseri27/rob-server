@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.dynamic.report.dao.DynamicReportDao">
+
+
+    <!-- 添加新的举报记录-->
+    <insert id="addReport">
+        insert into report (reportid, submittime, reason, reportstatus, userid, articleid)
+        values(#{reportid}, now(), #{reason}, #{reportstatus}, #{userid}, #{articleid})
+    </insert>
+
+    <!-- 获取当前最大的举报记录的编号 -->
+    <select id="getMaxReportId" resultType="java.lang.Integer">
+        select ifnull(max(reportid), 0)
+        from report;
+    </select>
+</mapper>

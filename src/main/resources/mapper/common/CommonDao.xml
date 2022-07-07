@@ -7,34 +7,12 @@
     <select id="getUserById" resultType="com.xjtu.dbc.robserver.common.model.user.User">
         select *
         from user
-        where userid = #{userid}
+        where userid = #{userId}
     </select>
 
-    <!-- 根据 ID 获取用户（不包含密码） -->
-    <select id="getUserWithoutPwdById" resultType="com.xjtu.dbc.robserver.common.model.user.User">
-        select *
-        from user
-        where userid = #{userid}
-    </select>
-
-    <!-- 根据用户名获取其头像链接 -->
-    <select id="getuserAvatarByName" resultType="java.lang.String">
-        select useravatar
-        from user
-        where username = #{username}
-    </select>
-
-    <!-- 根据用户 ID 获取用户名 -->
-    <select id="getUserNameById" resultType="java.lang.String">
-        select username
-        from user
-        where userid = #{userid}
-    </select>
-
-    <!-- 查询用户名数量 -->
-    <select id="getUserCountByName" resultType="java.lang.Integer">
-        select count(userid)
-        from user
-        where username = #{username};
-    </select>
+    <!-- 添加历史记录 -->
+    <insert id="addHistory">
+        insert into history(historytime, userid, historytype, articleid)
+        VALUES (now(), #{userId}, #{historyType}, #{articleId})
+    </insert>
 </mapper>

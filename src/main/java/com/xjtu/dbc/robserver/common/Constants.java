@@ -19,8 +19,11 @@ public class Constants {
 
     public static int ARTICLE_STATUS = 4;
     public static int ARTICLE_STATUS_DRAFT = 400;
-    public static int ARTICLE_STATUS_PUBLISH = 401;
-    public static int ARTICLE_STATUS_HIDDEN = 402;
+    // 已发布，待审核
+    public static int ARTICLE_STATUS_WAITING_CHECK = 401;
+    // 已发布且可见
+    public static int ARTICLE_STATUS_VISIBLE = 402;
+    public static int ARTICLE_STATUS_HIDDEN = 403;
 
     public static int REPORT_STATUS = 5;
     public static int REPORT_STATUS_UNCHECKED = 500;

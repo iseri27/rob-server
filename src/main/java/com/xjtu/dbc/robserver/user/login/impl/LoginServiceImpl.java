@@ -15,34 +15,34 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 根据用户 ID 与密码验证用户身份
      *
-     * @param userid  用户 ID
-     * @param userpwd 用户密码
+     * @param userId  用户 ID
+     * @param userPwd 用户密码
      * @return 验证通过返回 1, 验证失败返回 0
      */
     @Override
-    public Integer verifyById(Integer userid, String userpwd) {
-        return loginDao.getUserCountByIdAndPwd(userid, userpwd);
+    public Integer verifyById(Integer userId, String userPwd) {
+        return loginDao.getUserCountByIdAndPwd(userId, userPwd);
     }
 
     /**
      * 根据用户的邮箱获取 ID
      *
-     * @param useremail 用户邮箱
+     * @param userEmail 用户邮箱
      * @return 用户 ID
      */
     @Override
-    public Integer getUserIdByEmail(String useremail) {
-        return loginDao.getUserIdByEmail(useremail);
+    public Integer getUserIdByEmail(String userEmail) {
+        return loginDao.getUserIdByEmail(userEmail);
     }
 
     /**
      * 根据用户名获取 ID
      *
-     * @param username 用户名
+     * @param userName 用户名
      * @return 用户 ID
      */
     @Override
-    public Integer getUserIdByName(String username) {
-        return loginDao.getUserIdByName(username);
+    public Integer getUserIdByName(String userName) {
+        return loginDao.getUserIdByName(userName);
     }
 }

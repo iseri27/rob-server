@@ -22,4 +22,11 @@ public interface LoginDao {
      * @return 用户 ID
      */
     Integer getUserIdByEmail(String useremail);
+
+    /**
+     * 添加登录历史
+     * @param userId 用户 ID
+     */
+    void addHistory(Integer userId);
+
 }

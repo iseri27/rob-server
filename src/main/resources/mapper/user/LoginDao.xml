@@ -23,4 +23,10 @@
         from user
         where useremail = #{useremail}
     </select>
+
+    <!-- 添加用户登录记录 -->
+    <insert id="addLoginHistory">
+        insert into history (historytime, userid, historytype, articleid)
+        values (now(), #{userId}, #{historyType}, null);
+    </insert>
 </mapper>

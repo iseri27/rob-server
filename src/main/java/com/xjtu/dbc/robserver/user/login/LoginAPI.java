@@ -1,11 +1,7 @@
 package com.xjtu.dbc.robserver.user.login;
 
-import com.xjtu.dbc.robserver.common.CommonService;
-import com.xjtu.dbc.robserver.common.CurrentUser;
-import com.xjtu.dbc.robserver.common.Result;
-import com.xjtu.dbc.robserver.common.TokenUtils;
+import com.xjtu.dbc.robserver.common.*;
 import com.xjtu.dbc.robserver.user.login.entity.LoginDto;
-import lombok.ToString;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
@@ -36,17 +32,11 @@ public class LoginAPI {
         if (cnt == 1) {
             System.out.println("Client Token = " + userId);
             String token = TokenUtils.loginSign(Integer.toString(userId), loginDto.getUserpwd());
+            // 添加历史记录
+            commonService.addHistory(userId, Constants.HISTORY_LOGIN, null);
             return Result.success("登录成功", token);
         } else {
             return Result.fail(Result.ERR_CODE_BUSINESS, "帐号或密码错误");
         }
-    }
-
-    @GetMapping("/test")
-    public Result test(@RequestHeader String token) {
-        CurrentUser currentUser = TokenUtils.getUserInfo(token, commonService);
-        System.out.println("CurrentUser : " + currentUser);
-
-        return Result.successData(currentUser);
     }
 }

@@ -4,18 +4,18 @@ import com.xjtu.dbc.robserver.common.model.user.User;
 
 public interface CommonDao {
 
-    // 根据 ID 获取用户数据
-    User getUserById(Integer userid);
+    /**
+     * 根据 ID 获取用户数据
+     * @param userId 用户 ID
+     * @return 用户数据
+     */
+    User getUserById(Integer userId);
 
-    // 根据 Id 获取用户的数据（不包括密码）
-    User getUserWithoutPwdById(Integer userid);
-
-    // 根据用户名获取其头像链接
-    String getuserAvatarByName(String username);
-
-    // 根据用户 ID 获取用户名
-    String getUserNameById(Integer userid);
-
-    // 查询用户名数量
-    Integer getUserCountByName(String username);
+    /**
+     * 添加历史记录
+     * @param userId 用户 ID
+     * @param historyType 历史类型
+     * @param articleId 文本 ID (可以为  null)
+     */
+    void addHistory(Integer userId, Integer historyType, Integer articleId);
 }

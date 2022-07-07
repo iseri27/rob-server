@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.dynamic.home.dao.DynamicHomeDao">
+    <!-- 获取主页的用户信息 -->
+    <select id="getUserInfo" resultType="com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeDto">
+        select *
+        from user
+        where userid = #{userid}
+    </select>
+
+    <!-- 获取用户的动态列表-->
+    <select id="getDynamicList" resultType="com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeListDto">
+    SELECT *
+    FROM article
+	WHERE  authorid = #{userId}  and articletype = 301
+    </select>
+
+    <!-- 获取用户的粉丝的数量-->
+    <select id="getFansnumByUserid" resultType="java.lang.Integer">
+    select count(userlist.userlistid)
+    from userlist JOIN userlist_has_user on userlist.userlistid = userlist_has_user.userlistid
+    where userlist.ownerid = #{userId} and userlist.userlisttype = 601
+    </select>
+
+    <!-- 获取用户的动态的数量-->
+    <select id="getDynamicnumByUserid" resultType="java.lang.Integer">
+    select count(articleid)
+    from article
+    where authorid = #{userId} and articletype = 301
+    </select>
+
+
+    <!-- 获取动态的获得的赞的数量-->
+    <select id="getLikenumByAriticleid" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{articleid} and votetype = 800
+    </select>
+
+    <!-- 获取动态的获得的踩的数量-->
+    <select id="getDislikenumByAriticleid" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{articleid} and votetype = 801
+    </select>
+
+</mapper>

@@ -1,22 +1,17 @@
-package com.xjtu.dbc.robserver.dynamic.comment.entity;
+package com.xjtu.dbc.robserver.dynamic.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class DynamicCommentDto {
+public class DynamicPostDto {
 
     private Integer articleid;
     private Integer articletype;
     private Integer articlestatus;
     private String content;
     private Integer authorid;
-    private Integer like_num;
-    private Integer dislike_num;
-    private Integer replyto;
-    private Integer rootid;
-
 
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -26,6 +21,7 @@ public class DynamicCommentDto {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lastmodifytime;
+
 
     public Integer getArticleid() {
         return articleid;
@@ -67,44 +63,12 @@ public class DynamicCommentDto {
         this.authorid = authorid;
     }
 
-    public Integer getLike_num() {
-        return like_num;
-    }
-
-    public void setLike_num(Integer like_num) {
-        this.like_num = like_num;
-    }
-
-    public Integer getDislike_num() {
-        return dislike_num;
-    }
-
-    public void setDislike_num(Integer dislike_num) {
-        this.dislike_num = dislike_num;
-    }
-
     public Date getCreatetime() {
         return createtime;
     }
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
-    }
-
-    public Integer getReplyto() {
-        return replyto;
-    }
-
-    public void setReplyto(Integer replyto) {
-        this.replyto = replyto;
-    }
-
-    public Integer getRootid() {
-        return rootid;
-    }
-
-    public void setRootid(Integer rootid) {
-        this.rootid = rootid;
     }
 
     public Date getLastmodifytime() {

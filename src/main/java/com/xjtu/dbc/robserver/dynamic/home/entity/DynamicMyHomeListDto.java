@@ -1,11 +1,11 @@
-package com.xjtu.dbc.robserver.dynamic.comment.entity;
+package com.xjtu.dbc.robserver.dynamic.home.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class DynamicCommentDto {
+public class DynamicMyHomeListDto {
 
     private Integer articleid;
     private Integer articletype;
@@ -14,18 +14,23 @@ public class DynamicCommentDto {
     private Integer authorid;
     private Integer like_num;
     private Integer dislike_num;
-    private Integer replyto;
-    private Integer rootid;
-
-
+    private Integer comment_num;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createtime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date lastmodifytime;
+    /*
+    * 自己主页看到的自己的关注的人
+    * */
+
+    private String username;
+    private String usersex;
+    private String useravatar;
+    private String useremail;
+    private Integer roleid;
+    private Integer userstatus;
+
 
     public Integer getArticleid() {
         return articleid;
@@ -91,27 +96,62 @@ public class DynamicCommentDto {
         this.createtime = createtime;
     }
 
-    public Integer getReplyto() {
-        return replyto;
+
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setReplyto(Integer replyto) {
-        this.replyto = replyto;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public Integer getRootid() {
-        return rootid;
+    public String getUsersex() {
+        return usersex;
     }
 
-    public void setRootid(Integer rootid) {
-        this.rootid = rootid;
+    public void setUsersex(String usersex) {
+        this.usersex = usersex;
     }
 
-    public Date getLastmodifytime() {
-        return lastmodifytime;
+    public String getUseravatar() {
+        return useravatar;
     }
 
-    public void setLastmodifytime(Date lastmodifytime) {
-        this.lastmodifytime = lastmodifytime;
+    public void setUseravatar(String useravatar) {
+        this.useravatar = useravatar;
     }
+
+    public String getUseremail() {
+        return useremail;
+    }
+
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public Integer getUserstatus() {
+        return userstatus;
+    }
+
+    public void setUserstatus(Integer userstatus) {
+        this.userstatus = userstatus;
+    }
+
+    public Integer getComment_num() {
+        return comment_num;
+    }
+
+    public void setComment_num(Integer comment_num) {
+        this.comment_num = comment_num;
+    }
+
 }

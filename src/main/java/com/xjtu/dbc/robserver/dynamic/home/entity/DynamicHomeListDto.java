@@ -13,6 +13,8 @@ public class DynamicHomeListDto {
     private Integer authorid;
     private Integer like_num;
     private Integer dislike_num;
+    private Integer comment_num;
+
 
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -84,4 +86,13 @@ public class DynamicHomeListDto {
     public void setDislike_num(Integer dislike_num) {
         this.dislike_num = dislike_num;
     }
+
+    public Integer getComment_num() {
+        return comment_num;
+    }
+
+    public void setComment_num(Integer comment_num) {
+        this.comment_num = comment_num;
+    }
+
 }

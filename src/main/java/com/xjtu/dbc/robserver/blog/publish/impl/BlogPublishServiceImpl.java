@@ -1,10 +1,11 @@
 package com.xjtu.dbc.robserver.blog.publish.impl;
 
+import com.xjtu.dbc.robserver.blog.publish.BlogDetailDto;
 import com.xjtu.dbc.robserver.blog.publish.BlogEditDto;
 import com.xjtu.dbc.robserver.blog.publish.BlogPublishService;
 import com.xjtu.dbc.robserver.blog.publish.dao.BlogPublishDao;
-import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
+import com.xjtu.dbc.robserver.common.model.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ public class BlogPublishServiceImpl implements BlogPublishService {
     private BlogPublishDao blogPublishDao;
 
     /**
-     * 获取用户tag列表(tagid）
+     * 获取用户tag列表(Tag类，包括id与name）
      */
     @Override
     public List<Tag> getAllTagListByUserid(int myid){
@@ -34,6 +35,9 @@ public class BlogPublishServiceImpl implements BlogPublishService {
         return blogPublishDao.getLastId()+1;
     }
 
+    /**
+     * 获取新的tagid
+     */
     @Override
     public int getNewTagid() {
         return blogPublishDao.getLastTagId()+1;
@@ -69,7 +73,9 @@ public class BlogPublishServiceImpl implements BlogPublishService {
     }
 
 
-
+    /**
+     * 增加我的tag
+     */
     @Override
     public void addTag(int myid, BlogEditDto dto){
         for (String t_id: dto.getTags()) {
@@ -110,8 +116,28 @@ public class BlogPublishServiceImpl implements BlogPublishService {
     }
 
     @Override
-    public Article getBlogDetailByArticleid(int articleid){
-        return blogPublishDao.selectBlogDetailByArticleid(articleid);
+    public BlogDetailDto getBlogDetailByArticleid(int articleid){
+        BlogDetailDto dto = blogPublishDao.selectBlogDetailDtoByArticleid(articleid);
+        List<String> tagList = blogPublishDao.selectTagListByArtileid(articleid);
+        dto.setTags(tagList);
+        User author = blogPublishDao.selectAuthorByArtileid(articleid);
+        dto.setAuthorname(author.getUsername());
+        dto.setAuthoravatar(author.getUseravatar());
+        return dto;
     }
+
+    @Override
+    public BlogEditDto getBlogEditDtoByArticleid(int articleid){
+        BlogEditDto dto = blogPublishDao.selectBlogEditDtoByArticleid(articleid);
+        List<String> tagList = blogPublishDao.selectTagListByArtileid(articleid);
+        dto.setTags(tagList);
+        return dto;
+    }
+
+    @Override
+    public int getUserStatus(int authorid){
+        return blogPublishDao.selectUserStatusByAuthorid(authorid);
+    }
+
 
 }

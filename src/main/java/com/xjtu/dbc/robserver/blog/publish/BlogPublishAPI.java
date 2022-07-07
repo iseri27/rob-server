@@ -44,13 +44,14 @@ public class BlogPublishAPI {
      */
     @PostMapping("/publish")
     public Result blogPublish(@RequestBody BlogEditDto dto, @RequestHeader("Token") String token) {
-//!!!!!!!        if (userService.getUserStatus(dto.getU_id()) != 0) {
-//!!!!!!!           return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
-//!!!!!!!        }
+        if (blogPublishService.getUserStatus(dto.getAuthorid()) != 200) {
+          return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
+        }
         int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
         if (dto.getContent()==null || "".equals(dto.getContent())) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");
         }
+
 
         /**
          * 首先需要判断是第一次提交还是再次编辑
@@ -75,6 +76,10 @@ public class BlogPublishAPI {
                 blogPublishService.addBlog(dto);
                 blogPublishService.addTag(myid,dto);
                 blogPublishService.addTagForBlog(myid,dto);
+                // 检查博客是否需要审核
+                if (dto.getArticlestatus()==401) {
+                    return Result.fail(Result.ERR_CODE_BUSINESS, "由于正文字数超过500或包含图片，博客正在审核中！");
+                }
                 return Result.success("发布成功！", dto.getArticleid());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -84,12 +89,20 @@ public class BlogPublishAPI {
             /**
              * 再次编辑
              */
+            // 检查博客是否被隐藏
+            if (dto.getArticlestatus()==403) {
+                return Result.fail(Result.ERR_CODE_BUSINESS, "博客被隐藏，无法编辑！");
+            }
             // 设置最后编辑时间
             dto.setLastmodifytime(Utils.getNow());
 
             try {
                 blogPublishService.updateBlogByArticleid(dto);
                 blogPublishService.updateBlogTag(myid,dto);
+                // 检查博客是否需要审核
+                if (dto.getArticlestatus()==401) {
+                    return Result.fail(Result.ERR_CODE_BUSINESS, "由于正文字数超过500或包含图片，博客正在审核中！");
+                }
                 return Result.success("修改成功！", dto.getArticleid());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,7 +119,7 @@ public class BlogPublishAPI {
     @GetMapping("/get/blogDetail")
     public Result getEssayDetail(@RequestParam("articleid") int articleid, @RequestParam("Token") String token) {
         try {
-            Article blog = blogPublishService.getBlogDetailByArticleid(articleid);
+            BlogDetailDto blog = blogPublishService.getBlogDetailByArticleid(articleid);
 
             if (blog.getArticlestatus()!=401) {
                 // 该随笔未发布，需要验证登录状态，未登录状态下或并非作者都不能查看
@@ -123,7 +136,6 @@ public class BlogPublishAPI {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "不能编辑不属于自己的博客！");
                 }
             }
-
             return Result.successData(blog);
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,52 +143,34 @@ public class BlogPublishAPI {
         }
     }
 
-//    /**
-//     * 返回随笔编辑数据传输对象
-//     * @param e_id 随笔id
-//     * @param token 令牌
-//     * @return 成功返回包含随笔的编辑信息的对象，失败返回fail
-//     */
-//    @GetMapping("/get/essayEditDto")
-//    public Result getEssayEditDto(@RequestParam("e_id") String e_id, @RequestHeader("Token") String token) {
-//        try {
-//            EssayEditDto dto = essaysService.getEssayEditDtoByE_id(e_id);
-//
-//            /*
-//             * 检查是否是随笔的作者
-//             */
-//            String u_id = TokenUtils.getUserInfo(token, commonService).getU_id();
-//            if (!dto.getU_id().equals(u_id)) {
-//                return Result.fail(Result.ERR_CODE_BUSINESS, "登录无效！");
-//            }
-//
-//            // 检查随笔是否被锁定
-//            if (dto.getE_locked()) {
-//                return Result.fail(Result.ERR_CODE_BUSINESS, "随笔被锁定，无法编辑！");
-//            }
-//
-//            return Result.successData(dto);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Result.fail(Result.ERR_CODE_SYS, "系统错误！获取随笔信息失败！");
-//        }
-//    }
-//
-//    /**
-//     * @param e_id 随笔id
-//     * @return 创建该随笔的用户的用户名(u_name)
-//     */
-//    @GetMapping("/get/author")
-//    public Result getAuthorName(@RequestParam("e_id") String e_id) {
-//        try {
-//            String u_id = essaysService.getU_idByE_id(e_id);
-//            String u_name = commonService.selectU_nameByU_id(u_id);
-//            return Result.successData(u_name);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Result.fail(Result.ERR_CODE_SYS, "查询作者姓名失败！");
-//        }
-//    }
+    /**
+     * 返回随笔编辑数据传输对象
+     * @return 成功返回包含随笔的编辑信息的对象，失败返回fail
+     */
+    @GetMapping("/get/essayEditDto")
+    public Result getEssayEditDto(@RequestParam("articleid") int articleid, @RequestHeader("Token") String token) {
+        try {
+            BlogEditDto dto= blogPublishService.getBlogEditDtoByArticleid(articleid);
+
+            /*
+             * 检查是否是随笔的作者
+             */
+            int authorid = TokenUtils.getUserInfo(token, commonService).getUserid();
+            if (!dto.getAuthorid().equals(authorid)) {
+                return Result.fail(Result.ERR_CODE_BUSINESS, "登录无效！");
+            }
+
+            // 检查博客是否被隐藏
+            if (dto.getArticlestatus()==402) {
+                return Result.fail(Result.ERR_CODE_BUSINESS, "博客被隐藏，无法编辑！");
+            }
+
+            return Result.successData(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.fail(Result.ERR_CODE_SYS, "系统错误！获取博客信息失败！");
+        }
+    }
 
 }
 

@@ -22,5 +22,9 @@ public interface BlogPublishService {
 
     void addTag(int myid, BlogEditDto dto);
 
-    Article getBlogDetailByArticleid(int articleid);
+    BlogDetailDto getBlogDetailByArticleid(int articleid);
+
+    BlogEditDto getBlogEditDtoByArticleid(int articleid);
+
+    int getUserStatus(int authorid);
 }

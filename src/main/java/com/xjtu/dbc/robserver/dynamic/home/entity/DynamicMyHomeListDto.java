@@ -5,7 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class DynamicHomeListDto {
+public class DynamicMyHomeListDto {
+
     private Integer articleid;
     private Integer articletype;
     private Integer articlestatus;
@@ -15,11 +16,21 @@ public class DynamicHomeListDto {
     private Integer dislike_num;
     private Integer comment_num;
 
-
-
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createtime;
+
+    /*
+    * 自己主页看到的自己的关注的人
+    * */
+
+    private String username;
+    private String usersex;
+    private String useravatar;
+    private String useremail;
+    private Integer roleid;
+    private Integer userstatus;
+
 
     public Integer getArticleid() {
         return articleid;
@@ -61,16 +72,6 @@ public class DynamicHomeListDto {
         this.authorid = authorid;
     }
 
-
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
     public Integer getLike_num() {
         return like_num;
     }
@@ -85,6 +86,64 @@ public class DynamicHomeListDto {
 
     public void setDislike_num(Integer dislike_num) {
         this.dislike_num = dislike_num;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsersex() {
+        return usersex;
+    }
+
+    public void setUsersex(String usersex) {
+        this.usersex = usersex;
+    }
+
+    public String getUseravatar() {
+        return useravatar;
+    }
+
+    public void setUseravatar(String useravatar) {
+        this.useravatar = useravatar;
+    }
+
+    public String getUseremail() {
+        return useremail;
+    }
+
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public Integer getUserstatus() {
+        return userstatus;
+    }
+
+    public void setUserstatus(Integer userstatus) {
+        this.userstatus = userstatus;
     }
 
     public Integer getComment_num() {

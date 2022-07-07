@@ -11,6 +11,14 @@ public interface CommonService {
      */
     User getUserById(Integer userId);
 
+
+    /**
+     * 根据用户 ID 获取用户信息，除了密码
+     * @param userId 用户 ID
+     * @return 用户信息，不包含密码
+     */
+    User getUserWithoutPasswordById(Integer userId);
+
     /**
      * 添加历史记录
      * @param userId 用户 ID

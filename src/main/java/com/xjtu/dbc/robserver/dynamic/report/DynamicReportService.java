@@ -14,7 +14,7 @@ public interface DynamicReportService {
 
     /**
      * 获取当前最大的举报记录的编号
-     * @return 最大的记录的编号
+     * @return 最大的评论记录的编号
      */
     Integer getMaxReportId();
 

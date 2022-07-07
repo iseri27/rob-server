@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.dynamic.post.dao.DynamicPostDao">
+
+
+
+    <!-- 添加新的动态记录-->
+    <insert id="addDynamic">
+        insert into article (articleid, articletype, articlestatus, content, createtime, lastmodifytime,authorid)
+        values(#{articleid},  #{articletype}, #{articlestatus}, #{content}, now(),now(),#{authorid})
+    </insert>
+
+    <!-- 获取当前最大的动态记录的编号 -->
+    <select id="getMaxDynamicId" resultType="java.lang.Integer">
+        select ifnull(max(articleid), 0)
+        from article;
+    </select>
+
+</mapper>

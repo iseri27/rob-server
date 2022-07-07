@@ -5,6 +5,7 @@ import com.xjtu.dbc.robserver.dynamic.home.DynamicHomeService;
 import com.xjtu.dbc.robserver.dynamic.home.dao.DynamicHomeDao;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeDto;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeListDto;
+import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicMyHomeListDto;
 import com.xjtu.dbc.robserver.user.register.dao.RegisterDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,11 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
     }
 
     @Override
+    public List<DynamicMyHomeListDto> getMyDynamicList(Integer userid){
+        return dynamicHomeDao.getMyDynamicList(userid);
+    }
+
+    @Override
     public int getFansnumByUserid(Integer userid){
         return  dynamicHomeDao.getFansnumByUserid(userid);
     }
@@ -50,6 +56,11 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
     @Override
     public int getDislikenumByAriticleid(Integer articleid){
         return dynamicHomeDao.getDislikenumByAriticleid(articleid);
+    }
+
+    @Override
+    public int getCommentnumByArticleid(Integer articleid){
+        return dynamicHomeDao.getCommentnumByArticleid(articleid);
     }
 
 }

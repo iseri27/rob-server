@@ -11,7 +11,6 @@ public interface CommonService {
      */
     User getUserById(Integer userId);
 
-
     /**
      * 根据用户 ID 获取用户信息，除了密码
      * @param userId 用户 ID
@@ -26,4 +25,11 @@ public interface CommonService {
      * @param articleId 文本 ID (可以为 null)
      */
     void addHistory(Integer userId, Integer historyType, Integer articleId);
+
+    /**
+     * 验证是否登录
+     * @param token 令牌
+     * @return 登录有效返回 true; 未登录或登录无效返回 false.
+     */
+    boolean isLogin(String token);
 }

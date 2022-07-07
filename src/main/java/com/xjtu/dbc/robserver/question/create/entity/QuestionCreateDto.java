@@ -1,10 +1,13 @@
 package com.xjtu.dbc.robserver.question.create.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+@Getter@Setter
 public class QuestionCreateDto {
     /**
      *  questionid:悬赏ID
@@ -34,83 +37,4 @@ public class QuestionCreateDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastmodifytime;
 
-    public int getQuestionid() {
-        return questionid;
-    }
-
-    public void setQuestionid(int questionid) {
-        this.questionid = questionid;
-    }
-
-    public String getQuestiontitle() {
-        return questiontitle;
-    }
-
-    public void setQuestiontitle(String questiontitle) {
-        this.questiontitle = questiontitle;
-    }
-
-    public String getQuestioncontent() {
-        return questioncontent;
-    }
-
-    public void setQuestioncontent(String questioncontent) {
-        this.questioncontent = questioncontent;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public int getAuthorid() {
-        return authorid;
-    }
-
-    public void setAuthorid(int authorid) {
-        this.authorid = authorid;
-    }
-
-    public int getQuestionstatus() {
-        return questionstatus;
-    }
-
-    public void setQuestionstatus(int questionstatus) {
-        this.questionstatus = questionstatus;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public Date getLastmodifytime() {
-        return lastmodifytime;
-    }
-
-    public void setLastmodifytime(Date lastmodifytime) {
-        this.lastmodifytime = lastmodifytime;
-    }
-
-    public int getCategoryid() {
-        return categoryid;
-    }
-
-    public void setCategoryid(int categoryid) {
-        this.categoryid = categoryid;
-    }
 }

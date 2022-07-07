@@ -23,10 +23,15 @@ public class QuestionCreateAPI {
      */
     @PostMapping("/create")//
     public Result createQuestion(@RequestBody QuestionCreateDto questionCreateDto,@RequestHeader("Token") String token){
-
-        questionCreateDto.setQuestionstatus(401);
-        questionCreateService.createQuestion(questionCreateDto);
-
+        QuestionCreateDto tempDto = questionCreateService.findQuestionById(questionCreateDto.getQuestionid());
+        if(tempDto != null && tempDto.getQuestionstatus() == 400 ){
+            questionCreateDto.setQuestionstatus(401);
+            questionCreateService.modifyQuestion(questionCreateDto);
+        }
+        else {
+            questionCreateDto.setQuestionstatus(401);
+            questionCreateService.createQuestion(questionCreateDto);
+        }
         return Result.success("问题创建成功，等待审核!", questionCreateDto.getQuestionid());
     }
 
@@ -42,6 +47,19 @@ public class QuestionCreateAPI {
         questionCreateService.saveQuestion(questionCreateDto);
 
         return Result.success("成功保存至草稿箱!", questionCreateDto.getQuestionid());
+    }
+
+    /**
+     * 删除草稿.
+     * @param questionCreateDto,token
+     * @return Result(msg, questionid)
+     */
+    @PostMapping("/delete")
+    public Result deleteQuestion(@RequestBody QuestionCreateDto questionCreateDto,@RequestHeader("Token") String token){
+
+        questionCreateService.deleteQuestionById(questionCreateDto.getQuestionid());
+
+        return Result.success("成功删除草稿!", questionCreateDto.getQuestionid());
     }
 
     /**

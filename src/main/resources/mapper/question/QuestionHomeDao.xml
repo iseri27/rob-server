@@ -2,7 +2,47 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xjtu.dbc.robserver.level.dao.QuestionHomeDao">
+<mapper namespace="com.xjtu.dbc.robserver.question.home.dao.QuestionHomeDao">
 
+    <!-- 获取全部问题列表-->
+    <select id="getAllQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
+    select *
+    from article
+	where articletype = 302
+    </select>
 
+    <!-- 获取未解决问题列表-->
+    <select id="getNotSolveQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
+    select *
+    from article
+	where articletype = 302 and cost > 0
+    </select>
+
+    <!-- 获取已解决问题列表-->
+    <select id="getSolveQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
+    select *
+    from article
+    where articletype = 302 and cost &lt; 0
+    </select>
+
+    <!-- 获取问题的获得的赞的数量-->
+    <select id="getLikenumByQuestionid" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{questionid} and votetype = 800
+    </select>
+
+    <!-- 获取问题的获得的踩的数量-->
+    <select id="getDislikenumByQuestionid" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{questionid} and votetype = 801
+    </select>
+
+    <!-- 获取问题评论的数量-->
+    <select id="getCommentNum" resultType="java.lang.Integer">
+    select count(articleid)
+    from article
+    where articletype = 302 and rootid = #{articleid}
+    </select>
 </mapper>

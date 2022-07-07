@@ -26,13 +26,18 @@ public class QuestionCreateServiceImpl implements QuestionCreateService {
     }
 
     @Override
-    public void findQuestionById(int questionId) {
-        questionCreateDao.findQuestionById(questionId);
+    public QuestionCreateDto findQuestionById(int questionid) {
+        return questionCreateDao.findQuestionById(questionid);
     }
 
     @Override
     public void saveQuestion(QuestionCreateDto dto) {
         questionCreateDao.createQuestion(dto);
+    }
+
+    @Override
+    public void deleteQuestionById(int questionid) {
+        questionCreateDao.deleteQuestionById(questionid);
     }
 
 }

@@ -32,8 +32,15 @@
                 articlestatus questionstatus,
                 createtime createtime,
                 lastmodifytime lastmodifytime,
-                categoryid categoryid
+                categoryid categoryid,
+                rootid rootid
         from article
         where articleid = #{questionid} and articletype = 302
     </select>
+
+    <!-- 通过id删除 -->
+    <delete id="deleteQuestionById">
+        delete from article
+        WHERE articleid = #{questiontitle} AND articletype = 302
+    </delete>
 </mapper>

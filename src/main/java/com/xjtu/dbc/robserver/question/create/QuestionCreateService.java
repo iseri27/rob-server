@@ -24,7 +24,7 @@ public interface QuestionCreateService {
      * @param questionId {问题ID}
      * @return 悬赏的 ID
      */
-    void findQuestionById(int questionId);
+    QuestionCreateDto findQuestionById(int questionId);
 
     /**
      * 保存草稿箱的草稿
@@ -32,4 +32,6 @@ public interface QuestionCreateService {
      * @return 悬赏的 ID
      */
     void saveQuestion(QuestionCreateDto questionCreateDto);
+
+    void deleteQuestionById(int questionid);
 }

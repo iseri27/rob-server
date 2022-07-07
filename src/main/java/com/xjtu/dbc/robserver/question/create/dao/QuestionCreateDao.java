@@ -7,9 +7,9 @@ public interface QuestionCreateDao {
 
     void createQuestion(QuestionCreateDto dto);
 
-    void modifyQuestion(QuestionCreateDto dto);
+    QuestionCreateDto modifyQuestion(QuestionCreateDto dto);
 
-    void findQuestionById(int questionId);
+    QuestionCreateDto findQuestionById(int questionId);
 
-    void saveQuestion(QuestionCreateDto dto);
+    void deleteQuestionById(int questionid);
 }

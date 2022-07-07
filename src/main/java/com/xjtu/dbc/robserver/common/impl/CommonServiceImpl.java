@@ -1,6 +1,6 @@
 package com.xjtu.dbc.robserver.common.impl;
-
 import com.xjtu.dbc.robserver.common.CommonService;
+import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.dao.CommonDao;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import org.springframework.stereotype.Service;
@@ -45,5 +45,21 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public void addHistory(Integer userId, Integer historyType, Integer articleId) {
         commonDao.addHistory(userId, historyType, articleId);
+    }
+
+    /**
+     * 验证 token 是否有效
+     * @param token 令牌
+     * @return token 有效返回 true; token 无效返回 false.
+     */
+    @Override
+    public boolean isLogin(String token) {
+        try {
+            TokenUtils.verifyToken(token, this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

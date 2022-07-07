@@ -2,7 +2,6 @@ package com.xjtu.dbc.robserver.user.login;
 
 import com.xjtu.dbc.robserver.common.*;
 import com.xjtu.dbc.robserver.user.login.entity.LoginDto;
-import lombok.ToString;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 

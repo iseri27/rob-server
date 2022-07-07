@@ -49,7 +49,7 @@ public class DynamicCommentAPI {
         Integer maxId = dynamicCommentService.getMaxCommentId();
         dynamicCommentDto.setArticleid(maxId + 1);
         dynamicCommentDto.setArticletype(303);  //评论所对应的文本类型为303
-        dynamicCommentDto.setArticlestatus(401);  //评论的状态设置为401
+        dynamicCommentDto.setArticlestatus(402);  //评论的状态设置为402
 
         dynamicCommentService.addComment(dynamicCommentDto);
         return Result.success("注册成功!", dynamicCommentDto);

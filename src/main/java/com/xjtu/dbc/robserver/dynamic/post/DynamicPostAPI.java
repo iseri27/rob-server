@@ -25,7 +25,7 @@ public class DynamicPostAPI {
         Integer maxId = dynamicPostService.getMaxDynamicId();
         dynamicPostDto.setArticleid(maxId + 1);
         dynamicPostDto.setArticletype(301);  //动态所对应的文本类型为301
-        dynamicPostDto.setArticlestatus(401);  //动态的状态设置为401
+        dynamicPostDto.setArticlestatus(402);  //动态的状态设置为402
 
         dynamicPostService.addDynamic(dynamicPostDto);
         return Result.success("发布动态成功!", dynamicPostDto);

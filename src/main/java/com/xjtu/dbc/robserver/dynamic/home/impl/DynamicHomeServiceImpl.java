@@ -36,6 +36,11 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
     }
 
     @Override
+    public int getFollownumByUserid(Integer userid){
+        return  dynamicHomeDao.getFollownumByUserid(userid);
+    }
+
+    @Override
     public int getFansnumByUserid(Integer userid){
         return  dynamicHomeDao.getFansnumByUserid(userid);
     }

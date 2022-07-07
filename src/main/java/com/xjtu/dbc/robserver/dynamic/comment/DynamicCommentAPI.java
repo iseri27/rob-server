@@ -29,6 +29,7 @@ public class DynamicCommentAPI {
     @GetMapping("")
     public Result getCommnent(Integer articleid) {
 
+        System.out.println("测试articleid: "+articleid);
         List<DynamicCommentDto> listDto = dynamicCommentService.getDynamicCommentList(articleid);
 
         //获取每条评论的点赞数与点踩数

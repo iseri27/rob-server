@@ -13,11 +13,13 @@ public class DynamicHomeDto {
     private String username;
     private String usersex;
     private String useravatar;
+    private String userabout;
     private String useremail;
     private Integer roleid;
     private Integer userstatus;
 
-    private Integer fans_num;
+    private Integer follow_num; //本主页用户关注的人数
+    private Integer fans_num;  // 关注本主页用户的人数
     private Integer dynamic_num;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -114,5 +116,21 @@ public class DynamicHomeDto {
 
     public void setRegtime(Date regtime) {
         this.regtime = regtime;
+    }
+
+    public Integer getFollow_num() {
+        return follow_num;
+    }
+
+    public void setFollow_num(Integer follow_num) {
+        this.follow_num = follow_num;
+    }
+
+    public String getUserabout() {
+        return userabout;
+    }
+
+    public void setUserabout(String userabout) {
+        this.userabout = userabout;
     }
 }

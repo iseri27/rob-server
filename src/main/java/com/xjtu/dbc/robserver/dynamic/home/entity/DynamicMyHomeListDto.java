@@ -15,9 +15,10 @@ public class DynamicMyHomeListDto {
     private Integer like_num;
     private Integer dislike_num;
     private Integer comment_num;
+//    pattern = "yyyy-MM-dd HH:mm:ss",
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     /*
@@ -28,6 +29,7 @@ public class DynamicMyHomeListDto {
     private String usersex;
     private String useravatar;
     private String useremail;
+    private String userabout;
     private Integer roleid;
     private Integer userstatus;
 
@@ -154,4 +156,11 @@ public class DynamicMyHomeListDto {
         this.comment_num = comment_num;
     }
 
+    public String getUserabout() {
+        return userabout;
+    }
+
+    public void setUserabout(String userabout) {
+        this.userabout = userabout;
+    }
 }

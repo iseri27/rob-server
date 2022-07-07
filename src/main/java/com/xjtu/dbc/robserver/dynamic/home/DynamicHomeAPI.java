@@ -4,11 +4,10 @@ package com.xjtu.dbc.robserver.dynamic.home;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 
+import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeDto;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeListDto;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicMyHomeListDto;
-import com.xjtu.dbc.robserver.user.register.RegisterService;
-import com.xjtu.dbc.robserver.user.register.entity.RegisterDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,11 +25,17 @@ public class DynamicHomeAPI {
      * 个人动态主页左边的个人信息栏的数据
      * */
     @GetMapping("uInfo")
-    public Result getUInfo( Integer userid) {
+    public Result getUInfo(@RequestHeader("Token") String token) {
+
+        Integer userid;
+
+        userid = TokenUtils.getUserInfo(token, commonService).getUserid();
 
         DynamicHomeDto homeDto = dynamicHomeService.getUserInfo(userid);
+        homeDto.setFollow_num(dynamicHomeService.getFollownumByUserid(userid));
         homeDto.setFans_num(dynamicHomeService.getFansnumByUserid(userid));
         homeDto.setDynamic_num(dynamicHomeService.getDynamicnumByUserid(userid));
+
         //还需要得到用户的粉丝数 动态数
         return Result.success("获取动态主页的个人信息成功!", homeDto);
     }
@@ -60,7 +65,11 @@ public class DynamicHomeAPI {
      * 访问的自己的动态主页时调用的接口，可以看到自己的动态以及自己关注的人的主页
      * */
     @GetMapping("mydList")
-    public Result getmyDList( Integer userid) {
+    public Result getmyDList(@RequestHeader("Token") String token) {
+
+        Integer userid;
+
+        userid = TokenUtils.getUserInfo(token, commonService).getUserid();
 
         List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(userid);
 

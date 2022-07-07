@@ -30,6 +30,16 @@ public interface DynamicHomeService {
      */
     List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
 
+
+
+    /**
+     * 根据用户的编号来获取该用户的关注的用户数
+     * @param userid  用户的编号
+     * @return 该用户关注的用户数
+     */
+    int getFollownumByUserid(Integer userid);
+
+
     /**
      * 根据用户的编号来获取该用户的粉丝数
      * @param userid  用户的编号

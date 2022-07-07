@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public class DynamicCommentDto {
+
     private Integer articleid;
     private Integer articletype;
     private Integer articlestatus;

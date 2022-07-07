@@ -52,7 +52,7 @@ public class DynamicCommentAPI {
         dynamicCommentDto.setArticlestatus(402);  //评论的状态设置为402
 
         dynamicCommentService.addComment(dynamicCommentDto);
-        return Result.success("注册成功!", dynamicCommentDto);
+        return Result.success("发布动态的评论成功!", dynamicCommentDto);
     }
 
 }

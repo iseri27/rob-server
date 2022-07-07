@@ -15,6 +15,7 @@
     SELECT *
     FROM article
 	WHERE  authorid = #{userId}  and articletype = 301
+	ORDER BY article.createtime DESC
     </select>
 
     <!-- 在自己主页,获取用户的动态列表-->

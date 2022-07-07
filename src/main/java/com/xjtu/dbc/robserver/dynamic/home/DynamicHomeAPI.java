@@ -72,7 +72,7 @@ public class DynamicHomeAPI {
         }
 
         //还需要得到用户的粉丝数 动态数
-        return Result.success("获取动态主页的动态列表成功!", listDto2);
+        return Result.success("获取我的动态主页的动态列表成功!", listDto2);
     }
 
 

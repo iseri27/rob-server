@@ -27,6 +27,14 @@ public class PersonalAPI {
     @Resource
     private PersonalService personalService;
 
+
+    @GetMapping("/get")
+    public Result getCurrentUser(@RequestHeader("Token") String token){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        Integer userid = currentUser.getUserid();
+        return Result.success("获取成功",commonService.getUserWithoutPasswordById(userid));
+    }
+
     /**
      * 修改头像
      * @param avatar 头像

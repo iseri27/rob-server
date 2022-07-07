@@ -45,6 +45,7 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
 
     @Override
     public Integer getLikenumByQuestionId(Integer questionid) {
+        System.out.println(3333333);
         return questionHomeDao.getLikenumByQuestionId(questionid);
     }
 

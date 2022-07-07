@@ -19,7 +19,6 @@
             content = #{questioncontent},
             cost = #{cost},
             lastmodifytime = now()
-
         </set>
         where articleid = #{questionid}
     </update>

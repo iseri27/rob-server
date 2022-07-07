@@ -21,12 +21,12 @@ public class QuestionHomeAPI {
     @Resource
     private  QuestionHomeService questionHomeService;
 
-    @GetMapping("qList")
-    public Result getQList(Integer selectid) {
+    @GetMapping("/qlist")
+    public Result getQList() {
+        System.out.println(1111111111);
+        Integer selectid = 1;
         if(selectid == 1){
-
             List<QuestionHomeListDto> listDto = questionHomeService.getAllQuestionList();
-
             //获取每条评论的点赞数与点踩数
             for(int i=0; i<listDto.size();i++){
                 listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));

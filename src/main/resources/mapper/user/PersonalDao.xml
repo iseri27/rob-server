@@ -9,9 +9,31 @@
         set useravatar = #{url}
         where userid = #{uid}
     </update>
-    <select id="getUserCountByName" resultType="java.lang.Integer">
-        select count(userid)
+
+    <update id="changeInformation">
+        update user
+        set
+        <if test="username != null and username != ''">username = #{username}</if>
+        <if test="userbirth != null and userbirth != ''">userbirth = #{userbirth}</if>
+        <if test="usersex != null and usersex != ''">usersex = #{usersex}</if>
+        <if test="userabout != null and userabout != ''">userabout = #{userabout}</if>
+        <where>
+            <if test="userid != null and userid != ''">and userid = #{userid}</if>
+        </where>
+    </update>
+
+    <select id="checkPassword" resultType="com.xjtu.dbc.robserver.common.model.user.User">
+        select userpwd
         from user
-        where username = #{username}
+        where <if test="userid != null and userid != ''">and userid = #{userid}</if>
     </select>
+
+    <update id="changePassword">
+        update user
+        set
+        <if test="userpwd != null and userpwd != ''">userpwd = #{userpwd}</if>
+        <where>
+            <if test="userid != null and userid != ''">and userid = #{userid}</if>
+        </where>
+    </update>
 </mapper>

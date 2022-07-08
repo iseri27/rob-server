@@ -95,5 +95,5 @@ public interface DynamicHomeService {
      */
     int getCommentnumByArticleid(Integer articleid);
 
-
+    int getVoteTypeByU_A_id(Integer userid,Integer articleid);
 }

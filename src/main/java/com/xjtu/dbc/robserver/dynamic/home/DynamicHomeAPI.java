@@ -93,6 +93,7 @@ public class DynamicHomeAPI {
             listDto3.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto3.get(i).getArticleid()));
             listDto3.get(i).setComment_num(dynamicHomeService.getCommentnumByArticleid(listDto3.get(i).getArticleid()));
             listDto3.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
+            listDto3.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto3.get(i).getUserid(),listDto3.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 0:未投票  800:赞  801:踩
         }
 
         //还需要得到用户的粉丝数 动态数
@@ -132,12 +133,16 @@ public class DynamicHomeAPI {
 
         List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(Userid);
 
+        Integer votetype;
+
+
         //获取每条评论的点赞数与点踩数
         for(int i=0; i<listDto2.size();i++){
             listDto2.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto2.get(i).getArticleid()));
             listDto2.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto2.get(i).getArticleid()));
             listDto2.get(i).setComment_num(dynamicHomeService.getCommentnumByArticleid(listDto2.get(i).getArticleid()));
             listDto2.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
+            listDto2.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto2.get(i).getUserid(),listDto2.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 null:未投票  800:赞  801:踩
         }
 
         //还需要得到用户的粉丝数 动态数

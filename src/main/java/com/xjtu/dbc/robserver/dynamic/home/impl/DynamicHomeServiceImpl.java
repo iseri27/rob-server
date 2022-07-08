@@ -80,4 +80,15 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
         return dynamicHomeDao.getCommentnumByArticleid(articleid);
     }
 
+    @Override
+    public int getVoteTypeByU_A_id(Integer userid,Integer articleid){
+        if(dynamicHomeDao.getVoteTypeByU_A_id(userid,articleid) !=null){
+            return dynamicHomeDao.getVoteTypeByU_A_id(userid,articleid);
+        }
+        else{
+            return 0;
+        }
+
+    }
+
 }

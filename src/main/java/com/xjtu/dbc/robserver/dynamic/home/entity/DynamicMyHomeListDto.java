@@ -15,6 +15,8 @@ public class DynamicMyHomeListDto {
     private Integer like_num;
     private Integer dislike_num;
     private Integer comment_num;
+    private Integer vote_type;  //0:未投票  800:赞  801:踩
+
 
     private Integer is_search_visible; //用于表示是否搜索栏可见   初始为1  1:可见 2：不可见
 //    pattern = "yyyy-MM-dd HH:mm:ss",
@@ -182,4 +184,13 @@ public class DynamicMyHomeListDto {
     public void setUserid(Integer userid) {
         this.userid = userid;
     }
+
+    public Integer getVote_type() {
+        return vote_type;
+    }
+
+    public void setVote_type(Integer vote_type) {
+        this.vote_type = vote_type;
+    }
+
 }

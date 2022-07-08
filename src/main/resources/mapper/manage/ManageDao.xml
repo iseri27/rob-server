@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.manage.dao.ManageDao">
+
+    <!-- tag的增删改查 -->
     <select id="selectTags" resultType="com.xjtu.dbc.robserver.common.model.tag.Tag">
         select * from `tag`
         <where>
@@ -17,4 +19,15 @@
             </if>
         </where>
     </select>
+
+    <insert id="insertTag" useGeneratedKeys="true" keyProperty="tagid" keyColumn="tagid">
+        insert into `tag`(`tagname`, `ownerid`)
+        values (#{tagname}, #{ownerid})
+    </insert>
+
+    <delete id="deleteTag">
+        delete from `tag`
+        where `tagid` = #{tagid}
+    </delete>
+
 </mapper>

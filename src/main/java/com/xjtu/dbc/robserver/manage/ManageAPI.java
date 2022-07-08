@@ -33,4 +33,36 @@ public class ManageAPI {
         Map<String, Object> data = manageService.getTagList(tagDto);
         return Result.success("获取tag列表成功", data);
     }
+
+    /**
+     * 添加tag.
+     * @param token
+     * @param tag
+     * @return
+     */
+    @PostMapping("/tag/add")
+    public Result addTag(@RequestHeader("Token") String token, @RequestBody Tag tag) {
+        Integer userID = TokenUtils.getUserInfo(token, commonService).getUserid();
+        tag.setOwnerid(userID);
+        manageService.addTag(tag);
+        return Result.successMsg("添加tag成功");
+    }
+
+    /**
+     * 删除tag，仅仅根据tagid.
+     * @param tag
+     * @return
+     */
+    @PostMapping("/tag/delete")
+    public Result deleteTag(@RequestBody Tag tag) {
+        manageService.deleteTag(tag);
+        return Result.successMsg("删除tag成功");
+    }
+
+    @PostMapping("/tag/update")
+    public Result updateTag(@RequestHeader("Token") String token, @RequestBody Tag tag) {
+        deleteTag(tag);
+        addTag(token, tag);
+        return Result.successMsg("修改tag成功");
+    }
 }

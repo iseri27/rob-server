@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface ManageDao {
     List<Tag> selectTags(TagDto tagDto);
+
+    void insertTag(Tag tag);
+
+    void deleteTag(Tag tag);
 }

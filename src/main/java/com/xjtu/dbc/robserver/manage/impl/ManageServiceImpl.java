@@ -21,4 +21,14 @@ public class ManageServiceImpl implements ManageService {
     public Map<String, Object> getTagList(TagDto tagDto) {
         return Utils.getPage(tagDto, () -> manageDao.selectTags(tagDto));
     }
+
+    @Override
+    public void addTag(Tag tag) {
+        manageDao.insertTag(tag);
+    }
+
+    @Override
+    public void deleteTag(Tag tag) {
+        manageDao.deleteTag(tag);
+    }
 }

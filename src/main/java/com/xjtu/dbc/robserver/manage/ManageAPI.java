@@ -22,10 +22,13 @@ public class ManageAPI {
     @Resource
     private CommonService commonService;
 
+    // tag增删改查
     /**
      * 查询tagList，支持tagName的模糊搜索及tagid的准确搜索.
+     * 分页查找.
      * @param tagDto
      * @see TagDto
+     * @author 杨兆瑞
      * @return
      */
     @GetMapping("/tag/select")
@@ -38,6 +41,7 @@ public class ManageAPI {
      * 添加tag.
      * @param token
      * @param tag
+     * @author 杨兆瑞
      * @return
      */
     @PostMapping("/tag/add")
@@ -51,6 +55,7 @@ public class ManageAPI {
     /**
      * 删除tag，仅仅根据tagid.
      * @param tag
+     * @author 杨兆瑞
      * @return
      */
     @PostMapping("/tag/delete")
@@ -59,6 +64,13 @@ public class ManageAPI {
         return Result.successMsg("删除tag成功");
     }
 
+    /**
+     * 修改tag，具体实现为先delete原tag，再插入一个新tag.
+     * @param token
+     * @param tag
+     * @author 杨兆瑞
+     * @return
+     */
     @PostMapping("/tag/update")
     public Result updateTag(@RequestHeader("Token") String token, @RequestBody Tag tag) {
         deleteTag(tag);

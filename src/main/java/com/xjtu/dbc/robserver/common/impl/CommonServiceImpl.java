@@ -58,7 +58,6 @@ public class CommonServiceImpl implements CommonService {
         try {
             TokenUtils.verifyToken(token, this);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
         return true;

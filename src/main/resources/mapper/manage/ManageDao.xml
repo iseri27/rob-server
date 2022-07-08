@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.manage.dao.ManageDao">
+
+    <!-- tag的增删查 -->
+    <select id="selectTags" resultType="com.xjtu.dbc.robserver.common.model.tag.Tag">
+        select * from `tag`
+        <where>
+            <if test="tagid != null">
+                and `tagid` = #{tagid}
+            </if>
+            <if test="tagname != null and tagname != ''">
+                and tagname like concat('%', #{tagname} ,'%')
+            </if>
+            <if test="ownerid != null">
+                and ownerid = #{ownerid}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertTag" useGeneratedKeys="true" keyProperty="tagid" keyColumn="tagid">
+        insert into `tag`(`tagname`, `ownerid`)
+        values (#{tagname}, #{ownerid})
+    </insert>
+
+    <delete id="deleteTag">
+        delete from `tag`
+        where `tagid` = #{tagid}
+    </delete>
+
+</mapper>

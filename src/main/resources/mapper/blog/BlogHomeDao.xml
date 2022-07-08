@@ -12,6 +12,6 @@
             <if test="articleType != null"> and articletype   = #{articleType} </if>
             <if test="true"               > and articlestatus = 402            </if>
         </where>
-        ORDER BY createtime DESC;
+        ORDER BY createtime DESC
     </select>
 </mapper>

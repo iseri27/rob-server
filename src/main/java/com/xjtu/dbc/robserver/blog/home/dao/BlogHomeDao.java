@@ -1,6 +1,6 @@
 package com.xjtu.dbc.robserver.blog.home.dao;
 
-import com.xjtu.dbc.robserver.common.model.article.BlogVO;
+import com.xjtu.dbc.robserver.blog.home.entity.BlogVO;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 
 import java.util.List;
@@ -34,4 +34,10 @@ public interface BlogHomeDao {
      */
     List<Category> getCategoryList();
 
+    /**
+     * 获取文本的 Tag 列表
+     * @param articleId 文本 ID
+     * @return Tag 列表
+     */
+    List<String> getTagListOfArticle(Integer articleId);
 }

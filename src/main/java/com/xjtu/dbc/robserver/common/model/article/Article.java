@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Getter @Setter
-public class BlogVO {
+public class Article {
     private Integer articleid;
     private Integer articletype;
     private Integer articlestatus;//是否发布。草稿 400；已发布但待审核 401；已发布并可见402；被隐藏 403

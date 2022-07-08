@@ -40,5 +40,12 @@
     <select id="getCategoryList" resultType="com.xjtu.dbc.robserver.common.model.category.Category">
         select * from category;
     </select>
+
+    <!-- 获取文本的 Tag -->
+    <select id="getTagListOfArticle" resultType="java.lang.String">
+        select t.tagname
+        from article_has_tag aht join tag t on aht.tagid = t.tagid
+        where aht.articleid = #{articleId}
+    </select>
     
 </mapper>

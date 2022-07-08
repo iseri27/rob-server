@@ -90,5 +90,6 @@ public class BlogHomeAPI {
         List<Category> categoryList = blogHomeService.getCategoryList();
         return Result.successData(categoryList);
     }
+    public static int HISTORY_BROWSE = 701;
 
 }

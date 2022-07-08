@@ -2,9 +2,9 @@ package com.xjtu.dbc.robserver.blog.home.impl;
 
 import com.xjtu.dbc.robserver.blog.home.BlogHomeService;
 import com.xjtu.dbc.robserver.blog.home.dao.BlogHomeDao;
+import com.xjtu.dbc.robserver.blog.home.entity.BlogVO;
 import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Utils;
-import com.xjtu.dbc.robserver.common.model.article.BlogVO;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import com.xjtu.dbc.robserver.common.page.QueryAction;
@@ -31,7 +31,13 @@ public class BlogHomeServiceImpl implements BlogHomeService {
         class queryAction implements QueryAction<BlogVO> {
             @Override
             public List<BlogVO> execute() {
-                return blogHomeDao.getArticleListOfConcernedUser(userId, Constants.ARTICLE_TYPE_BLOG);
+                List<BlogVO> blogVOList = blogHomeDao.getArticleListOfConcernedUser(userId, Constants.ARTICLE_TYPE_BLOG);
+
+                for (BlogVO blogVO: blogVOList) {
+                    blogVO.setTagList(blogHomeDao.getTagListOfArticle(blogVO.getArticleid()));
+                }
+
+                return blogVOList;
             }
         }
 
@@ -50,7 +56,13 @@ public class BlogHomeServiceImpl implements BlogHomeService {
         class queryAction implements  QueryAction<BlogVO> {
             @Override
             public List<BlogVO> execute() {
-            return blogHomeDao.getArticleListOfMyself(userId, Constants.ARTICLE_TYPE_BLOG);
+                List<BlogVO> blogVOList = blogHomeDao.getArticleListOfMyself(userId, Constants.ARTICLE_TYPE_BLOG);
+
+                for (BlogVO blogVO: blogVOList) {
+                    blogVO.setTagList(blogHomeDao.getTagListOfArticle(blogVO.getArticleid()));
+                }
+
+                return blogVOList;
             }
         }
 

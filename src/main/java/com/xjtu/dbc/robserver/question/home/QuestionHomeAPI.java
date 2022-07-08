@@ -87,9 +87,6 @@ public class QuestionHomeAPI {
             e.printStackTrace();
             return Result.fail(Result.ERR_CODE_BUSINESS, "查找悬赏详情失败！");
         }
-
-
-
     }
 
 //    @GetMapping("/preview")//待实现

@@ -20,11 +20,19 @@ public interface BlogPublishService {
 
     void updateBlogTag(int myid, BlogEditDto dto);
 
-    void addTag(int myid, BlogEditDto dto);
-
     BlogDetailDto getBlogDetailByArticleid(int articleid);
 
     BlogEditDto getBlogEditDtoByArticleid(int articleid);
 
     int getUserStatus(int authorid);
+
+    int getArticleStatus(int articleid);
+
+    void addTag(Tag tag);
+
+    Integer getTagCount(String t_name, int u_id);
+
+    void renameTag(String tagname, int u_id, String t_name_new);
+
+    void deleteTag(String tagname, int u_id);
 }

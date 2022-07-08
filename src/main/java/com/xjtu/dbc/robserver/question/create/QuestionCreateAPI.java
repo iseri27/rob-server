@@ -31,11 +31,11 @@ public class QuestionCreateAPI {
         QuestionCreateDto tempDto = questionCreateService.findQuestionById(questionCreateDto.getQuestionid());
         if (authorstatus == 200){
             if(tempDto != null && tempDto.getQuestionstatus() == 400 ){
-                questionCreateDto.setQuestionstatus(401);
+                questionCreateDto.setQuestionstatus(402);
                 questionCreateService.modifyQuestion(questionCreateDto);
             }
             else {
-                questionCreateDto.setQuestionstatus(401);
+                questionCreateDto.setQuestionstatus(402);
                 questionCreateService.createQuestion(questionCreateDto);
             }
             return Result.success("问题创建成功，等待审核!", questionCreateDto.getQuestionid());
@@ -50,11 +50,27 @@ public class QuestionCreateAPI {
     }
 
     /**
+     * 获取草稿对象
+     */
+    @RequestMapping("/draft/get")
+    public Result getDraft(@RequestParam("qid") int qid){
+        try{
+            int questionid = qid;
+            QuestionCreateDto dto = questionCreateService.findQuestionById(qid);
+            return Result.success("获取草稿成功！",dto);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.fail(Result.ERR_CODE_BUSINESS, "获取草稿失败！");
+        }
+
+    }
+
+    /**
      * 保存问题至草稿箱.
      * @param questionCreateDto,token
      * @return Result(msg, questionid)
      */
-    @PostMapping("/save")
+    @PostMapping("/draft/save")
     public Result saveQuestion(@RequestBody QuestionCreateDto questionCreateDto,@RequestHeader("Token") String token){
 
         questionCreateDto.setQuestionstatus(400);
@@ -68,7 +84,7 @@ public class QuestionCreateAPI {
      * @param questionCreateDto,token
      * @return Result(msg, questionid)
      */
-    @PostMapping("/delete")
+    @PostMapping("/draft/delete")
     public Result deleteQuestion(@RequestBody QuestionCreateDto questionCreateDto,@RequestHeader("Token") String token){
 
         questionCreateService.deleteQuestionById(questionCreateDto.getQuestionid());
@@ -81,14 +97,14 @@ public class QuestionCreateAPI {
      * @param questionCreateDto,token
      * @return Result(msg, questionid)
      */
-    @PostMapping("/modify")
+    @PostMapping("/draft/modify")
     public Result modifyQuestion(@RequestBody QuestionCreateDto questionCreateDto,@RequestHeader("Token") String token){
 
         //questionCreateDto.setQuestionid(1);
         questionCreateDto.setQuestionstatus(400);
         questionCreateService.modifyQuestion(questionCreateDto);
 
-        return Result.success("草稿保存成功!", questionCreateDto.getQuestionid());
+        return Result.success("草稿修改成功!", questionCreateDto.getQuestionid());
     }
 
     @PostMapping("/tag/add")

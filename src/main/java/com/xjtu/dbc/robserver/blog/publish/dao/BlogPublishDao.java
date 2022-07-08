@@ -29,8 +29,6 @@ public interface BlogPublishDao {
 
     void dropTagForBlog(int articleid, int tagid);
 
-    void addTag(int tagid, int myid, String t_id);
-
     BlogDetailDto selectBlogDetailDtoByArticleid(int articleid);
 
     BlogEditDto selectBlogEditDtoByArticleid(int articleid);
@@ -38,4 +36,14 @@ public interface BlogPublishDao {
     User selectAuthorByArtileid(int articleid);
 
     int selectUserStatusByAuthorid(int authorid);
+
+    int getArticleStatus(int articleid);
+
+    void addTag(Tag tag);
+
+    Integer selectTagCntByT_nameAndU_id(String t_name, int u_id);
+
+    void updateTagnameByT_nameAndU_id(String tagname, int u_id, String t_name_new);
+
+    void deleteTagByTagnameAndU_id(String tagname, int u_id);
 }

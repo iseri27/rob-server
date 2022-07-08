@@ -23,5 +23,6 @@ public class Article {
     private Date lastmodifytime;
     private Integer replyto;
     private Integer authorid;
-    private Integer category;
+    private Integer categoryid;
+    private Integer rootid;
 }

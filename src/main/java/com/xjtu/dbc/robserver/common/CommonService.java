@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.common;
 
 
+import com.xjtu.dbc.robserver.common.model.tag.Tag;
 import com.xjtu.dbc.robserver.common.model.user.User;
 
 public interface CommonService {
@@ -32,4 +33,16 @@ public interface CommonService {
      * @return 登录有效返回 true; 未登录或登录无效返回 false.
      */
     boolean isLogin(String token);
+
+    /**
+     * 用户新增tag
+     * @param tag (tagid tag名称 tag所属)
+     */
+    void addTag(Tag tag);
+
+    /**
+     * 删除用户的tag
+     * @param tagid
+     */
+    void deleteTag(int tagid);
 }

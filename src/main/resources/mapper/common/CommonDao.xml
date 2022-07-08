@@ -15,4 +15,16 @@
         insert into history(historytime, userid, historytype, articleid)
         VALUES (now(), #{userId}, #{historyType}, #{articleId})
     </insert>
+
+    <!-- 新增tag -->
+    <insert id="addTag">
+        INSERT INTO tag(tagid,tagname,ownerid)
+        VALUES (#{tagid}, #{tagname}, #{ownerid})
+    </insert>
+
+    <!--删除tag-->
+    <delete id="deleteTag">
+        delete from tag
+        where tagid=#{tagid}
+    </delete>
 </mapper>

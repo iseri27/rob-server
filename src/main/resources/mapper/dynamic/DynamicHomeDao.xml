@@ -10,11 +10,21 @@
         where userid = #{userid}
     </select>
 
-    <!-- 获取用户的动态列表-->
+    <!-- 在他人主页,获取用户的动态列表-->
     <select id="getDynamicList" resultType="com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeListDto">
     SELECT *
     FROM article
 	WHERE  authorid = #{userId}  and articletype = 301
+    </select>
+
+    <!-- 在自己主页,获取用户的动态列表-->
+    <select id="getMyDynamicList" resultType="com.xjtu.dbc.robserver.dynamic.home.entity.DynamicMyHomeListDto">
+    select  DISTINCT article.articleid,article.articletype,article.articlestatus,article.content,article.createtime, article.lastmodifytime,article.authorid,user.username,user.useravatar,user.usersex,user.userstatus,user.useremail,user.roleid
+    from userlist JOIN userlist_has_user on userlist.userlistid = userlist_has_user.userlistid
+				  JOIN article   on  ( article.authorid  =  userlist_has_user.userid  or  article.authorid = userlist.ownerid)
+				  JOIN user  on  user.userid =article.authorid
+    where userlist.ownerid = #{userId} and userlist.userlisttype = 600   and  article.articletype = 301
+    ORDER BY article.createtime DESC
     </select>
 
     <!-- 获取用户的粉丝的数量-->
@@ -44,6 +54,13 @@
     select count(voteid)
     from vote
     where articleid = #{articleid} and votetype = 801
+    </select>
+
+    <!-- 获取动态的评论的数量-->
+    <select id="getCommentnumByArticleid" resultType="java.lang.Integer">
+    select count(articleid)
+    from article
+    where articletype = 303 and rootid = #{articleid}
     </select>
 
 </mapper>

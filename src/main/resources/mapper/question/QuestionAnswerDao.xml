@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.question.answer.dao.QuestionAnswerDao">
+
+    <!-- 获取全部回答列表-->
+    <select id="getAllAnswerList" resultType="com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto">
+    select article.articleid answerid,article.articlestatus answerstatus,
+           article.title answertitle,user.userid authorid,
+           user.username authorname,user.useravatar authoravatar,
+           article.createtime createtime,article.articletype type
+    from article join user on user.userid = article.authorid
+	where article.articletype = 304 or 305 and article.replyto = #{questionid}
+    </select>
+
+    <!-- 获取回答的获得的赞的数量-->
+    <select id="getLikenumByAnswerId" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{answerid} and votetype = 800
+    </select>
+
+    <!-- 获取回答的获得的踩的数量-->
+    <select id="getDislikenumByAnswerId" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{answerid} and votetype = 801
+    </select>
+
+    <!-- 获取问题评论的数量-->
+    <select id="getCommentNum" resultType="java.lang.Integer">
+    select count(articleid)
+    from article
+    where articletype = 303 and rootid = #{answerid}
+    </select>
+
+    <!--获取回答详情-->
+    <select id="getAnswerDetails" resultType="com.xjtu.dbc.robserver.question.answer.entity.AnswerDetailsDto">
+        select  article.articleid questionid,article.articlestatus questionstatus,
+                article.title questiontitle,user.userid authorid,user.username authorname,
+                user.useravatar authoravatar,article.createtime createtime,
+                article.cost cost,article.lastmodifytime lastmodifytime,
+                article.content questioncontent,article.articletype type
+        from article join user on user.userid = article.authorid
+        where article.articleid = #{answerid}
+    </select>
+
+</mapper>

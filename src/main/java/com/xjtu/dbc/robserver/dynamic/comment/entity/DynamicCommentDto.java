@@ -13,10 +13,18 @@ public class DynamicCommentDto {
     private Integer authorid;
     private Integer like_num;
     private Integer dislike_num;
+    private Integer replyto;
+    private Integer rootid;
+
+
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createtime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lastmodifytime;
 
     public Integer getArticleid() {
         return articleid;
@@ -80,5 +88,29 @@ public class DynamicCommentDto {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public Integer getReplyto() {
+        return replyto;
+    }
+
+    public void setReplyto(Integer replyto) {
+        this.replyto = replyto;
+    }
+
+    public Integer getRootid() {
+        return rootid;
+    }
+
+    public void setRootid(Integer rootid) {
+        this.rootid = rootid;
+    }
+
+    public Date getLastmodifytime() {
+        return lastmodifytime;
+    }
+
+    public void setLastmodifytime(Date lastmodifytime) {
+        this.lastmodifytime = lastmodifytime;
     }
 }

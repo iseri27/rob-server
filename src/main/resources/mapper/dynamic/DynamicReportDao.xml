@@ -16,4 +16,5 @@
         select ifnull(max(reportid), 0)
         from report;
     </select>
+
 </mapper>

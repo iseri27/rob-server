@@ -5,5 +5,16 @@
 <mapper namespace="com.xjtu.dbc.robserver.manage.dao.ManageDao">
     <select id="selectTags" resultType="com.xjtu.dbc.robserver.common.model.tag.Tag">
         select * from `tag`
+        <where>
+            <if test="tagid != null">
+                and `tagid` = #{tagid}
+            </if>
+            <if test="tagname != null and tagname != ''">
+                and tagname like concat('%', #{tagname} ,'%')
+            </if>
+            <if test="ownerid != null">
+                and ownerid = #{ownerid}
+            </if>
+        </where>
     </select>
 </mapper>

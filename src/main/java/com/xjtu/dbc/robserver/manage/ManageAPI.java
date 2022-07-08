@@ -4,6 +4,7 @@ import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
+import com.xjtu.dbc.robserver.manage.entity.TagDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,12 +24,13 @@ public class ManageAPI {
 
     /**
      * 查询tagList，支持tagName的模糊搜索及tagid的准确搜索.
-     * @param tag
+     * @param tagDto
+     * @see TagDto
      * @return
      */
     @GetMapping("/tag/select")
-    public Result getTags(Tag tag) {
-        Map<String, Object> data = manageService.getTagList(tag);
+    public Result getTags(TagDto tagDto) {
+        Map<String, Object> data = manageService.getTagList(tagDto);
         return Result.success("获取tag列表成功", data);
     }
 }

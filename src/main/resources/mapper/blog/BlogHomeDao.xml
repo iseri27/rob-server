@@ -3,15 +3,49 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.blog.home.dao.BlogHomeDao">
-    <!-- 获取用户及其关注的用户的博客 -->
-    <select id="getUserRelatedArticleList" resultType="com.xjtu.dbc.robserver.common.model.article.Article">
+    <!-- 获取用户关注的人的博客 -->
+    <select id="getArticleListOfConcernedUser" resultType="com.xjtu.dbc.robserver.blog.home.entity.BlogVO">
         select *
         from user_follow_article
         <where>
-            <if test="userId      != null">     userid        = #{userId}      </if>
-            <if test="articleType != null"> and articletype   = #{articleType} </if>
-            <if test="true"               > and articlestatus = 402            </if>
+            <if test="userId      != null">     userid        =  #{userId}      </if>
+            <if test="articleType != null"> and articletype   =  #{articleType} </if>
+            <if test="true"               > and articlestatus =  402            </if>
+            <if test="true"               > and authorid      != #{userId}      </if>
         </where>
         ORDER BY createtime DESC
     </select>
+
+    <!-- 获取用户自己的博客 -->
+    <select id="getArticleListOfMyself" resultType="com.xjtu.dbc.robserver.blog.home.entity.BlogVO">
+        select *
+        from user_follow_article
+        where userid = #{userId} and authorid = #{userId} and articletype = #{articleType} and articlestatus = 402
+        order by createtime desc
+    </select>
+
+    <!-- 获取推荐的博客 -->
+    <select id="getArticleListOfRecommend" resultType="com.xjtu.dbc.robserver.blog.home.entity.BlogVO">
+        select *
+        from user_follow_article
+        <where>
+            <if test="userId      != null">     authorid      != #{userId}      </if>
+            <if test="articleType != null"> and articletype   =  #{articleType} </if>
+            <if test="true"               > and articlestatus =  402            </if>
+        </where>
+        order by createtime desc
+    </select>
+
+    <!-- 获取分类列表 -->
+    <select id="getCategoryList" resultType="com.xjtu.dbc.robserver.common.model.category.Category">
+        select * from category;
+    </select>
+
+    <!-- 获取文本的 Tag -->
+    <select id="getTagListOfArticle" resultType="java.lang.String">
+        select t.tagname
+        from article_has_tag aht join tag t on aht.tagid = t.tagid
+        where aht.articleid = #{articleId}
+    </select>
+    
 </mapper>

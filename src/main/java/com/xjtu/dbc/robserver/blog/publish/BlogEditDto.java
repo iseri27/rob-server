@@ -8,6 +8,6 @@ import java.util.List;
 
 @Getter @Setter
 
-public class BlogEditDto extends Article{
+public class BlogEditDto extends Article {
     private List <String> tags; // 博客的tag
 }

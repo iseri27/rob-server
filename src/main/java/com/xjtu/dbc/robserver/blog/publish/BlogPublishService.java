@@ -1,6 +1,5 @@
 package com.xjtu.dbc.robserver.blog.publish;
 
-import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
 
 import java.util.List;

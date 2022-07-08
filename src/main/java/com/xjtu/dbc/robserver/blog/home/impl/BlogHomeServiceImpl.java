@@ -24,15 +24,52 @@ public class BlogHomeServiceImpl implements BlogHomeService {
      * 获取用户关注的人的博客
      * @param pageParam 分页参数
      * @param userId 用户 ID
-     * @param limit 最大数量
      * @return 用户关注的人的博客
      */
     @Override
-    public Map<String, Object> getBlogListOfConcernedUser(PageParam pageParam, Integer userId, Integer limit) {
+    public Map<String, Object> getBlogListOfConcernedUser(PageParam pageParam, Integer userId) {
         class queryAction implements QueryAction<BlogVO> {
             @Override
             public List<BlogVO> execute() {
-                return blogHomeDao.getArticleListOfConcernedUser(userId, Constants.ARTICLE_TYPE_BLOG, limit);
+                return blogHomeDao.getArticleListOfConcernedUser(userId, Constants.ARTICLE_TYPE_BLOG);
+            }
+        }
+
+        queryAction query = new queryAction();
+        return Utils.getPage(pageParam, query);
+    }
+
+    /**
+     * 获取我的博客列表
+     * @param pageParam 分页参数
+     * @param userId 用户 ID
+     * @return 我的博客列表
+     */
+    @Override
+    public Map<String, Object> getMyBlogList(PageParam pageParam, Integer userId) {
+        class queryAction implements  QueryAction<BlogVO> {
+            @Override
+            public List<BlogVO> execute() {
+            return blogHomeDao.getArticleListOfMyself(userId, Constants.ARTICLE_TYPE_BLOG);
+            }
+        }
+
+        queryAction query = new queryAction();
+        return Utils.getPage(pageParam, query);
+    }
+
+    /**
+     * 获取推荐的的博客列表
+     * @param pageParam 分页参数
+     * @param userId    用户 ID
+     * @return 推荐的的博客列表
+     */
+    @Override
+    public Map<String, Object> getRecommendBlogList(PageParam pageParam, Integer userId) {
+        class queryAction implements  QueryAction<BlogVO> {
+            @Override
+            public List<BlogVO> execute() {
+                return blogHomeDao.getArticleListOfRecommend(userId, Constants.ARTICLE_TYPE_BLOG);
             }
         }
 

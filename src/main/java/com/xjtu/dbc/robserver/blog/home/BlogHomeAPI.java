@@ -40,7 +40,7 @@ public class BlogHomeAPI {
         Integer userId = null;
         try {
             userId = TokenUtils.getUserInfo(token, commonService).getUserid();
-            blogListPage = blogHomeService.getBlogListOfConcernedUser(pageParam, userId, 50);
+            blogListPage = blogHomeService.getBlogListOfConcernedUser(pageParam, userId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,7 +56,14 @@ public class BlogHomeAPI {
      */
     @GetMapping("/my")
     public Result getMyBlog(PageParam pageParam, @RequestHeader("Token") String token) {
-        return Result.success();
+        if (!commonService.isLogin(token)) {
+            return Result.fail(Result.ERR_CODE_UNLOGIN, "用户未登录.");
+        }
+
+        Integer userId = TokenUtils.getUserInfo(token, commonService).getUserid();
+        Map<String, Object> blogListPage = blogHomeService.getMyBlogList(pageParam, userId);
+
+        return Result.successData(blogListPage);
     }
 
     /**
@@ -65,8 +72,14 @@ public class BlogHomeAPI {
      * @return 推荐的博客
      */
     @GetMapping("/recommend")
-    public Result getRecommend(PageParam pageParam) {
-        return Result.success();
+    public Result getRecommend(PageParam pageParam, @RequestHeader("Token") String token) {
+        Integer userId = null;
+        if (commonService.isLogin(token)) {
+            userId = TokenUtils.getUserInfo(token, commonService).getUserid();
+        }
+
+        Map<String, Object> blogListPage = blogHomeService.getRecommendBlogList(pageParam, userId);
+        return Result.successData(blogListPage);
     }
 
     /**获取分类列表

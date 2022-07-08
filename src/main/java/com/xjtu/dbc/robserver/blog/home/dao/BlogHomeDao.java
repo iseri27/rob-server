@@ -10,14 +10,28 @@ public interface BlogHomeDao {
     /**
      * 获取用户关注的人的博客
      * @param userId 用户 ID
-     * @param limit 最大数量
      * @return 用户关注的人的博客
      */
-    List<BlogVO> getArticleListOfConcernedUser(Integer userId, Integer articleType, Integer limit);
+    List<BlogVO> getArticleListOfConcernedUser(Integer userId, Integer articleType);
+
+    /**
+     * 获取用户自己的博客
+     * @param userId 用户 ID
+     * @return 用户自己的博客
+     */
+    List<BlogVO> getArticleListOfMyself(Integer userId, Integer articleType);
+
+    /**
+     * 获取推荐的博客
+     * @param userId 用户 ID
+     * @return 用推荐的博客
+     */
+    List<BlogVO> getArticleListOfRecommend(Integer userId, int articleType);
 
     /**
      * 获取分类列表
      * @return 分类列表
      */
     List<Category> getCategoryList();
+
 }

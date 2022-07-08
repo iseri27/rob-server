@@ -27,8 +27,8 @@ public class DynamicCommentAPI {
      * 动态详情页的评论显示
      * */
     @GetMapping("")
-    public Result getCommnent(Integer articleid) {
-
+    public Result getCommnent(@RequestParam("num") Integer num) {
+        Integer articleid = num;
         System.out.println("测试articleid: "+articleid);
         List<DynamicCommentDto> listDto = dynamicCommentService.getDynamicCommentList(articleid);
 
@@ -44,6 +44,10 @@ public class DynamicCommentAPI {
     }
 
 
+
+
+
+
     @PostMapping("publishcomment")
     public Result publishComment(@RequestBody DynamicCommentDto dynamicCommentDto) {
 
@@ -53,7 +57,7 @@ public class DynamicCommentAPI {
         dynamicCommentDto.setArticlestatus(402);  //评论的状态设置为402
 
         dynamicCommentService.addComment(dynamicCommentDto);
-        return Result.success("发布动态的评论成功!", dynamicCommentDto);
+        return Result.success("发布评论成功!", dynamicCommentDto);
     }
 
 }

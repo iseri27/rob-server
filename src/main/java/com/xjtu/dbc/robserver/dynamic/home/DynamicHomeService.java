@@ -20,7 +20,11 @@ public interface DynamicHomeService {
      * @param userid 用户编号
      * @return 用户的动态列表
      */
-    List<DynamicHomeListDto> getDynamicList(Integer userid);
+    List<DynamicMyHomeListDto> getDynamicList(Integer userid);
+
+
+    List<DynamicMyHomeListDto> getFollowDynamicList(Integer userid);
+
 
 
     /**
@@ -29,6 +33,15 @@ public interface DynamicHomeService {
      * @return 用户的动态列表
      */
     List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
+
+
+
+    /**
+     * 根据动态的编号获取动态的信息
+     * @param authorid 动态编号
+     * @return 动态信息
+     */
+    DynamicMyHomeListDto getDynamic(Integer authorid);
 
 
 

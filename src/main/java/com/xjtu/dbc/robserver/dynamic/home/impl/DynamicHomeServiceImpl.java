@@ -26,13 +26,25 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
     }
 
     @Override
-    public List<DynamicHomeListDto> getDynamicList(Integer userid){
+    public List<DynamicMyHomeListDto> getDynamicList(Integer userid){
         return dynamicHomeDao.getDynamicList(userid);
     }
 
     @Override
     public List<DynamicMyHomeListDto> getMyDynamicList(Integer userid){
         return dynamicHomeDao.getMyDynamicList(userid);
+    }
+
+
+    @Override
+    public List<DynamicMyHomeListDto> getFollowDynamicList(Integer userid){
+        return dynamicHomeDao.getFollowDynamicList(userid);
+    }
+
+
+    @Override
+    public DynamicMyHomeListDto getDynamic(Integer articleid){
+        return dynamicHomeDao.getDynamic(articleid);
     }
 
     @Override

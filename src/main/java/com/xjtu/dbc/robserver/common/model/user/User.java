@@ -25,7 +25,7 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regtime;
     private String userabout;
-    private Integer conis;
+    private Integer coins;
     private Integer roleid;
     private Integer userstatus;
 }

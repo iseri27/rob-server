@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.blog.collect.dao.BlogCollectDao">
+    <select id="hadCollectedOrNot" resultType="java.lang.Integer">
+        select count(*)
+        from bookmark_has_article
+        where bookmarkid=#{bookmarkid} and articleid=#{articleid}
+    </select>
+
+    <select id="selectBookmarkid" resultType="java.lang.Integer">
+        select bookmarkid
+        from bookmark
+        where ownerid=#{ownerid}
+    </select>
+
+    <insert id="addCollect">
+        INSERT INTO bookmark_has_article(bookmarkid,articleid,createtime)
+        VALUES (#{bookmarkid}, #{articleid}, #{createtime})
+    </insert>
+
+    <delete id="deCollect">
+        DELETE FROM bookmark_has_article
+        WHERE bookmarkid = #{bookmarkid} and articleid=#{articleid}
+    </delete>
+</mapper>

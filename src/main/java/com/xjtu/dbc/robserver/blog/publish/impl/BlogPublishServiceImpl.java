@@ -27,6 +27,23 @@ public class BlogPublishServiceImpl implements BlogPublishService {
         List<Tag> list = blogPublishDao.selectTagListByUserid(myid);
         return list;
     }
+
+    @Override
+    public Integer getTagCount(String t_name, int u_id){
+        return blogPublishDao.selectTagCntByT_nameAndU_id(t_name, u_id);
+    }
+
+    @Override
+    public void renameTag(String tagname, int u_id, String t_name_new){
+        blogPublishDao.updateTagnameByT_nameAndU_id(tagname, u_id, t_name_new);
+    }
+
+    @Override
+    public void deleteTag(String tagname, int u_id){
+        blogPublishDao.deleteTagByTagnameAndU_id(tagname, u_id);
+    }
+
+
     /**
      * 获取新的博客id
      */
@@ -66,9 +83,11 @@ public class BlogPublishServiceImpl implements BlogPublishService {
     public void addTagForBlog(int myid,BlogEditDto dto) {
         int t_id;
         int articleid = dto.getArticleid();
-        for (String tagname: dto.getTags()) {
-            t_id=blogPublishDao.selectTagidUseTagname(myid,tagname);
-            blogPublishDao.addTagForBlog(articleid, t_id);
+        if(dto.getTags()!=null) {
+            for (String tagname : dto.getTags()) {
+                t_id = blogPublishDao.selectTagidUseTagname(myid, tagname);
+                blogPublishDao.addTagForBlog(articleid, t_id);
+            }
         }
     }
 
@@ -77,10 +96,8 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      * 增加我的tag
      */
     @Override
-    public void addTag(int myid, BlogEditDto dto){
-        for (String t_id: dto.getTags()) {
-            blogPublishDao.addTag(getNewTagid(), myid, t_id);
-        }
+    public void addTag(Tag tag){
+        blogPublishDao.addTag(tag);
     }
 
     /**
@@ -91,7 +108,6 @@ public class BlogPublishServiceImpl implements BlogPublishService {
         //  获取之前的tag列表
         int articleid = dto.getArticleid();
         int t_id;
-        List<String> myList = blogPublishDao.selectTagnameListByUserid(myid);
         List<String> oldList = blogPublishDao.selectTagListByArtileid(articleid);
         List<String> newList = dto.getTags();
 
@@ -105,9 +121,6 @@ public class BlogPublishServiceImpl implements BlogPublishService {
 
         // 新增之前没有的tag
         for (String tagname2: newList) {
-            if(!myList.contains(tagname2)){
-                blogPublishDao.addTag(getNewTagid(), myid, tagname2);
-            }
             if (!oldList.contains(tagname2)) {
                 t_id=blogPublishDao.selectTagidUseTagname(myid,tagname2);
                 blogPublishDao.addTagForBlog(articleid, t_id);
@@ -115,6 +128,9 @@ public class BlogPublishServiceImpl implements BlogPublishService {
         }
     }
 
+    /**
+     * 获取博客详情
+     */
     @Override
     public BlogDetailDto getBlogDetailByArticleid(int articleid){
         BlogDetailDto dto = blogPublishDao.selectBlogDetailDtoByArticleid(articleid);
@@ -139,5 +155,9 @@ public class BlogPublishServiceImpl implements BlogPublishService {
         return blogPublishDao.selectUserStatusByAuthorid(authorid);
     }
 
+    @Override
+    public int getArticleStatus(int articleid){
+        return blogPublishDao.getArticleStatus(articleid);
+    }
 
 }

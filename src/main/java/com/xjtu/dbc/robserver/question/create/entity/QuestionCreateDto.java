@@ -37,4 +37,6 @@ public class QuestionCreateDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastmodifytime;
 
+
+
 }

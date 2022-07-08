@@ -2,6 +2,7 @@ package com.xjtu.dbc.robserver.common.impl;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.dao.CommonDao;
+import com.xjtu.dbc.robserver.common.model.tag.Tag;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,5 +62,19 @@ public class CommonServiceImpl implements CommonService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 验证是否登录
+     * @param tag (tagid tag名称 tag所属)
+     */
+    @Override
+    public void addTag(Tag tag) {
+        commonDao.addTag(tag);
+    }
+
+    @Override
+    public void deleteTag(int tagid) {
+        commonDao.deleteTag(tagid);
     }
 }

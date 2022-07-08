@@ -18,4 +18,6 @@ public interface QuestionHomeDao {
     List<QuestionHomeListDto> getNotSolveQuestionList();
 
     List<QuestionHomeListDto> getSolveQuestionList();
+
+    List<String> getTagListByQuestionid(int questionid);
 }

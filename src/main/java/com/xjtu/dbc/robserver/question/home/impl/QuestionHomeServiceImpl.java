@@ -33,6 +33,11 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
         return questionHomeDao.getSolveQuestionList();
     }
 
+    @Override
+    public List<String> getTagListByQuestionid(int questionid) {
+        return questionHomeDao.getTagListByQuestionid(questionid);
+    }
+
 //    @Override
 //    public Map<String, Object> getQuestionList(QuestionPreviewDto dto) {
 //        return null;

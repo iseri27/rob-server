@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 public class QuestionHomeListDto {
@@ -14,10 +15,12 @@ public class QuestionHomeListDto {
     private Integer questionstatus;//草稿 400；已发布 401；被隐藏 402
     private String questiontitle;
     private Integer authorid;
+    private String authorname;
     private String authoravatar;
     private Integer like_num;
     private Integer dislike_num;
     private Integer comment_num;
+    private List<String> taglist;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "GMT+8")

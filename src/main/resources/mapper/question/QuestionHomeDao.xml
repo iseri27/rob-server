@@ -6,7 +6,7 @@
 
     <!-- 获取全部问题列表-->
     <select id="getAllQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
-    select article.articleid questionid,article.articlestatus questionstatus,article.title questiontitle,user.userid authorid,user.useravatar authoravatar,article.createtime createtime
+    select article.articleid questionid,article.articlestatus questionstatus,article.title questiontitle,user.userid authorid,user.username authorname,user.useravatar authoravatar,article.createtime createtime
     from article join user on user.userid = article.authorid
 	where article.articletype = 302
     </select>
@@ -45,4 +45,12 @@
     from article
     where articletype = 302 and rootid = #{articleid}
     </select>
+
+    <!-- 通过文章ID查tag-->
+    <select id="getTagListByQuestionid" resultType="java.lang.String">
+        select tagname
+        from article_has_tag,tag
+        where articleid=#{questionid} and article_has_tag.tagid = tag.tagid
+    </select>
+
 </mapper>

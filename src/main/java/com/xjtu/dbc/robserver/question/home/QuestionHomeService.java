@@ -38,4 +38,9 @@ public interface QuestionHomeService {
     List<QuestionHomeListDto> getAllQuestionList();
     List<QuestionHomeListDto> getNotSolveQuestionList();
     List<QuestionHomeListDto> getSolveQuestionList();
+
+    /**
+     *根据悬赏id获取tag表
+     */
+    List<String> getTagListByQuestionid(int questionid);
 }

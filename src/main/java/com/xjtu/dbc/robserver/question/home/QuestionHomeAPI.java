@@ -5,6 +5,7 @@ import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -22,44 +23,53 @@ public class QuestionHomeAPI {
     private  QuestionHomeService questionHomeService;
 
     @GetMapping("/qlist")
-    public Result getQList() {
-        System.out.println(1111111111);
-        Integer selectid = 1;
-        if(selectid == 1){
-            List<QuestionHomeListDto> listDto = questionHomeService.getAllQuestionList();
-            //获取每条评论的点赞数与点踩数
-            for(int i=0; i<listDto.size();i++){
-                listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
-                listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
-                listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
+    public Result getQList(@RequestParam("Number") int Number) {
+        try{
+            int selectid = Number;
+            if(selectid == 1){
+                List<QuestionHomeListDto> listDto = questionHomeService.getAllQuestionList();
+                //获取每条评论的点赞数与点踩数
+                for(int i=0; i<listDto.size();i++){
+                    listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
+                }
+                return Result.success("获取悬赏大厅的全部问题列表成功!", listDto);
             }
-            return Result.success("获取悬赏大厅的全部问题列表成功!", listDto);
-        }
-        else if(selectid == 2){
+            else if(selectid == 2){
 
-            List<QuestionHomeListDto> listDto = questionHomeService.getNotSolveQuestionList();
+                List<QuestionHomeListDto> listDto = questionHomeService.getNotSolveQuestionList();
 
-            //获取每条评论的点赞数与点踩数
-            for(int i=0; i<listDto.size();i++){
-                listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
-                listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
-                listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
+                //获取每条评论的点赞数与点踩数
+                for(int i=0; i<listDto.size();i++){
+                    listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
+                }
+                return Result.success("获取悬赏大厅的未解决问题列表成功!", listDto);
+
             }
-            return Result.success("获取悬赏大厅的未解决问题列表成功!", listDto);
+            else{
 
-        }
-        else{
+                List<QuestionHomeListDto> listDto = questionHomeService.getSolveQuestionList();
 
-            List<QuestionHomeListDto> listDto = questionHomeService.getSolveQuestionList();
-
-            //获取每条评论的点赞数与点踩数
-            for(int i=0; i<listDto.size();i++){
-                listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
-                listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
-                listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
+                //获取每条评论的点赞数与点踩数
+                for(int i=0; i<listDto.size();i++){
+                    listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
+                }
+                return Result.success("获取悬赏大厅的已解决问题列表成功!", listDto);
             }
-            return Result.success("获取悬赏大厅的已解决问题列表成功!", listDto);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return Result.fail(Result.ERR_CODE_SYS, "未找到匹配项目！");
         }
+
+
     }
 
 //    @GetMapping("/preview")//待实现

@@ -42,4 +42,37 @@
         delete from article
         WHERE articleid = #{questiontitle} AND articletype = 302
     </delete>
+
+    <!--查询拥有tag个数-->
+    <select id="selectTagNum" resultType="java.lang.Integer">
+        select count(tagid)
+        from tag
+        where ownerid = #{userid}
+    </select>
+
+    <!--为悬赏添加tag-->
+    <insert id="connectTag">
+        insert into article_has_tag(articleid,tagid)
+        values(#{questionid},#{tagid})
+    </insert>
+
+    <!--删除悬赏tag-->
+    <delete id="disconnectTag">
+        delete from article_has_tag
+        where articleid=#{questionid} and tagid=#{tagid}
+    </delete>
+
+    <!-- 查询当前悬赏的tag数量 -->
+    <select id="getQuestionTagNum" resultType="java.lang.Integer">
+        select count(tagid)
+        from article_has_tag
+        where articleid=#{questionid}
+    </select>
+
+    <!-- 查询悬赏的tag列表 -->
+    <select id="getQuestionTagListById" resultType="com.xjtu.dbc.robserver.question.create.entity.QuestionTagListDto">
+        seletct articleid questionid,tagid tagid,tagname tagname
+        from tag, article_has_tag
+        where articleid = #{questionid}
+    </select>
 </mapper>

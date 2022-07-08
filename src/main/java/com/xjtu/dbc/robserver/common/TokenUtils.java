@@ -174,8 +174,8 @@ public class TokenUtils {
         }
 
         //从客户端登录令牌中获取当前用户账号
-        Integer userId = JWT.decode(clientToken).getClaim(CLAIM_USERID_NAME).asInt();
-        if(!StringUtils.hasText(Integer.toString(userId))){
+        String userId = JWT.decode(clientToken).getClaim(CLAIM_USERID_NAME).asString();
+        if(!StringUtils.hasText(userId)) {
             //token中账号不存在
             throw new RuntimeException("登录令牌失效！");
         }
@@ -187,7 +187,7 @@ public class TokenUtils {
             throw new RuntimeException("登录令牌失效！");
         }
 
-        User user = commonService.getUserById(userId);
+        User user = commonService.getUserById(Integer.parseInt(userId));
         if(user==null){
             //用户不存在
             throw new RuntimeException("用户不存在！");
@@ -200,7 +200,7 @@ public class TokenUtils {
             jwtVerifier.verify(cacheToken);
         } catch (TokenExpiredException e){
             //令牌过期，刷新令牌
-            String newToken = sign(Integer.toString(userId),user.getUserpwd());
+            String newToken = sign(userId,user.getUserpwd());
             cache.putToken(clientToken,newToken);
         } catch (Exception e){
             e.printStackTrace();

@@ -6,23 +6,32 @@
 
     <!-- 获取全部问题列表-->
     <select id="getAllQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
-    select article.articleid questionid,article.articlestatus questionstatus,article.title questiontitle,user.userid authorid,user.username authorname,user.useravatar authoravatar,article.createtime createtime
+    select article.articleid questionid,article.articlestatus questionstatus,
+           article.title questiontitle,user.userid authorid,
+           user.username authorname,user.useravatar authoravatar,
+           article.createtime createtime,article.cost cost,article.articletype type
     from article join user on user.userid = article.authorid
 	where article.articletype = 302
     </select>
 
     <!-- 获取未解决问题列表-->
     <select id="getNotSolveQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
-    select article.articleid questionid,article.articlestatus questionstatus,article.title questiontitle,user.userid authorid,user.useravatar authoravatar,article.createtime createtime
+    select article.articleid questionid,article.articlestatus questionstatus,
+           article.title questiontitle,user.userid authorid,
+           user.username authorname,user.useravatar authoravatar,
+           article.createtime createtime,article.cost cost,article.articletype type
     from article join user on user.userid = article.authorid
-	where article.articletype = 302 and cost > 0
+	where article.articletype = 302 and article.cost > 0
     </select>
 
     <!-- 获取已解决问题列表-->
     <select id="getSolveQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
-    select article.articleid questionid,article.articlestatus questionstatus,article.title questiontitle,user.userid authorid,user.useravatar authoravatar,article.createtime createtime
+    select article.articleid questionid,article.articlestatus questionstatus,
+           article.title questiontitle,user.userid authorid,
+           user.username authorname,user.useravatar authoravatar,
+           article.createtime createtime,article.cost cost,article.articletype type
     from article join user on user.userid = article.authorid
-	where article.articletype = 302 and cost &lt; 0
+	where article.articletype = 302 and article.cost &lt; 0
     </select>
 
     <!-- 获取问题的获得的赞的数量-->
@@ -51,6 +60,17 @@
         select tagname
         from article_has_tag,tag
         where articleid=#{questionid} and article_has_tag.tagid = tag.tagid
+    </select>
+
+    <!--获取文章详情-->
+    <select id="getQuestionDetails" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto">
+        select  article.articleid questionid,article.articlestatus questionstatus,
+                article.title questiontitle,user.userid authorid,user.username authorname,
+                user.useravatar authoravatar,article.createtime createtime,
+                article.cost cost,article.lastmodifytime lastmodifytime,
+                article.content questioncontent,article.articletype type
+        from article join user on user.userid = article.authorid
+        where article.articleid = #{questionid}
     </select>
 
 </mapper>

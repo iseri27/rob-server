@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.question.home;
 
+import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
 
 import java.util.List;
@@ -43,4 +44,9 @@ public interface QuestionHomeService {
      *根据悬赏id获取tag表
      */
     List<String> getTagListByQuestionid(int questionid);
+
+    /**
+     *根据悬赏id获取悬赏及其提问者详情
+     */
+    QuestionDetailsDto getQuestionDetails(int questionid);
 }

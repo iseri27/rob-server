@@ -2,6 +2,7 @@ package com.xjtu.dbc.robserver.question.home.impl;
 
 import com.xjtu.dbc.robserver.question.home.QuestionHomeService;
 import com.xjtu.dbc.robserver.question.home.dao.QuestionHomeDao;
+import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +39,8 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
         return questionHomeDao.getTagListByQuestionid(questionid);
     }
 
+
+
 //    @Override
 //    public Map<String, Object> getQuestionList(QuestionPreviewDto dto) {
 //        return null;
@@ -57,5 +60,10 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
     @Override
     public Integer getCommentNum(Integer questionid) {
         return questionHomeDao.getCommentNum(questionid);
+    }
+
+    @Override
+    public QuestionDetailsDto getQuestionDetails(int questionid) {
+        return questionHomeDao.getQuestionDetails(questionid);
     }
 }

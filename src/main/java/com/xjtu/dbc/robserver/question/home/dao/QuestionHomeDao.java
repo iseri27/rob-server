@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.question.home.dao;
 
+import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface QuestionHomeDao {
     List<QuestionHomeListDto> getSolveQuestionList();
 
     List<String> getTagListByQuestionid(int questionid);
+
+    QuestionDetailsDto getQuestionDetails(int questionid);
 }

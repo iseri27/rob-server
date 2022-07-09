@@ -32,6 +32,28 @@ public class LevelAPI {
         return Result.success("获取用户经验值成功！", exp);
     }
 
+    @GetMapping("/get")
+    public Result getLevel(@RequestHeader("Token") String token) {
+        int exp = (Integer) getExp(token).getData();
+        int value;
+        if (exp <= 30) {
+            value = 1;
+        } else if (exp <= 80) {
+            value = 2;
+        } else if (exp <= 150) {
+            value = 3;
+        } else if (exp <= 300) {
+            value = 4;
+        } else if (exp <= 666) {
+            value = 5;
+        } else {
+            value = 6;
+        }
+
+        Level level = new Level(value);
+        return Result.success("获取等级成功", level);
+    }
+
     /**
      * 增加用户经验值，比如签到时增加.
      * @param token

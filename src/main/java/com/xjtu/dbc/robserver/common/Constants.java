@@ -16,6 +16,8 @@ public class Constants {
     public static int ARTICLE_TYPE_DYNAMIC = 301;
     public static int ARTICLE_TYPE_QUESTION = 302;
     public static int ARTICLE_TYPE_REPLY = 303;
+    public static int ARTICLE_TYPE_ANSWER = 304;
+    public static int ARTICLE_TYPE_GREAT_ANSWER = 305;
 
     public static int ARTICLE_STATUS = 4;
     public static int ARTICLE_STATUS_DRAFT = 400;
@@ -38,6 +40,7 @@ public class Constants {
     public static int HISTORY_TYPE = 7;
     public static int HISTORY_LOGIN = 700;
     public static int HISTORY_BROWSE = 701;
+    public static int HISTORY_REWARD = 702;
 
     public static int VOTE_TYPE = 8;
     public static int VOTE = 800;

@@ -10,7 +10,15 @@ public interface DynamicHomeDao {
 
     DynamicHomeDto getUserInfo(Integer userid);
 
-    List<DynamicHomeListDto> getDynamicList(Integer userid);
+    List<DynamicMyHomeListDto> getDynamicList(Integer userid);
+
+    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
+
+    List<DynamicMyHomeListDto> getFollowDynamicList(Integer userid);
+
+    DynamicMyHomeListDto getDynamic(Integer articleid);
+
+    Integer getFollownumByUserid(Integer userid);
 
     List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
 
@@ -24,5 +32,7 @@ public interface DynamicHomeDao {
     Integer getDislikenumByAriticleid(Integer articleid);
 
     Integer getCommentnumByArticleid(Integer articleid);
+
+    Integer getVoteTypeByU_A_id(Integer userid,Integer articleid);
 
 }

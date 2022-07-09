@@ -16,7 +16,7 @@
 
     <insert id="addBlog">
         INSERT INTO article(articleid, articletype, articlestatus, title, content, cost, createtime, lastmodifytime, replyto, authorid, categoryid, rootid)
-        VALUES (#{articleid}, #{articletype}, #{articlestatus}, #{title}, #{content}, #{cost}, #{createtime}, #{lastmodifytime}, #{replyto}, #{authorid}, #{categoryid}, #{rootid});
+        VALUES (#{articleid}, 300, #{articlestatus}, #{title}, #{content}, #{cost}, #{createtime}, #{lastmodifytime}, #{replyto}, #{authorid}, #{categoryid}, #{rootid})
     </insert>
 
     <insert id="addTag">
@@ -71,22 +71,10 @@
         WHERE tagid = #{tagid} and articleid=#{articleid}
     </delete>
 
-    <select id="selectBlogDetailDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.publish.BlogDetailDto">
-        select *
-        from article
-        where articleid=#{articleid}
-    </select>
-
     <select id="selectBlogEditDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.publish.BlogEditDto">
         select *
         from article
         where articleid=#{articleid}
-    </select>
-
-    <select id="selectAuthorByArtileid" resultType="com.xjtu.dbc.robserver.common.model.user.User">
-        select userid,username,useravatar
-        from article,user
-        where userid = authorid and articleid = #{articleid}
     </select>
 
     <select id="selectUserStatusByAuthorid" resultType="java.lang.Integer">

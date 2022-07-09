@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.user.personal.impl;
 
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.PersonalService;
 import com.xjtu.dbc.robserver.user.personal.dao.PersonalDao;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service @Transactional
 public class PersonalServiceImpl implements PersonalService {
@@ -30,5 +32,10 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     public void changePassword(User user) {
         personalDao.changePassword(user);
+    }
+
+    @Override
+    public List<Article> getArtical(Integer userid) {
+        return personalDao.getArtical(userid);
     }
 }

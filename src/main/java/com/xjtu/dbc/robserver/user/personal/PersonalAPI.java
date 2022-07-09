@@ -71,7 +71,7 @@ public class PersonalAPI {
      * @return 密码正确/错误
      */
     @GetMapping("/password/check")
-    public Result checkPassword(@RequestBody User user ,@RequestHeader("Token") String token){
+    public Result checkPassword(User user ,@RequestHeader("Token") String token){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         user.setUserid(currentUser.getUserid());
         if(user.getUserpwd().equals(personalService.checkPassword(user).getUserpwd())){
@@ -94,5 +94,16 @@ public class PersonalAPI {
         user.setUserid(currentUser.getUserid());
         personalService.changePassword(user);
         return Result.successMsg("密码修改完成");
+    }
+
+    /**
+     *
+     * @param token 获取当前用户id
+     * @return 返回该用户发布的所有博文（包括草稿，审核中，隐藏贴）
+     */
+    @GetMapping("/artical")
+    public Result getArtical(@RequestHeader("Token") String token){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        return Result.success("获取成功", personalService.getArtical(currentUser.getUserid()));
     }
 }

@@ -1,6 +1,6 @@
 package com.xjtu.dbc.robserver.blog.publish.dao;
 
-import com.xjtu.dbc.robserver.blog.publish.BlogDetailDto;
+import com.xjtu.dbc.robserver.blog.detail.BlogDetailDto;
 import com.xjtu.dbc.robserver.blog.publish.BlogEditDto;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
 import com.xjtu.dbc.robserver.common.model.user.User;
@@ -17,8 +17,6 @@ public interface BlogPublishDao {
     
     List<String> selectTagListByArtileid(int articleid);
     
-    List<String> selectTagnameListByUserid(int myid);
-    
     int selectTagidUseTagname(int myid, String tagname);
     
     List<Tag> selectTagListByUserid(int myid);
@@ -29,11 +27,7 @@ public interface BlogPublishDao {
 
     void dropTagForBlog(int articleid, int tagid);
 
-    BlogDetailDto selectBlogDetailDtoByArticleid(int articleid);
-
     BlogEditDto selectBlogEditDtoByArticleid(int articleid);
-
-    User selectAuthorByArtileid(int articleid);
 
     int selectUserStatusByAuthorid(int authorid);
 

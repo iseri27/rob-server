@@ -1,6 +1,5 @@
 package com.xjtu.dbc.robserver.blog.publish;
 
-import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
 
 import java.util.List;
@@ -19,8 +18,6 @@ public interface BlogPublishService {
     void updateBlogByArticleid(BlogEditDto dto);
 
     void updateBlogTag(int myid, BlogEditDto dto);
-
-    BlogDetailDto getBlogDetailByArticleid(int articleid);
 
     BlogEditDto getBlogEditDtoByArticleid(int articleid);
 

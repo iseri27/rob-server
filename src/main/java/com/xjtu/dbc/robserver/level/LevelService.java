@@ -1,5 +1,7 @@
 package com.xjtu.dbc.robserver.level;
 
+import com.xjtu.dbc.robserver.blog.reward.RewardDto;
+
 public interface LevelService {
     int getExp(int userID);
 

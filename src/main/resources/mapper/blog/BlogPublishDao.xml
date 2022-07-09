@@ -5,8 +5,8 @@
 <mapper namespace="com.xjtu.dbc.robserver.blog.publish.dao.BlogPublishDao">
     <!-- 根据 ID 获取用户 -->
     <select id="getLastId" resultType="java.lang.Integer">
-        select max(userid)
-        from user
+        select max(articleid)
+        from article
     </select>
 
     <select id="getLastTagId" resultType="java.lang.Integer">
@@ -15,13 +15,13 @@
     </select>
 
     <insert id="addBlog">
-        INSERT INTO article(articleid, articletype, articlestatus, title, content, cost, createtime, lastmodifytime, replyto, authorid, category)
-        VALUES (#{articleid}, #{articletype}, #{articlestatus}, #{title}, #{content}, #{cost}, #{createtime}, #{lastmodifytime}, #{replyto}, #{authorid}, #{category});
+        INSERT INTO article(articleid, articletype, articlestatus, title, content, cost, createtime, lastmodifytime, replyto, authorid, categoryid, rootid)
+        VALUES (#{articleid}, 300, #{articlestatus}, #{title}, #{content}, #{cost}, #{createtime}, #{lastmodifytime}, #{replyto}, #{authorid}, #{categoryid}, #{rootid})
     </insert>
 
     <insert id="addTag">
         INSERT INTO tag(tagid,tagname,ownerid)
-        VALUES (#{tagid}, #{t_id}, #{myid})
+        VALUES (#{tagid}, #{tagname}, #{ownerid})
     </insert>
 
     <select id="selectTagListByArtileid" resultType="java.lang.String">
@@ -51,11 +51,13 @@
     <update id="updateBlogByArticleid">
         UPDATE article
         SET
+            <if test="articlestatus != null">
             articlestatus  = #{articlestatus},
+            </if>
             title          = #{title},
             content        = #{content},
             lastmodifytime = #{lastmodifytime},
-            category       = #{category},
+            categoryid       = #{categoryid}
         WHERE articleid = #{articleid}
     </update>
 
@@ -69,22 +71,10 @@
         WHERE tagid = #{tagid} and articleid=#{articleid}
     </delete>
 
-    <select id="selectBlogDetailDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.publish.BlogDetailDto">
-        select *
-        from article
-        where articleid=#{articleid}
-    </select>
-
     <select id="selectBlogEditDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.publish.BlogEditDto">
         select *
         from article
         where articleid=#{articleid}
-    </select>
-
-    <select id="selectAuthorByArtileid" resultType="com.xjtu.dbc.robserver.common.model.user.User">
-        select userid,username,useravatar
-        from article,user
-        where userid = authorid and articleid = #{articleid}
     </select>
 
     <select id="selectUserStatusByAuthorid" resultType="java.lang.Integer">
@@ -92,5 +82,28 @@
         from user
         where userid = #{authorid}
     </select>
+
+    <select id="getArticleStatus" resultType="java.lang.Integer">
+        select articlestatus
+        from article
+        where articleid = #{articleid}
+    </select>
+
+    <select id="selectTagCntByT_nameAndU_id" resultType="java.lang.Integer">
+        SELECT COUNT(tagid)
+        FROM tag
+        WHERE tagname = #{t_name} and ownerid = #{u_id}
+    </select>
+
+    <update id="updateTagnameByT_nameAndU_id">
+        UPDATE tag
+        SET tagname = #{t_name_new}
+        WHERE tagname = #{tagname} AND ownerid = #{u_id}
+    </update>
+
+    <delete id="deleteTagByTagnameAndU_id">
+        DELETE FROM tag
+        WHERE tagname = #{tagname} and ownerid = #{u_id}
+    </delete>
 
 </mapper>

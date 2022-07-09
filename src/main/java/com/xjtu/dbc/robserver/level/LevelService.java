@@ -1,5 +1,7 @@
 package com.xjtu.dbc.robserver.level;
 
+import com.xjtu.dbc.robserver.blog.reward.RewardDto;
+
 public interface LevelService {
     int getExp(int userID);
 
@@ -8,4 +10,6 @@ public interface LevelService {
     int getCans(int userID);
 
     void updateCans(int userID, int num);
+
+    int getLevel(int userID);
 }

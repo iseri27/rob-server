@@ -5,6 +5,7 @@ import com.xjtu.dbc.robserver.common.CurrentUser;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.model.user.User;
+import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
 import com.xjtu.dbc.robserver.user.personal.entity.Avatar;
 import org.bouncycastle.jcajce.provider.symmetric.Serpent;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,14 @@ public class PersonalAPI {
 
     @Resource
     private PersonalService personalService;
+
+
+    @GetMapping("/get")
+    public Result getCurrentUser(@RequestHeader("Token") String token){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        Integer userid = currentUser.getUserid();
+        return Result.success("获取成功",commonService.getUserWithoutPasswordById(userid));
+    }
 
     /**
      * 修改头像
@@ -63,7 +72,7 @@ public class PersonalAPI {
      * @return 密码正确/错误
      */
     @GetMapping("/password/check")
-    public Result checkPassword(@RequestBody User user ,@RequestHeader("Token") String token){
+    public Result checkPassword(User user ,@RequestHeader("Token") String token){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         user.setUserid(currentUser.getUserid());
         if(user.getUserpwd().equals(personalService.checkPassword(user).getUserpwd())){
@@ -86,5 +95,17 @@ public class PersonalAPI {
         user.setUserid(currentUser.getUserid());
         personalService.changePassword(user);
         return Result.successMsg("密码修改完成");
+    }
+
+    /**
+     *
+     * @param token 获取当前用户id
+     * @return 返回该用户发布的所有博文（包括草稿，审核中，隐藏贴）
+     */
+    @GetMapping("/article")
+    public Result getArtical(@RequestHeader("Token") String token, ArticleDto articleDto){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        articleDto.setUserid(currentUser.getUserid());
+        return Result.success("获取成功", personalService.getArtical(articleDto));
     }
 }

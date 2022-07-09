@@ -1,6 +1,10 @@
 package com.xjtu.dbc.robserver.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xjtu.dbc.robserver.common.page.PageParam;
+import com.xjtu.dbc.robserver.common.page.QueryAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.text.ParseException;
@@ -62,5 +66,31 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 分页器
+     */
+    public static <T> Map<String, Object> getPage(PageParam pageParam, QueryAction<T> queryAction) {
+        PageHelper.startPage(pageParam);
+
+        List<T> list = queryAction.execute();
+
+        PageInfo<T> pageInfo = new PageInfo<>(list);
+
+        Map<String, Object> page = new HashMap<>();
+
+        page.put("current", pageInfo.getPageNum());
+        page.put("pageSize",pageInfo.getPageSize());//每页最大记录数
+        page.put("total",pageInfo.getTotal());//总记录数
+        page.put("pages",pageInfo.getPages());//总页数
+        page.put("size",pageInfo.getSize());//当前页实际记录数
+        page.put("list",pageInfo.getList());//当前页的数据记录
+        page.put("first",1);
+        page.put("pre",pageInfo.getPrePage());
+        page.put("next",pageInfo.getNextPage());
+        page.put("last",pageInfo.getPages());
+
+        return page;
     }
 }

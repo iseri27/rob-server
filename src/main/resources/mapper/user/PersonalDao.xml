@@ -36,4 +36,16 @@
             <if test="userid != null">userid = #{userid}</if>
         </where>
     </update>
+
+    <select id="getArtical" resultType="com.xjtu.dbc.robserver.common.model.article.Article">
+        select *
+        from article
+        <where>
+            <if test="userid != null">authorid = #{userid}</if>
+            and articletype = #{type}
+        </where>
+        order by
+        lastmodifytime
+        desc
+    </select>
 </mapper>

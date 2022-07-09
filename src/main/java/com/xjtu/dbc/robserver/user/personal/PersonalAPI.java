@@ -5,6 +5,7 @@ import com.xjtu.dbc.robserver.common.CurrentUser;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.model.user.User;
+import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
 import com.xjtu.dbc.robserver.user.personal.entity.Avatar;
 import org.bouncycastle.jcajce.provider.symmetric.Serpent;
 import org.springframework.web.bind.annotation.*;
@@ -101,9 +102,10 @@ public class PersonalAPI {
      * @param token 获取当前用户id
      * @return 返回该用户发布的所有博文（包括草稿，审核中，隐藏贴）
      */
-    @GetMapping("/artical")
-    public Result getArtical(@RequestHeader("Token") String token){
+    @GetMapping("/article")
+    public Result getArtical(@RequestHeader("Token") String token, ArticleDto articleDto){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
-        return Result.success("获取成功", personalService.getArtical(currentUser.getUserid()));
+        articleDto.setUserid(currentUser.getUserid());
+        return Result.success("获取成功", personalService.getArtical(articleDto));
     }
 }

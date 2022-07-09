@@ -1,14 +1,18 @@
 package com.xjtu.dbc.robserver.user.personal.impl;
 
+import com.xjtu.dbc.robserver.common.Constants;
+import com.xjtu.dbc.robserver.common.Utils;
 import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.PersonalService;
 import com.xjtu.dbc.robserver.user.personal.dao.PersonalDao;
+import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service @Transactional
 public class PersonalServiceImpl implements PersonalService {
@@ -35,7 +39,8 @@ public class PersonalServiceImpl implements PersonalService {
     }
 
     @Override
-    public List<Article> getArtical(Integer userid) {
-        return personalDao.getArtical(userid);
+    public Map<String,Object> getArtical(ArticleDto articleDto ) {
+        articleDto.setType(Constants.ARTICLE_TYPE_BLOG);
+        return Utils.getPage(articleDto, () -> personalDao.getArtical(articleDto));
     }
 }

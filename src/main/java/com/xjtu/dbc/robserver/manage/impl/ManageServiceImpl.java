@@ -31,4 +31,9 @@ public class ManageServiceImpl implements ManageService {
     public void deleteTag(Tag tag) {
         manageDao.deleteTag(tag);
     }
+
+    @Override
+    public void updateTag(Tag tag) {
+        manageDao.updateTag(tag);
+    }
 }

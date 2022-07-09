@@ -8,5 +8,5 @@ import lombok.Setter;
 public class TagDto extends PageParam {
     private Integer tagid;
     private String tagname;
-    private String ownerid;
+    private Integer ownerid;
 }

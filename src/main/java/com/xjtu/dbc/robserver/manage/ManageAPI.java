@@ -32,7 +32,9 @@ public class ManageAPI {
      * @return
      */
     @GetMapping("/tag/select")
-    public Result getTags(TagDto tagDto) {
+    public Result getTags(@RequestHeader("Token")String token, TagDto tagDto) {
+        int userID = TokenUtils.getUserInfo(token, commonService).getUserid();
+        tagDto.setOwnerid(userID);
         Map<String, Object> data = manageService.getTagList(tagDto);
         return Result.success("获取tag列表成功", data);
     }
@@ -65,16 +67,14 @@ public class ManageAPI {
     }
 
     /**
-     * 修改tag，具体实现为先delete原tag，再插入一个新tag.
-     * @param token
+     * 修改tag.
      * @param tag
      * @author 杨兆瑞
      * @return
      */
     @PostMapping("/tag/update")
-    public Result updateTag(@RequestHeader("Token") String token, @RequestBody Tag tag) {
-        deleteTag(tag);
-        addTag(token, tag);
+    public Result updateTag(@RequestBody Tag tag) {
+        manageService.updateTag(tag);
         return Result.successMsg("修改tag成功");
     }
 }

@@ -20,4 +20,10 @@
         from article,user
         where userid = authorid and articleid = #{articleid}
     </select>
+
+    <select id="selectCategorynameByArtileid" resultType="java.lang.String">
+        select categoryname
+        from article,category
+        where article.categoryid = category.categoryid and articleid = #{articleid}
+    </select>
 </mapper>

@@ -12,5 +12,5 @@ public class BlogDetailDto extends Article {
     private String authorname; //博客作者的姓名
     private String authoravatar; //博客作者的头像
     private String categoryname;//分区名字
-    private Integer level;//用户等级
+    private String levelname;//用户等级名
 }

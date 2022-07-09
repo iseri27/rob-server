@@ -27,6 +27,7 @@ public class BlogDetailServiceImpl implements BlogDetailService {
         User author = blogDetailDao.selectAuthorByArtileid(articleid);
         dto.setAuthorname(author.getUsername());
         dto.setAuthoravatar(author.getUseravatar());
+        dto.setCategoryname(blogDetailDao.selectCategorynameByArtileid(articleid));
         return dto;
     }
 }

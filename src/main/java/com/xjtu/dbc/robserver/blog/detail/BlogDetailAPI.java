@@ -38,6 +38,7 @@ public class BlogDetailAPI {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "不能编辑不属于自己的博客！");
                 }
             }
+            //blog.setLevelname(blogDetailService.getUserLevelname(blog.getAuthorid()));
             return Result.successData(blog);
         } catch (Exception e) {
             e.printStackTrace();

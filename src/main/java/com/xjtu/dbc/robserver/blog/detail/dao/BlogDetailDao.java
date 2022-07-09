@@ -11,4 +11,6 @@ public interface BlogDetailDao {
     List<String> selectTagListByArtileid(int articleid);
 
     User selectAuthorByArtileid(int articleid);
+
+    String selectCategorynameByArtileid(int articleid);
 }

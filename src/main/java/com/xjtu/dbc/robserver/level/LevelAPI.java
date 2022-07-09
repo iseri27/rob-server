@@ -40,7 +40,6 @@ public class LevelAPI {
 
     @GetMapping("/getUserLevel")
     public Result getLevel(@PathVariable("userID") int userID) {
-        int exp = levelService.getExp(userID);
         int value = levelService.getLevel(userID);
 
         Level level = new Level(value);

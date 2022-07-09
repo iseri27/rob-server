@@ -32,9 +32,9 @@ public class LevelAPI {
         return Result.success("获取用户经验值成功！", exp);
     }
 
-    @GetMapping("/get")
-    public Result getLevel(@RequestHeader("Token") String token) {
-        int exp = (Integer) getExp(token).getData();
+    @GetMapping("/get/{userID}")
+    public Result getLevel(@PathVariable("userID") int userID) {
+        int exp = levelService.getExp(userID);
         int value;
         if (exp <= 30) {
             value = 1;

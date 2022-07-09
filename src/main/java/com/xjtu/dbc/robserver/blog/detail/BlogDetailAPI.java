@@ -3,6 +3,8 @@ package com.xjtu.dbc.robserver.blog.detail;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
+import com.xjtu.dbc.robserver.level.Level;
+import com.xjtu.dbc.robserver.level.LevelService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -12,6 +14,9 @@ import javax.annotation.Resource;
 public class BlogDetailAPI {
     @Resource
     private BlogDetailService blogDetailService;
+
+    @Resource
+    private LevelService levelService;
 
     @Resource
     private CommonService commonService;
@@ -38,7 +43,9 @@ public class BlogDetailAPI {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "不能编辑不属于自己的博客！");
                 }
             }
-            //blog.setLevelname(blogDetailService.getUserLevelname(blog.getAuthorid()));
+            int value = levelService.getLevel(blog.getAuthorid());
+            Level level = new Level(value);
+            blog.setLevelname(level.getName());
             return Result.successData(blog);
         } catch (Exception e) {
             e.printStackTrace();

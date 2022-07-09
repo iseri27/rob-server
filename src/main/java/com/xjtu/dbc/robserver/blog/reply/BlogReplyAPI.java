@@ -1,11 +1,14 @@
 package com.xjtu.dbc.robserver.blog.reply;
 
 import com.xjtu.dbc.robserver.blog.publish.BlogPublishService;
+import com.xjtu.dbc.robserver.blog.report.ReportDto;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.Utils;
 import com.xjtu.dbc.robserver.common.model.reply.Reply;
+import com.xjtu.dbc.robserver.level.Level;
+import com.xjtu.dbc.robserver.level.LevelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,9 @@ public class BlogReplyAPI {
 
     @Resource
     private BlogPublishService blogPublishService;
+
+    @Resource
+    private LevelService levelService;
 
     @Resource
     private CommonService commonService;
@@ -47,6 +53,12 @@ public class BlogReplyAPI {
     @GetMapping("/replylist")
     public Result getReplyList(@RequestParam("articleid") int articleid){
         List<ReplyDto> replyList = replyService.getReplyList(articleid);
+        int value;
+        for (ReplyDto reply:replyList) {
+            value = levelService.getLevel(reply.getAuthorid());
+            Level level = new Level(value);
+            reply.setLevelname(level.getName());
+        }
         return Result.success("获取回复列表成功！",replyList);
     }
 }

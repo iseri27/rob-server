@@ -8,4 +8,5 @@ import lombok.Setter;
 public class ReplyDto extends Reply {
     private String username; //评论者的姓名
     private String useravatar; //评论者的头像
+    private String levelname;//用户等级名
 }

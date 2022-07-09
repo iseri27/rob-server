@@ -10,4 +10,6 @@ public interface LevelService {
     int getCans(int userID);
 
     void updateCans(int userID, int num);
+
+    int getLevel(int userID);
 }

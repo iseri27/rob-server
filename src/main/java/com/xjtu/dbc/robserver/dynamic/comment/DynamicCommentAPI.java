@@ -37,6 +37,7 @@ public class DynamicCommentAPI {
         for(int i=0; i<listDto.size();i++){
             listDto.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto.get(i).getArticleid()));
             listDto.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto.get(i).getArticleid()));
+            listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 null:未投票  800:赞  801:踩
         }
 
         //还需要得到用户的粉丝数 动态数

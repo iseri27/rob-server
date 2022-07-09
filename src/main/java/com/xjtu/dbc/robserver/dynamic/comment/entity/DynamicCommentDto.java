@@ -16,6 +16,7 @@ public class DynamicCommentDto {
     private Integer dislike_num;
     private Integer replyto;
     private Integer rootid;
+    private Integer vote_type;  //0:未投票  800:赞  801:踩
 
 
 
@@ -27,7 +28,7 @@ public class DynamicCommentDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastmodifytime;
 
-
+    private Integer userid;
     private String username;
     private String usersex;
     private String useravatar;
@@ -183,6 +184,23 @@ public class DynamicCommentDto {
 
     public void setUserstatus(Integer userstatus) {
         this.userstatus = userstatus;
+    }
+
+
+    public Integer getVote_type() {
+        return vote_type;
+    }
+
+    public void setVote_type(Integer vote_type) {
+        this.vote_type = vote_type;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
 }

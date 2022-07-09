@@ -20,7 +20,7 @@ public interface DynamicHomeDao {
 
     Integer getFollownumByUserid(Integer userid);
 
-    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
+//    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
 
     Integer getFansnumByUserid(Integer userid);
 

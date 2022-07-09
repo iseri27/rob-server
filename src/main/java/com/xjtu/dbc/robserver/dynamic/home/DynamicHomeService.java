@@ -58,7 +58,7 @@ public interface DynamicHomeService {
      * @param userid 用户编号
      * @return 用户的动态列表
      */
-    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
+//    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
 
     /**
      * 根据用户的编号来获取该用户的粉丝数

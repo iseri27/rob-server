@@ -150,24 +150,24 @@ public class DynamicHomeAPI {
         return Result.success("获取我的动态主页的动态列表成功!", listDto2);
     }
 
-    /*
-     * 访问的自己的动态主页时调用的接口，可以看到自己的动态以及自己关注的人的主页
-     * */
-    @GetMapping("mydList")
-    public Result getmyDList( Integer userid) {
-
-        List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(userid);
-
-        //获取每条评论的点赞数与点踩数
-        for(int i=0; i<listDto2.size();i++){
-            listDto2.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto2.get(i).getArticleid()));
-            listDto2.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto2.get(i).getArticleid()));
-            listDto2.get(i).setComment_num(dynamicHomeService.getCommentnumByArticleid(listDto2.get(i).getArticleid()));
-        }
-
-        //还需要得到用户的粉丝数 动态数
-        return Result.success("获取我的动态主页的动态列表成功!", listDto2);
-    }
+//    /*
+//     * 访问的自己的动态主页时调用的接口，可以看到自己的动态以及自己关注的人的主页
+//     * */
+//    @GetMapping("mydList")
+//    public Result getmyDList( Integer userid) {
+//
+//        List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(userid);
+//
+//        //获取每条评论的点赞数与点踩数
+//        for(int i=0; i<listDto2.size();i++){
+//            listDto2.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto2.get(i).getArticleid()));
+//            listDto2.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto2.get(i).getArticleid()));
+//            listDto2.get(i).setComment_num(dynamicHomeService.getCommentnumByArticleid(listDto2.get(i).getArticleid()));
+//        }
+//
+//        //还需要得到用户的粉丝数 动态数
+//        return Result.success("获取我的动态主页的动态列表成功!", listDto2);
+//    }
 
 
 

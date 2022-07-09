@@ -25,7 +25,7 @@
     <select id="checkPassword" resultType="com.xjtu.dbc.robserver.common.model.user.User">
         select userpwd
         from user
-        where <if test="userid != null">and userid = #{userid}</if>
+        where <if test="userid != null">userid = #{userid}</if>
     </select>
 
     <update id="changePassword">
@@ -33,7 +33,7 @@
         set
         <if test="userpwd != null and userpwd != ''">userpwd = #{userpwd}</if>
         <where>
-            <if test="userid != null">and userid = #{userid}</if>
+            <if test="userid != null">userid = #{userid}</if>
         </where>
     </update>
 </mapper>

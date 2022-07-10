@@ -58,6 +58,12 @@ public class ManageServiceImpl implements ManageService {
         return search.Replace(sentence, replaceChar);
     }
 
+    /**
+     * 从Redis中获取敏感词集合，再经过过滤获得敏感词列表.
+     * 使用了lambda表达式和Java8 stream.
+     * @param sensitiveWordDto
+     * @return 敏感词列表
+     */
     @Override
     public Map<String, Object> getSensitiveWordList(SensitiveWordDto sensitiveWordDto) {
         return Utils.getPage(sensitiveWordDto, () -> {

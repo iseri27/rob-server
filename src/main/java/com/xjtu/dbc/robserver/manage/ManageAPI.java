@@ -79,9 +79,9 @@ public class ManageAPI {
 
     /**
      * 修改tag.
-     * @param tag
+     * @param tag {@link Tag}
      * @author 杨兆瑞
-     * @return
+     * @return 修改结果.
      */
     @PostMapping("/tag/update")
     public Result updateTag(@RequestBody Tag tag) {
@@ -94,6 +94,7 @@ public class ManageAPI {
      * 如果已存在或者长度不符合要求，均会报错.
      * @param word 待添加的敏感词
      * @return 添加结果
+     * @author 杨兆瑞
      */
     @PostMapping("/sensitive/add/{word}")
     public Result addSensitiveWord(@PathVariable("word") String word) {
@@ -111,6 +112,7 @@ public class ManageAPI {
      * @param replaceChar 用于替换的字符.
      * @see ManageServiceImpl
      * @return 过滤后的句子.
+     * @author 杨兆瑞
      */
     @GetMapping("/sensitive/filter/{sentence}/{replaceChar}")
     public Result filterSentence(@PathVariable("sentence") String sentence, @PathVariable("replaceChar") char replaceChar) {
@@ -118,6 +120,12 @@ public class ManageAPI {
         return Result.success("过滤成功", cleanSentence);
     }
 
+    /**
+     * 删除敏感词.
+     * @param word 要删除的敏感词.
+     * @return 删除结果
+     * @author 杨兆瑞
+     */
     @PostMapping("/sensitive/del/{word}")
     public Result delSensitiveWord(@PathVariable("word") String word) {
         redisTemplate.opsForSet().remove(Constants.SENSITIVE_KEY, word);
@@ -129,6 +137,7 @@ public class ManageAPI {
      * @param originWord 原敏感词
      * @param newWord 新敏感词
      * @return 修改结果.
+     * @author 杨兆瑞
      */
     @PostMapping("/sensitive/update/{originWord}/{newWord}")
     public Result updateSensitiveWord(@PathVariable("originWord") String originWord, @PathVariable("newWord") String newWord) {
@@ -141,6 +150,12 @@ public class ManageAPI {
         return Result.successMsg("修改敏感词成功");
     }
 
+    /**
+     * 敏感词获取.
+     * @param sensitiveWordDto 支持模糊搜索. {@link SensitiveWordDto}
+     * @return 敏感词列表.
+     * @author 杨兆瑞
+     */
     @GetMapping("/sensitive/get")
     public Result getSensitiveWords(SensitiveWordDto sensitiveWordDto) {
         Map<String, Object> data = manageService.getSensitiveWordList(sensitiveWordDto);

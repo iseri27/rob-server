@@ -28,6 +28,6 @@ public class DynamicReportAPI {
         dynamicReportDto.setReportstatus(500);  //举报状态初始设置为500
 
         dynamicReportService.addReport(dynamicReportDto);
-        return Result.success("注册成功!", dynamicReportDto);
+        return Result.success("提交举报成功!", dynamicReportDto);
     }
 }

@@ -2,10 +2,8 @@ package com.xjtu.dbc.robserver.question.pay;
 
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.xjtu.dbc.robserver.question.pay.entity.PayDto;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,8 +18,17 @@ public class QuestionPayAPI {
     private QuestionPayService questionPayService;
 
     @PostMapping
-    public Result payQuestion(@RequestHeader("Token") String token){
+    public Result payQuestion(@RequestBody PayDto dto, @RequestHeader("Token") String token){
 
-    return Result.success("1",1);
+        if(dto.getCost() > 0){
+            questionPayService.payQuestion(dto.getQuestionid());
+            questionPayService.setGoodAnswer(dto.getAnswerid());
+            return Result.success("设置为优质回答成功,悬赏已完成",dto);
+        }
+        else{
+            questionPayService.setGoodAnswer(dto.getAnswerid());
+            return Result.success("设置为优质回答成功",dto);
+        }
+
     }
 }

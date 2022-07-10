@@ -11,4 +11,6 @@ public interface ManageService {
     void addTag(Tag tag);
 
     void deleteTag(Tag tag);
+
+    void updateTag(Tag tag);
 }

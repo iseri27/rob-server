@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.blog.reply.dao.BlogReplyDao">
+    <select id="getReplyList" resultType="com.xjtu.dbc.robserver.blog.reply.ReplyDto">
+        select content, createtime, replyto, authorid, rootid, username, useravatar
+        from article,user
+        where userid = authorid and rootid = #{articleid}
+    </select>
+
+    <insert id="insertReply">
+        INSERT INTO article(articletype, content, createtime, lastmodifytime, replyto, authorid, rootid)
+        VALUES (303, #{content}, #{createtime}, #{createtime}, #{replyto}, #{authorid}, #{rootid});
+    </insert>
+</mapper>

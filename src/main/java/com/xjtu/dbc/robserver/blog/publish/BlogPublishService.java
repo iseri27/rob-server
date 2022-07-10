@@ -19,8 +19,6 @@ public interface BlogPublishService {
 
     void updateBlogTag(int myid, BlogEditDto dto);
 
-    BlogDetailDto getBlogDetailByArticleid(int articleid);
-
     BlogEditDto getBlogEditDtoByArticleid(int articleid);
 
     int getUserStatus(int authorid);

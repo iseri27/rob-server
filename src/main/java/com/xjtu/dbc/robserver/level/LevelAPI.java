@@ -32,6 +32,20 @@ public class LevelAPI {
         return Result.success("获取用户经验值成功！", exp);
     }
 
+    @GetMapping("/getWithToken")
+    public Result getLevelWithToken(@RequestHeader("Token") String token) {
+        int userID = TokenUtils.getUserInfo(token, commonService).getUserid();
+        return getLevel(userID);
+    }
+
+    @GetMapping("/getUserLevel")
+    public Result getLevel(@PathVariable("userID") int userID) {
+        int value = levelService.getLevel(userID);
+
+        Level level = new Level(value);
+        return Result.success("获取等级成功", level);
+    }
+
     /**
      * 增加用户经验值，比如签到时增加.
      * @param token

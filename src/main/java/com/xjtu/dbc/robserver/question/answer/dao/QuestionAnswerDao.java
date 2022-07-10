@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.question.answer.dao;
 
 import com.xjtu.dbc.robserver.question.answer.entity.AnswerDetailsDto;
+import com.xjtu.dbc.robserver.question.answer.entity.AnswerDto;
 import com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto;
 
 
@@ -16,4 +17,6 @@ public interface QuestionAnswerDao {
     Integer getCommentNum(Integer answerid);
 
     AnswerDetailsDto getAnswerDetails(Integer answerid);
+
+    void createAnswer(AnswerDto answerDto);
 }

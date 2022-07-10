@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.dynamic.vote.dao.DynamicVoteDao">
+
+
+    <!-- 添加新的举报记录-->
+    <insert id="doVote">
+        insert into vote ( votetype, userid, articleid)
+        values(#{votetype},#{userid}, #{articleid})
+    </insert>
+
+    <!-- 获取当前最大的举报记录的编号 -->
+    <delete id="deleteVote" >
+        delete
+        from vote
+        where userid = #{userid} and articleid = #{articleid}
+    </delete>
+
+</mapper>

@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.question.home.impl;
 
+import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.question.home.QuestionHomeService;
 import com.xjtu.dbc.robserver.question.home.dao.QuestionHomeDao;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
@@ -20,18 +21,18 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
 
 
     @Override
-    public List<QuestionHomeListDto> getAllQuestionList() {
-        return questionHomeDao.getAllQuestionList();
+    public List<QuestionHomeListDto> getAllQuestionList(int categoryid) {
+        return questionHomeDao.getAllQuestionList(categoryid);
     }
 
     @Override
-    public List<QuestionHomeListDto> getNotSolveQuestionList() {
-        return questionHomeDao.getNotSolveQuestionList();
+    public List<QuestionHomeListDto> getNotSolveQuestionList(int categoryid) {
+        return questionHomeDao.getNotSolveQuestionList(categoryid);
     }
 
     @Override
-    public List<QuestionHomeListDto> getSolveQuestionList() {
-        return questionHomeDao.getSolveQuestionList();
+    public List<QuestionHomeListDto> getSolveQuestionList(int categoryid) {
+        return questionHomeDao.getSolveQuestionList(categoryid);
     }
 
     @Override
@@ -53,7 +54,6 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
 
     @Override
     public Integer getLikenumByQuestionId(Integer questionid) {
-        System.out.println(3333333);
         return questionHomeDao.getLikenumByQuestionId(questionid);
     }
 
@@ -65,5 +65,10 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
     @Override
     public QuestionDetailsDto getQuestionDetails(int questionid) {
         return questionHomeDao.getQuestionDetails(questionid);
+    }
+
+    @Override
+    public List<Category> getCategory() {
+        return questionHomeDao.getCategory();
     }
 }

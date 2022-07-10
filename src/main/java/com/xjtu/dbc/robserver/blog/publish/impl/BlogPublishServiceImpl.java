@@ -1,7 +1,7 @@
 package com.xjtu.dbc.robserver.blog.publish.impl;
 
 
-import com.xjtu.dbc.robserver.blog.publish.BlogDetailDto;
+
 import com.xjtu.dbc.robserver.blog.publish.BlogEditDto;
 
 import com.xjtu.dbc.robserver.blog.publish.BlogPublishService;
@@ -131,19 +131,6 @@ public class BlogPublishServiceImpl implements BlogPublishService {
         }
     }
 
-    /**
-     * 获取博客详情
-     */
-    @Override
-    public BlogDetailDto getBlogDetailByArticleid(int articleid){
-        BlogDetailDto dto = blogPublishDao.selectBlogDetailDtoByArticleid(articleid);
-        List<String> tagList = blogPublishDao.selectTagListByArtileid(articleid);
-        dto.setTags(tagList);
-        User author = blogPublishDao.selectAuthorByArtileid(articleid);
-        dto.setAuthorname(author.getUsername());
-        dto.setAuthoravatar(author.getUseravatar());
-        return dto;
-    }
 
     @Override
     public BlogEditDto getBlogEditDtoByArticleid(int articleid){

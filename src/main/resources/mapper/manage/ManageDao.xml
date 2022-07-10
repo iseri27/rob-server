@@ -36,4 +36,9 @@
         where `tagid` = #{tagid}
     </delete>
 
+    <delete id="deleteRelation">
+        delete from `article_has_tag`
+        where `tagid` = #{tagid}
+    </delete>
+
 </mapper>

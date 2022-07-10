@@ -46,3 +46,7 @@ spring:
     multipart:
       maxFileSize: 30MB
       maxRequestSize: 30MB
+  redis:
+    host: 106.15.91.23
+    port: 6379
+    password: redisadmin

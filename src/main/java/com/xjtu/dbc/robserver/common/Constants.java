@@ -36,6 +36,7 @@ public class Constants {
     public static int USERLIST_FOLLOW = 600;
     public static int USERLIST_FANS = 601;
     public static int USERLIST_BLACKLIST = 602;
+    public static int USERLIST_CHAT = 603;
 
     public static int HISTORY_TYPE = 7;
     public static int HISTORY_LOGIN = 700;

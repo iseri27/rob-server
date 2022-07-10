@@ -5,6 +5,7 @@ import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
+import com.xjtu.dbc.robserver.manage.entity.SensitiveWordDto;
 import com.xjtu.dbc.robserver.manage.entity.TagDto;
 import com.xjtu.dbc.robserver.manage.impl.ManageServiceImpl;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -123,6 +124,12 @@ public class ManageAPI {
         return Result.successMsg("删除成功");
     }
 
+    /**
+     * 修改敏感词.
+     * @param originWord 原敏感词
+     * @param newWord 新敏感词
+     * @return 修改结果.
+     */
     @PostMapping("/sensitive/update/{originWord}/{newWord}")
     public Result updateSensitiveWord(@PathVariable("originWord") String originWord, @PathVariable("newWord") String newWord) {
         if (redisTemplate.opsForSet().isMember(Constants.SENSITIVE_KEY, newWord))
@@ -132,5 +139,11 @@ public class ManageAPI {
         redisTemplate.opsForSet().remove(Constants.SENSITIVE_KEY, originWord);
         redisTemplate.opsForSet().add(Constants.SENSITIVE_KEY, newWord);
         return Result.successMsg("修改敏感词成功");
+    }
+
+    @GetMapping("/sensitive/get")
+    public Result getSensitiveWords(SensitiveWordDto sensitiveWordDto) {
+        Map<String, Object> data = manageService.getSensitiveWordList(sensitiveWordDto);
+        return Result.success("获取敏感词列表成功", data);
     }
 }

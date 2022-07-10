@@ -6,6 +6,7 @@ import com.xjtu.dbc.robserver.common.model.tag.Tag;
 import com.xjtu.dbc.robserver.common.page.QueryAction;
 import com.xjtu.dbc.robserver.manage.ManageService;
 import com.xjtu.dbc.robserver.manage.dao.ManageDao;
+import com.xjtu.dbc.robserver.manage.entity.SensitiveWordDto;
 import com.xjtu.dbc.robserver.manage.entity.TagDto;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional @Service
 public class ManageServiceImpl implements ManageService {
@@ -54,5 +56,22 @@ public class ManageServiceImpl implements ManageService {
         StringSearch search = new StringSearch();
         search.SetKeywords(sensitiveWordList);
         return search.Replace(sentence, replaceChar);
+    }
+
+    @Override
+    public Map<String, Object> getSensitiveWordList(SensitiveWordDto sensitiveWordDto) {
+        return Utils.getPage(sensitiveWordDto, () -> {
+            String part = sensitiveWordDto.getPart();
+            Set<String> sensitiveWordSet = redisTemplate.opsForSet().members(Constants.SENSITIVE_KEY);
+            List<String> sensitiveWordList = sensitiveWordSet
+                    .stream()
+                    .filter((word) -> {
+                        if (part != null && "" != part && !word.contains(part))
+                            return false;
+                        return true;
+                    })
+                    .collect(Collectors.toList());
+            return sensitiveWordList;
+        });
     }
 }

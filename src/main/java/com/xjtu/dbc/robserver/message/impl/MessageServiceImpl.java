@@ -28,6 +28,6 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void startChat(int myId, int friendId) {
-        log.info(messageDao.getChatHistory(myId,friendId)+"");
+        messageDao.startChat(myId,friendId);
     }
 }

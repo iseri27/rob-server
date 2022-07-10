@@ -3,15 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.message.dao.MessageDao">
-    <select id="getChatHistory" resultType="java.lang.Integer">
-        SELECT
-            COUNT( userlist.ownerid ) count
-        FROM
-            userlist
-            JOIN userlist_has_user ON userlist.userlistid = userlist_has_user.userlistid
-        WHERE
-            userlisttype = 603
-            AND ownerid = #{myId}
-            AND userlist_has_user.userid = #{friendId}
+    <select id="startChat" >
+        INSERT INTO userlist_has_user SELECT
+            (SELECT DISTINCT chatlistid
+            FROM chatlist WHERE myid = #{myId}), #{friendId}
+        WHERE NOT EXISTS
+            (SELECT *
+            FROM chatlist
+            WHERE chatlist.myid = #{myId}
+                    AND chatlist.friendid = #{friendId} )
     </select>
 </mapper>

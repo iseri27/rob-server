@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface MessageDao {
     List<ChatFriend> getChatFriendList(int userId);
-    Integer getChatHistory(int myId,int friendId);
+    void startChat(int myId,int friendId);
 }

@@ -33,10 +33,19 @@ public class MessageAPI {
         return  Result.success("获取私信列表成功",chatFriends);
     }
 
+
+    /**
+     * 开始与某人的私信，如果已经建立过私信则不添加
+     * @param token
+     * @param friendid 朋友的id
+     * @return
+     */
     @PostMapping("/startchat/{friendid}")
     public Result addChat(@RequestHeader("Token")String token,@PathVariable("friendid") Integer friendid){
         int userid = TokenUtils.getUserInfo(token, commonService).getUserid();
         messageService.startChat(userid,friendid);
         return  Result.successMsg("创建私信成功");
     }
+
+    
 }

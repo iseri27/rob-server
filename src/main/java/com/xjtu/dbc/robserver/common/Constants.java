@@ -54,4 +54,7 @@ public class Constants {
     public static int ROLE_SUPERADMIN = 1000;
     public static int ROLE_NORMAL_USER = 1001;
     public static int ROLE_ADMIN = 1002;
+
+    // Redis中敏感词集合的key
+    public static final String SENSITIVE_KEY = "sensitive";
 }

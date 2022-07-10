@@ -3,6 +3,7 @@ package com.xjtu.dbc.robserver.manage;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
 import com.xjtu.dbc.robserver.manage.entity.TagDto;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ManageService {
@@ -13,4 +14,6 @@ public interface ManageService {
     void deleteTag(Tag tag);
 
     void updateTag(Tag tag);
+
+    String filter(String sentence, char replaceChar);
 }

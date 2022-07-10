@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.blog.detail.dao.BlogDetailDao">
+    <select id="selectBlogDetailDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.detail.BlogDetailDto">
+        select *
+        from article
+        where articleid=#{articleid}
+    </select>
+
+    <select id="selectTagListByArtileid" resultType="java.lang.String">
+        select tagname
+        from article_has_tag,tag
+        where articleid=#{articleid} and article_has_tag.tagid = tag.tagid
+    </select>
+
+    <select id="selectAuthorByArtileid" resultType="com.xjtu.dbc.robserver.common.model.user.User">
+        select userid,username,useravatar
+        from article,user
+        where userid = authorid and articleid = #{articleid}
+    </select>
+
+    <select id="selectCategorynameByArtileid" resultType="java.lang.String">
+        select categoryname
+        from article,category
+        where article.categoryid = category.categoryid and articleid = #{articleid}
+    </select>
+</mapper>

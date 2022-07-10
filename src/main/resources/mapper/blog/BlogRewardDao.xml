@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.blog.reward.dao.BlogRewardDao">
+    <select id="getAuthoridByArticleid" resultType="java.lang.Integer">
+        select authorid
+        from article
+        where articleid = #{articleid}
+    </select>
+
+    <select id="getRewrdHistory" resultType="java.lang.Integer">
+        select count(*)
+        from history
+        where userid = #{userid} and articleid = #{articleid} and historytype = 702
+    </select>
+
+    <insert id="insertHistory">
+        INSERT INTO history(historytime, userid, historytype, articleid, coins)
+        VALUES (#{rewardtime}, #{userid}, 702, #{articleid}, #{coins});
+    </insert>
+</mapper>

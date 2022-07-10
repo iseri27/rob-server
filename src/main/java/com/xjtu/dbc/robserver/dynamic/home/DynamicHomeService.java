@@ -2,6 +2,7 @@ package com.xjtu.dbc.robserver.dynamic.home;
 
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeDto;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeListDto;
+import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicMyHomeListDto;
 
 import java.util.List;
 
@@ -15,12 +16,49 @@ public interface DynamicHomeService {
     DynamicHomeDto getUserInfo(Integer userid);
 
     /**
-     * 根据主页用户的编号获取噶用户的动态列表
+     * 根据主页用户的编号获取用户的动态列表,用于他人主页的动态的展示
      * @param userid 用户编号
      * @return 用户的动态列表
      */
-    List<DynamicHomeListDto> getDynamicList(Integer userid);
+    List<DynamicMyHomeListDto> getDynamicList(Integer userid);
 
+
+    List<DynamicMyHomeListDto> getFollowDynamicList(Integer userid);
+
+
+
+    /**
+     * 根据主页用户的编号获取用户的动态列表,用于自己主页的动态的展示
+     * @param userid 用户编号
+     * @return 用户的动态列表
+     */
+    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
+
+
+
+    /**
+     * 根据动态的编号获取动态的信息
+     * @param authorid 动态编号
+     * @return 动态信息
+     */
+    DynamicMyHomeListDto getDynamic(Integer authorid);
+
+
+
+    /**
+     * 根据用户的编号来获取该用户的关注的用户数
+     * @param userid  用户的编号
+     * @return 该用户关注的用户数
+     */
+    int getFollownumByUserid(Integer userid);
+
+
+    /**
+     * 根据主页用户的编号获取用户的动态列表,用于自己主页的动态的展示
+     * @param userid 用户编号
+     * @return 用户的动态列表
+     */
+//    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
 
     /**
      * 根据用户的编号来获取该用户的粉丝数
@@ -57,4 +95,12 @@ public interface DynamicHomeService {
     int getDislikenumByAriticleid(Integer articleid);
 
 
+    /**
+     * 根据动态的编号来获取该动态的评论数
+     * @param articleid  动态的编号
+     * @return 该动态获得的评论数
+     */
+    int getCommentnumByArticleid(Integer articleid);
+
+    int getVoteTypeByU_A_id(Integer userid,Integer articleid);
 }

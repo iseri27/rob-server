@@ -8,10 +8,20 @@
     <!-- 获取动态的评论列表-->
     <select id="getDynamicCommentList" resultType="com.xjtu.dbc.robserver.dynamic.comment.entity.DynamicCommentDto">
     SELECT *
-    FROM article
+    FROM article JOIN user on user.userid = article.authorid
 	WHERE  rootid = #{articleid}  and articletype = 303
     </select>
 
+    <!-- 添加新的评论记录-->
+    <insert id="addComment">
+        insert into article (articleid, articletype, articlestatus, content, createtime, lastmodifytime,authorid,replyto,rootid)
+        values(#{articleid},  #{articletype}, #{articlestatus}, #{content}, now(),now(),#{authorid},#{replyto},#{rootid})
+    </insert>
 
+    <!-- 获取当前最大的举报记录的编号 -->
+    <select id="getMaxCommentId" resultType="java.lang.Integer">
+        select ifnull(max(articleid), 0)
+        from article;
+    </select>
 
 </mapper>

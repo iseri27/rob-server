@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.manage.dao.ManageDao">
 
-    <!-- tag的增删查 -->
+    <!-- tag的增删改查 -->
     <select id="selectTags" resultType="com.xjtu.dbc.robserver.common.model.tag.Tag">
         select * from `tag`
         <where>
@@ -25,8 +25,19 @@
         values (#{tagname}, #{ownerid})
     </insert>
 
+    <update id="updateTag">
+        update `tag`
+        set `tagname` = #{tagname}
+        where `tagid` = #{tagid}
+    </update>
+
     <delete id="deleteTag">
         delete from `tag`
+        where `tagid` = #{tagid}
+    </delete>
+
+    <delete id="deleteRelation">
+        delete from `article_has_tag`
         where `tagid` = #{tagid}
     </delete>
 

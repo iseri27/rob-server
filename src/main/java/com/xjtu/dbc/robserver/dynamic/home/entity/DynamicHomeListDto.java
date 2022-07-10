@@ -13,11 +13,22 @@ public class DynamicHomeListDto {
     private Integer authorid;
     private Integer like_num;
     private Integer dislike_num;
+    private Integer comment_num;
 
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
+
+    private String username;
+    private String usersex;
+    private String useravatar;
+    private String useremail;
+    private String userabout;
+    private Integer roleid;
+    private Integer userstatus;
+
 
     public Integer getArticleid() {
         return articleid;
@@ -83,5 +94,70 @@ public class DynamicHomeListDto {
 
     public void setDislike_num(Integer dislike_num) {
         this.dislike_num = dislike_num;
+    }
+
+    public Integer getComment_num() {
+        return comment_num;
+    }
+
+    public void setComment_num(Integer comment_num) {
+        this.comment_num = comment_num;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsersex() {
+        return usersex;
+    }
+
+    public void setUsersex(String usersex) {
+        this.usersex = usersex;
+    }
+
+    public String getUseravatar() {
+        return useravatar;
+    }
+
+    public void setUseravatar(String useravatar) {
+        this.useravatar = useravatar;
+    }
+
+    public String getUseremail() {
+        return useremail;
+    }
+
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
+    }
+
+    public String getUserabout() {
+        return userabout;
+    }
+
+    public void setUserabout(String userabout) {
+        this.userabout = userabout;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public Integer getUserstatus() {
+        return userstatus;
+    }
+
+    public void setUserstatus(Integer userstatus) {
+        this.userstatus = userstatus;
     }
 }

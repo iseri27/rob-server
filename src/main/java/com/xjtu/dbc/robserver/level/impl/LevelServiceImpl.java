@@ -34,4 +34,24 @@ public class LevelServiceImpl implements LevelService {
         levelDao.updateCans(userID, num);
     }
 
+    @Override
+    public int getLevel(int userID) {
+        int exp = getExp(userID);
+        int value;
+        if (exp <= 30) {
+            value = 1;
+        } else if (exp <= 80) {
+            value = 2;
+        } else if (exp <= 150) {
+            value = 3;
+        } else if (exp <= 300) {
+            value = 4;
+        } else if (exp <= 666) {
+            value = 5;
+        } else {
+            value = 6;
+        }
+        return value;
+    }
+
 }

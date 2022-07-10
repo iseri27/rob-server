@@ -95,7 +95,7 @@ public class BlogPublishAPI {
      * @param tag 包含tag名
      * @param token 用户令牌
      */
-    @DeleteMapping("/tag/delete")
+    @PostMapping("/tag/delete")
     public Result deleteTag(@RequestBody Tag tag, @RequestHeader("Token") String token) {
         if (tag.getTagname() == null || "".equals(tag.getTagname().trim())) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "Tag名不能为空!");
@@ -187,36 +187,6 @@ public class BlogPublishAPI {
 
         }
 
-    }
-
-    /**
-     * 获取博客详情
-     */
-    @GetMapping("/detail")
-    public Result getEssayDetail(@RequestParam("articleid") int articleid, @RequestHeader("Token") String token) {
-        try {
-            BlogDetailDto blog = blogPublishService.getBlogDetailByArticleid(articleid);
-
-            if (blog.getArticlestatus()==400) {
-                // 该随笔未发布，需要验证登录状态，未登录状态下或并非作者都不能查看
-                try {
-                    TokenUtils.verifyToken(token, commonService);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return Result.fail(Result.ERR_CODE_BUSINESS, "随笔未发布，请登录！");
-                }
-
-                // 虽然该用户登录了，但并非是这篇随笔的作者
-                int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
-                if (myid!=blog.getAuthorid()) {
-                    return Result.fail(Result.ERR_CODE_BUSINESS, "不能编辑不属于自己的博客！");
-                }
-            }
-            return Result.successData(blog);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Result.fail(Result.ERR_CODE_SYS, "系统错误！获取博客信息失败！");
-        }
     }
 
     /**

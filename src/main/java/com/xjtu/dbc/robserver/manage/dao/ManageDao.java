@@ -11,4 +11,8 @@ public interface ManageDao {
     void insertTag(Tag tag);
 
     void deleteTag(Tag tag);
+
+    void updateTag(Tag tag);
+
+    void deleteRelation(Integer tagid);
 }

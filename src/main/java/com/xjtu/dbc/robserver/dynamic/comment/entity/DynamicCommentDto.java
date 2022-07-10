@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public class DynamicCommentDto {
+
     private Integer articleid;
     private Integer articletype;
     private Integer articlestatus;
@@ -13,10 +14,33 @@ public class DynamicCommentDto {
     private Integer authorid;
     private Integer like_num;
     private Integer dislike_num;
+    private Integer replyto;
+    private Integer rootid;
+    private Integer vote_type;  //0:未投票  800:赞  801:踩
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date lastmodifytime;
+
+    private Integer userid;
+    private String username;
+    private String usersex;
+    private String useravatar;
+    private String useremail;
+    private String userabout;
+    private Integer roleid;
+    private Integer userstatus;
+
+
+
+
+
 
     public Integer getArticleid() {
         return articleid;
@@ -81,4 +105,102 @@ public class DynamicCommentDto {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+    public Integer getReplyto() {
+        return replyto;
+    }
+
+    public void setReplyto(Integer replyto) {
+        this.replyto = replyto;
+    }
+
+    public Integer getRootid() {
+        return rootid;
+    }
+
+    public void setRootid(Integer rootid) {
+        this.rootid = rootid;
+    }
+
+    public Date getLastmodifytime() {
+        return lastmodifytime;
+    }
+
+    public void setLastmodifytime(Date lastmodifytime) {
+        this.lastmodifytime = lastmodifytime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsersex() {
+        return usersex;
+    }
+
+    public void setUsersex(String usersex) {
+        this.usersex = usersex;
+    }
+
+    public String getUseravatar() {
+        return useravatar;
+    }
+
+    public void setUseravatar(String useravatar) {
+        this.useravatar = useravatar;
+    }
+
+    public String getUseremail() {
+        return useremail;
+    }
+
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
+    }
+
+    public String getUserabout() {
+        return userabout;
+    }
+
+    public void setUserabout(String userabout) {
+        this.userabout = userabout;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public Integer getUserstatus() {
+        return userstatus;
+    }
+
+    public void setUserstatus(Integer userstatus) {
+        this.userstatus = userstatus;
+    }
+
+
+    public Integer getVote_type() {
+        return vote_type;
+    }
+
+    public void setVote_type(Integer vote_type) {
+        this.vote_type = vote_type;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
 }

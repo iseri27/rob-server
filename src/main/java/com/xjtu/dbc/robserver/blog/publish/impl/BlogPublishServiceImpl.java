@@ -1,11 +1,6 @@
 package com.xjtu.dbc.robserver.blog.publish.impl;
 
-<<<<<<< HEAD
 
-import com.xjtu.dbc.robserver.blog.publish.BlogDetailDto;
-=======
-import com.xjtu.dbc.robserver.blog.detail.BlogDetailDto;
->>>>>>> 38d0f72ef7be36ccc8c06a5fd5eef75bdf105efa
 import com.xjtu.dbc.robserver.blog.publish.BlogEditDto;
 
 import com.xjtu.dbc.robserver.blog.publish.BlogPublishService;

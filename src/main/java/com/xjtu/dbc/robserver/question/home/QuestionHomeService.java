@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.question.home;
 
+import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
 
@@ -36,9 +37,9 @@ public interface QuestionHomeService {
      * @param
      * @return 列表
      */
-    List<QuestionHomeListDto> getAllQuestionList();
-    List<QuestionHomeListDto> getNotSolveQuestionList();
-    List<QuestionHomeListDto> getSolveQuestionList();
+    List<QuestionHomeListDto> getAllQuestionList(int categoryid);
+    List<QuestionHomeListDto> getNotSolveQuestionList(int categoryid);
+    List<QuestionHomeListDto> getSolveQuestionList(int categoryid);
 
     /**
      *根据悬赏id获取tag表
@@ -49,4 +50,6 @@ public interface QuestionHomeService {
      *根据悬赏id获取悬赏及其提问者详情
      */
     QuestionDetailsDto getQuestionDetails(int questionid);
+
+    List<Category> getCategory();
 }

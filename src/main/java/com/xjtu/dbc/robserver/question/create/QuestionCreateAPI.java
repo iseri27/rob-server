@@ -52,7 +52,7 @@ public class QuestionCreateAPI {
     /**
      * 获取草稿对象
      */
-    @RequestMapping("/draft/get")
+    @GetMapping("/draft/get")
     public Result getDraft(@RequestParam("qid") int qid){
         try{
             int questionid = qid;

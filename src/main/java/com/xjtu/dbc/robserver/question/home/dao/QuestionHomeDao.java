@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.question.home.dao;
 
+import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
 
@@ -14,13 +15,15 @@ public interface QuestionHomeDao {
 
     Integer getCommentNum(Integer questionid);
 
-    List<QuestionHomeListDto> getAllQuestionList();
+    List<QuestionHomeListDto> getAllQuestionList(int categoryid);
 
-    List<QuestionHomeListDto> getNotSolveQuestionList();
+    List<QuestionHomeListDto> getNotSolveQuestionList(int categoryid);
 
-    List<QuestionHomeListDto> getSolveQuestionList();
+    List<QuestionHomeListDto> getSolveQuestionList(int categoryid);
 
     List<String> getTagListByQuestionid(int questionid);
 
     QuestionDetailsDto getQuestionDetails(int questionid);
+
+    List<Category> getCategory();
 }

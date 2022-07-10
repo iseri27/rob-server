@@ -46,4 +46,9 @@
         where article.articleid = #{answerid}
     </select>
 
+    <insert id="createAnswer">
+         insert into article (articleid, articletype, articlestatus, title, content, cost, createtime,lastmodifytime,authorid,categoryid,rootid,replyto)
+        values(#{articleid}, 304, #{articlestatus}, #{title}, #{content}, 0, now(),now(),#{authorid},null,null,#{replyto})
+    </insert>
+
 </mapper>

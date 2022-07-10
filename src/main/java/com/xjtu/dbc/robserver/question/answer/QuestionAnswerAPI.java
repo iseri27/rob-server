@@ -2,13 +2,11 @@ package com.xjtu.dbc.robserver.question.answer;
 
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
+import com.xjtu.dbc.robserver.question.answer.entity.AnswerDto;
 import com.xjtu.dbc.robserver.question.answer.entity.AnswerDetailsDto;
 import com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -40,7 +38,7 @@ public class QuestionAnswerAPI {
         }
     }
 
-    @RequestMapping("/detail")
+    @GetMapping("/detail")
     public Result getQuestionDetails(@RequestParam("qid") int qid) {
         try{
             int questionid = qid;
@@ -54,4 +52,18 @@ public class QuestionAnswerAPI {
             return Result.fail(Result.ERR_CODE_BUSINESS, "查找回答详情失败！");
         }
     }
+
+    @PostMapping("/create")
+    public Result createAnswer(@RequestBody AnswerDto answerDto, @RequestHeader("Token") String token){
+        try{
+            questionAnswerService.createAnswer(answerDto);
+
+            return Result.success("创建回答成功，等待审核！",answerDto);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.fail(Result.ERR_CODE_BUSINESS, "创建回答失败！");
+        }
+    }
+
+
 }

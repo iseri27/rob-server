@@ -48,6 +48,13 @@
     ORDER BY article.createtime DESC
     </select>
 
+    <!-- 根据文本编号删除动态-->
+    <delete id="deleteDynamic">
+    delete
+    from article
+    where article.articleid = #{articleid}
+    </delete>
+
     <!-- 获取用户关注的用户的数量-->
     <select id="getFollownumByUserid" resultType="java.lang.Integer">
     select count(userlist.userlistid)

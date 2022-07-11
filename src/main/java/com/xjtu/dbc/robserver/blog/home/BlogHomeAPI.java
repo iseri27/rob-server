@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.blog.home;
 
+import com.xjtu.dbc.robserver.blog.home.entity.BlogDto;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
@@ -68,17 +69,17 @@ public class BlogHomeAPI {
 
     /**
      * 获取推荐的博客
-     * @param pageParam 分页参数
+     * @param blogDto 查询参数
      * @return 推荐的博客
      */
     @GetMapping("/recommend")
-    public Result getRecommend(PageParam pageParam, @RequestHeader("Token") String token) {
+    public Result getRecommend(BlogDto blogDto, @RequestHeader("Token") String token) {
         Integer userId = null;
         if (commonService.isLogin(token)) {
             userId = TokenUtils.getUserInfo(token, commonService).getUserid();
         }
 
-        Map<String, Object> blogListPage = blogHomeService.getRecommendBlogList(pageParam, userId);
+        Map<String, Object> blogListPage = blogHomeService.getRecommendBlogList(blogDto, userId);
         return Result.successData(blogListPage);
     }
 

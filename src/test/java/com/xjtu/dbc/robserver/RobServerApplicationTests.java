@@ -9,14 +9,7 @@ import javax.annotation.Resource;
 
 @SpringBootTest
 class RobServerApplicationTests {
-    @Resource
-    private RedisTemplate redisTemplate;
-    @Test
     void contextLoads() {
-
-        redisTemplate.opsForValue().set("name", "西交第一白兰王");
-        String name = (String) redisTemplate.opsForValue().get("name");
-        System.out.println("Name : " + name);
     }
 
 }

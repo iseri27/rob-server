@@ -2,6 +2,7 @@ package com.xjtu.dbc.robserver.blog.home.impl;
 
 import com.xjtu.dbc.robserver.blog.home.BlogHomeService;
 import com.xjtu.dbc.robserver.blog.home.dao.BlogHomeDao;
+import com.xjtu.dbc.robserver.blog.home.entity.BlogDto;
 import com.xjtu.dbc.robserver.blog.home.entity.BlogVO;
 import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Utils;
@@ -72,21 +73,21 @@ public class BlogHomeServiceImpl implements BlogHomeService {
 
     /**
      * 获取推荐的的博客列表
-     * @param pageParam 分页参数
+     * @param blogDto 分页参数
      * @param userId    用户 ID
      * @return 推荐的的博客列表
      */
     @Override
-    public Map<String, Object> getRecommendBlogList(PageParam pageParam, Integer userId) {
+    public Map<String, Object> getRecommendBlogList(BlogDto blogDto, Integer userId) {
         class queryAction implements  QueryAction<BlogVO> {
             @Override
             public List<BlogVO> execute() {
-                return blogHomeDao.getArticleListOfRecommend(userId, Constants.ARTICLE_TYPE_BLOG);
+                return blogHomeDao.getArticleListOfRecommend(userId, blogDto.getCategoryId(), Constants.ARTICLE_TYPE_BLOG);
             }
         }
 
         queryAction query = new queryAction();
-        return Utils.getPage(pageParam, query);
+        return Utils.getPage(blogDto, query);
     }
 
     /**

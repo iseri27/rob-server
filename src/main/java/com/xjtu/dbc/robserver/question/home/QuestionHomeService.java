@@ -51,5 +51,13 @@ public interface QuestionHomeService {
      */
     QuestionDetailsDto getQuestionDetails(int questionid);
 
+    /**
+     *获取分区列表
+     */
     List<Category> getCategory();
+
+    /**
+     *获取回答数
+     */
+    Integer getAnswerNum(int questionid);
 }

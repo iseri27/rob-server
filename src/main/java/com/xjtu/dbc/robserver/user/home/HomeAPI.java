@@ -30,13 +30,24 @@ public class HomeAPI {
 
     /**
      * 根据当前用户获取导航栏菜单
+     *
      * @return
      */
     @GetMapping("/menus")
     public Result menus(@RequestHeader("Token") String token) {
-        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
-        Integer userid = currentUser.getUserid();
-        List<Menu> menuList = homeService.getMenus(userid);
-        return Result.success("获得菜单成功",menuList);
+        Integer userId = TokenUtils.getUserInfo(token, commonService).getUserid();
+        List<Menu> menuList = homeService.getMenus(userId);
+        return Result.success("获得菜单成功", menuList);
+    }
+
+    /**
+     * 根据当前用户获取未读消息数目
+     * @param token
+     * @return
+     */
+    @GetMapping("/count")
+    public Result getUnReadNum(@RequestHeader("Token") String token) {
+        Integer userId = TokenUtils.getUserInfo(token, commonService).getUserid();
+        return Result.success("获取未读消息数成功", homeService.getUnReadNum(userId));
     }
 }

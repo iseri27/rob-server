@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.blog.detail.dao;
 
 import com.xjtu.dbc.robserver.blog.detail.BlogDetailDto;
+import com.xjtu.dbc.robserver.blog.detail.CurrentUserDto;
 import com.xjtu.dbc.robserver.common.model.user.User;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface BlogDetailDao {
     User selectAuthorByArtileid(int articleid);
 
     String selectCategorynameByArtileid(int articleid);
+
+    CurrentUserDto getCurrentUser(Integer myid);
 }

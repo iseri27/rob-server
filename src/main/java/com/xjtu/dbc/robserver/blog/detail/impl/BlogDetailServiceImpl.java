@@ -2,6 +2,7 @@ package com.xjtu.dbc.robserver.blog.detail.impl;
 
 import com.xjtu.dbc.robserver.blog.detail.BlogDetailDto;
 import com.xjtu.dbc.robserver.blog.detail.BlogDetailService;
+import com.xjtu.dbc.robserver.blog.detail.CurrentUserDto;
 import com.xjtu.dbc.robserver.blog.detail.dao.BlogDetailDao;
 import com.xjtu.dbc.robserver.blog.publish.dao.BlogPublishDao;
 import com.xjtu.dbc.robserver.common.model.user.User;
@@ -29,5 +30,10 @@ public class BlogDetailServiceImpl implements BlogDetailService {
         dto.setAuthoravatar(author.getUseravatar());
         dto.setCategoryname(blogDetailDao.selectCategorynameByArtileid(articleid));
         return dto;
+    }
+
+    @Override
+    public CurrentUserDto getCurrentUser(Integer myid){
+        return blogDetailDao.getCurrentUser(myid);
     }
 }

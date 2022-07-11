@@ -48,4 +48,34 @@
         lastmodifytime
         desc
     </select>
+    <select id="getRelationship" resultType="java.lang.Integer">
+        select userlisttype
+        from userlist, userlist_has_user
+        where userlist.ownerid = #{myid}
+        and userlist.userlistid = userlist_has_user.userlistid
+        and userlist_has_user.userid = #{userid}
+        and userlist.userlisttype &lt;&gt; 601
+        and userlist.userlisttype &lt;&gt; 603
+    </select>
+    <select id="getListid" resultType="java.lang.Integer">
+        select userlistid
+        from userlist
+        where ownerid = #{myid}
+        and userlisttype = #{constant}
+    </select>
+    <insert id="follow">
+        insert into userlist_has_user(userlistid,userid)
+        values (#{userlistid}, #{userid})
+    </insert>
+    <delete id="disfollow">
+        delete
+        from userlist_has_user
+        where userlistid = #{userlistid}
+        and userid = {userid}
+    </delete>
+    <delete id="deleteBlog">
+        delete
+        from article
+        where articleid = #{articleid}
+    </delete>
 </mapper>

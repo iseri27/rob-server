@@ -14,4 +14,15 @@
             userid = #{userid}
     </select>
 
+    <select id="getUnReadNum" resultType="java.lang.Integer">
+        SELECT
+            count( msgid ) count
+        FROM
+            message
+        WHERE
+            message.msgstatus = 0
+            AND message.receiverid = #{userId}
+
+    </select>
+
 </mapper>

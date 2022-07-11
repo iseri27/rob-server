@@ -17,4 +17,14 @@ public interface PersonalDao {
     void changePassword(User user);
 
     List<Article> getArtical(ArticleDto articleDto);
+
+    Integer getRelationship(Integer myid, Integer userid);
+
+    Integer getListid(Integer myid, int constant);
+
+    void follow(Integer userlistid,Integer userid);
+
+    void disfollow(Integer userlistid,Integer userid);
+
+    void deleteBlog(Integer articleid);
 }

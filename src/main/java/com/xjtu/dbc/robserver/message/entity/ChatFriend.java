@@ -12,6 +12,5 @@ public class ChatFriend {
     Integer id;//id
     String name;//昵称
     String avatar;//头像
-    String isFriend;//是否为好友
     String unReadNum;//未读消息数
 }

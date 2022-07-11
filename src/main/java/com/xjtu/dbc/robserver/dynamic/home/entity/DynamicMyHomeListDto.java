@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class DynamicMyHomeListDto {
 
+    private Integer dynamicid;
     private Integer articleid;
     private Integer articletype;
     private Integer articlestatus;
@@ -28,6 +29,7 @@ public class DynamicMyHomeListDto {
     /*
     * 自己主页看到的自己的关注的人
     * */
+    private Integer ownerid;
 
     private Integer userid;
     private String username;
@@ -38,6 +40,14 @@ public class DynamicMyHomeListDto {
     private Integer roleid;
     private Integer userstatus;
 
+
+    public Integer getDynamicid() {
+        return dynamicid;
+    }
+
+    public void setDynamicid(Integer dynamicid) {
+        this.dynamicid = dynamicid;
+    }
 
     public Integer getArticleid() {
         return articleid;
@@ -193,4 +203,11 @@ public class DynamicMyHomeListDto {
         this.vote_type = vote_type;
     }
 
+    public Integer getOwnerid() {
+        return ownerid;
+    }
+
+    public void setOwnerid(Integer ownerid) {
+        this.ownerid = ownerid;
+    }
 }

@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface HomeDao {
     List<Menu> getMenusByUserId(Integer userid);
+    Integer getUnReadNum(Integer userid);
 }

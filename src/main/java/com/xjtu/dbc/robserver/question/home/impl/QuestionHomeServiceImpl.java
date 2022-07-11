@@ -71,4 +71,9 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
     public List<Category> getCategory() {
         return questionHomeDao.getCategory();
     }
+
+    @Override
+    public Integer getAnswerNum(int questionid) {
+        return questionHomeDao.countAnswer(questionid);
+    }
 }

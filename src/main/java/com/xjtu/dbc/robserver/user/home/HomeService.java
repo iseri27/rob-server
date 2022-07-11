@@ -11,5 +11,6 @@ import java.util.List;
  * @date 2022/7/9 8:49
  */
 public interface HomeService {
-    List<Menu> getMenus(Integer userid);
+    List<Menu> getMenus(Integer userId);
+    Integer getUnReadNum(Integer userId);
 }

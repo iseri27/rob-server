@@ -88,8 +88,8 @@
         select  article.articleid questionid,article.articlestatus questionstatus,
                 article.title questiontitle,user.userid authorid,user.username authorname,
                 user.useravatar authoravatar,article.createtime createtime,
-                article.lastmodifytime lastmodifytime,
-                article.content answercontent,article.articletype type
+                article.lastmodifytime lastmodifytime,article.cost cost,
+                article.content questioncontent,article.articletype type
         from article join user on user.userid = article.authorid
         where article.articleid = #{questionid}
     </select>
@@ -98,4 +98,9 @@
         select * from category
     </select>
 
+    <select id="countAnswer" resultType="java.lang.Integer">
+        select count(articleid)
+        from article
+        where articletype = 304 or 305 and replyto = #{questionid}
+    </select>
 </mapper>

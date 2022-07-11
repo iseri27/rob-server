@@ -1,7 +1,6 @@
 package com.xjtu.dbc.robserver.blog.publish;
 
 import com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto;
-import com.xjtu.dbc.robserver.blog.publish.entity.TagDto;
 import com.xjtu.dbc.robserver.common.*;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -38,13 +37,14 @@ public class BlogPublishAPI {
     }
 
     /**
-     * 新增tag
-     * @param tag 包含tag信息
+     * 新增 tag
+     * @param tag 包含 tag 信息
      * @param token 用户令牌
      */
     @PostMapping("/tag/add")
     public Result addTag(@RequestBody Tag tag, @RequestHeader("Token") String token) {
 
+        // 检查 tag 名
         if (tag.getTagname() == null || "".equals(tag.getTagname().trim())) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "Tag名不能为空!");
         }
@@ -77,25 +77,26 @@ public class BlogPublishAPI {
      */
     @PostMapping("/publish")
     public Result blogPublish(@RequestBody BlogPublishDto blogPublishDto, @RequestHeader("Token") String token) {
-        Integer myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
-        if (blogPublishService.getUserStatus(myid) != Constants.USER_STATUS_MUTED) {
+        // 获取当前用户的 ID
+        Integer authorId = TokenUtils.getUserInfo(token,commonService).getUserid();
+        if (blogPublishService.getUserStatus(authorId) != Constants.USER_STATUS_NORMAL) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
         }
 
+        // 检查内容是否为空
         if (blogPublishDto.getContent() == null || "".equals(blogPublishDto.getContent())) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");
         }
 
-        // 首先需要判断是第一次提交还是再次编辑
+        // 判断是第一次提交还是再次编辑
         if (blogPublishDto.getArticleid() == null) {
             // 第一次提交
             // 设置作者 ID
-            Integer authorId = TokenUtils.getUserInfo(token, commonService).getUserid();
             blogPublishDto.setAuthorid(authorId);
 
             try {
                 blogPublishService.addBlog(blogPublishDto);
-                blogPublishService.addTagForBlog(myid, blogPublishDto);
+                blogPublishService.addTagForBlog(authorId, blogPublishDto);
                 // 检查博客是否需要审核
                 if (blogPublishDto.getArticlestatus() != null && blogPublishDto.getArticlestatus() == Constants.ARTICLE_STATUS_WAITING_CHECK) {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "博客正在审核中！");
@@ -117,7 +118,7 @@ public class BlogPublishAPI {
 
             try {
                 blogPublishService.updateBlogByArticleId(blogPublishDto);
-//                blogPublishService.updateBlogTag(myid, blogPublishDto);
+                blogPublishService.updateBlogTag(blogPublishDto.getTags(), blogPublishDto.getArticleid());
                 // 检查博客是否需要审核
                 if (blogStatus==401) {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "由于正文字数超过500或包含图片，博客正在审核中！");
@@ -136,30 +137,29 @@ public class BlogPublishAPI {
      * 返回随笔编辑数据传输对象
      * @return 成功返回包含随笔的编辑信息的对象，失败返回fail
      */
-    @GetMapping("/get/essayEditDto")
-    public Result getEssayEditDto(@RequestParam("articleid") int articleid, @RequestHeader("Token") String token) {
+    @GetMapping("/get/articlePublishDto")
+    public Result getArticlePublishDto(@RequestParam("articleId") Integer articleId, @RequestHeader("Token") String token) {
         try {
-            BlogPublishDto dto= blogPublishService.getBlogPublishDtoByArticleId(articleid);
+            BlogPublishDto blogPublishDto= blogPublishService.getBlogPublishDtoByArticleId(articleId);
 
             /*
              * 检查是否是随笔的作者
              */
-            int authorid = TokenUtils.getUserInfo(token, commonService).getUserid();
-            if (!dto.getAuthorid().equals(authorid)) {
+            Integer authorId = TokenUtils.getUserInfo(token, commonService).getUserid();
+            if (!blogPublishDto.getAuthorid().equals(authorId)) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "您不是该博客的作者，没有修改权限！");
             }
 
             // 检查博客是否被隐藏
-            if (dto.getArticlestatus()==403) {
+            if (blogPublishDto.getArticlestatus()==403) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "博客被隐藏，无法编辑！");
             }
 
-            return Result.successData(dto);
+            return Result.successData(blogPublishDto);
         } catch (Exception e) {
             e.printStackTrace();
             return Result.fail(Result.ERR_CODE_SYS, "系统错误！获取博客信息失败！");
         }
     }
-
 }
 

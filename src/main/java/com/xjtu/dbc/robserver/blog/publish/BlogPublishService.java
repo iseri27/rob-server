@@ -66,4 +66,11 @@ public interface BlogPublishService {
      * @return tag 的数量
      */
     Integer getTagCount(String tagName, Integer userId);
+
+    /**
+     * 更新博客的 tag
+     * @param tags 标签列表
+     * @param articleId 文章 ID
+     */
+    void updateBlogTag(List<Integer> tags, Integer articleId);
 }

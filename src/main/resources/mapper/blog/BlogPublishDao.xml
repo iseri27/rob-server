@@ -5,7 +5,7 @@
 <mapper namespace="com.xjtu.dbc.robserver.blog.publish.dao.BlogPublishDao">
 
     <!-- 添加新的博客 -->
-    <insert id="addBlog">
+    <insert id="addBlog" useGeneratedKeys="true" keyColumn="articleid" keyProperty="articleid">
         INSERT INTO
             article (
                 articletype  , articlestatus    ,
@@ -21,93 +21,73 @@
             )
     </insert>
 
+    <!-- 查询博客拥有的 Tag -->
+    <select id="getTagListByArticleId" resultType="java.lang.Integer">
+        select tagid
+        from article_has_tag
+        where articleid=#{articleid}
+    </select>
+
+    <!-- 获取用户拥有的 tag -->
+    <select id="getTagListByUserId" resultType="com.xjtu.dbc.robserver.common.model.tag.Tag">
+        select *
+        from tag
+        where ownerid = #{userId}
+    </select>
+
     <!-- 新建 tag -->
     <insert id="addTag">
         INSERT INTO tag(tagname, ownerid)
         VALUES (#{tagname}, #{ownerid})
     </insert>
 
-    <!-- 查询博客拥有的 Tag -->
-    <select id="selectTagListByArtileid" resultType="java.lang.String">
-        select tagname
-        from article_has_tag,tag
-        where articleid=#{articleid} and article_has_tag.tagid = tag.tagid
-    </select>
 
-    <select id="selectTagnameListByUserid" resultType="java.lang.String">
-        select tagname
-        from tag
-        where ownerid=#{myid}
-    </select>
-
-    <select id="selectTagidUseTagname" resultType="java.lang.Integer">
-        select tagid
-        from tag
-        where ownerid=#{myid} and tagname=#{tagname}
-    </select>
-
-    <select id="selectTagListByUserid" resultType="com.xjtu.dbc.robserver.common.model.tag.Tag">
-        select *
-        from tag
-        where ownerid=#{myid}
-    </select>
-
-    <update id="updateBlogByArticleid">
+    <!-- 更新博客 -->
+    <update id="updateBlogById">
         UPDATE article
         SET
             <if test="articlestatus != null">
-            articlestatus  = #{articlestatus},
+            articlestatus  = #{articlestatus}
             </if>
             title          = #{title},
             content        = #{content},
             lastmodifytime = #{lastmodifytime},
-            categoryid       = #{categoryid}
+            categoryid     = #{categoryid}
         WHERE articleid = #{articleid}
     </update>
 
+    <!-- 为博客添加 tag -->
     <insert id="addTagForBlog">
         INSERT INTO article_has_tag(articleid,tagid)
-        VALUES (#{articleid}, #{tagid})
+        VALUES (#{articleId}, #{tagId})
     </insert>
 
-    <delete id="dropTagForBlog">
-        DELETE FROM article_has_tag
-        WHERE tagid = #{tagid} and articleid=#{articleid}
-    </delete>
-
-    <select id="selectBlogEditDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto">
+    <!-- 获取已经存在的待编辑的博客的标题内容等 -->
+    <select id="getBlogPublishDtoById" resultType="com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto">
         select *
         from article
-        where articleid=#{articleid}
+        where articleid = #{articleid}
     </select>
 
-    <select id="selectUserStatusByAuthorid" resultType="java.lang.Integer">
+    <!-- 获取用户 (作者) 的状态 -->
+    <select id="getUserStatusByAuthorId" resultType="java.lang.Integer">
         select userstatus
         from user
         where userid = #{authorid}
     </select>
 
+    <!-- 获取博客的状态-->
     <select id="getArticleStatus" resultType="java.lang.Integer">
         select articlestatus
         from article
         where articleid = #{articleid}
     </select>
 
-    <select id="selectTagCntByT_nameAndU_id" resultType="java.lang.Integer">
+    <!-- 获取某用户创建的某名字的 tag 的数量 -->
+    <select id="getTagCountByTagNameAndUserId" resultType="java.lang.Integer">
         SELECT COUNT(tagid)
         FROM tag
-        WHERE tagname = #{t_name} and ownerid = #{u_id}
+        WHERE tagname = #{tagName} and ownerid = #{userId}
     </select>
-
-    <update id="updateTagnameByT_nameAndU_id">
-        UPDATE tag
-        SET tagname = #{t_name_new}
-        WHERE tagname = #{tagname} AND ownerid = #{u_id}
-    </update>
-
-    <delete id="deleteTagByTagnameAndU_id">
-        DELETE FROM tag
-        WHERE tagname = #{tagname} and ownerid = #{u_id}
-    </delete>
 
 </mapper>

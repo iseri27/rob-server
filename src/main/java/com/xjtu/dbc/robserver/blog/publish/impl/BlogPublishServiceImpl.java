@@ -27,7 +27,7 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      */
     @Override
     public List<Tag> getAllTagListByUserId(Integer myId){
-        List<Tag> list = blogPublishDao.selectTagListByUserId(myId);
+        List<Tag> list = blogPublishDao.getTagListByUserId(myId);
         return list;
     }
 
@@ -47,11 +47,10 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      */
     @Override
     public void addTagForBlog(Integer myId, BlogPublishDto blogPublishDto) {
-        int t_id;
-        int articleid = blogPublishDto.getArticleid();
-        if(blogPublishDto.getTags()!=null) {
+        Integer articleId = blogPublishDto.getArticleid();
+        if(blogPublishDto.getTags() != null) {
             for (Integer tagId : blogPublishDto.getTags()) {
-                blogPublishDao.addTagForBlog(articleid, tagId);
+                blogPublishDao.addTagForBlog(articleId, tagId);
             }
         }
     }
@@ -62,7 +61,7 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      */
     @Override
     public void updateBlogByArticleId(BlogPublishDto dto) {
-        blogPublishDao.updateBlogByArticleId(dto);
+        blogPublishDao.updateBlogById(dto);
     }
 
     /**
@@ -72,9 +71,9 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      */
     @Override
     public BlogPublishDto getBlogPublishDtoByArticleId(Integer articleId){
-        BlogPublishDto dto = blogPublishDao.selectBlogEditDtoByArticleId(articleId);
-        List<String> tagList = blogPublishDao.selectTagListByArticleId(articleId);
-//        dto.setTags(tagList);
+        BlogPublishDto dto = blogPublishDao.getBlogPublishDtoById(articleId);
+        List<Integer> tagList = blogPublishDao.getTagListByArticleId(articleId);
+        dto.setTags(tagList);
         return dto;
     }
 
@@ -85,7 +84,7 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      */
     @Override
     public Integer getUserStatus(Integer authorId){
-        return blogPublishDao.selectUserStatusByAuthorId(authorId);
+        return blogPublishDao.getUserStatusByAuthorId(authorId);
     }
 
     /**
@@ -115,6 +114,16 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      */
     @Override
     public Integer getTagCount(String tagName, Integer userId){
-        return blogPublishDao.selectTagCountByTagNameAndUserId(tagName, userId);
+        return blogPublishDao.getTagCountByTagNameAndUserId(tagName, userId);
+    }
+
+    /**
+     * 更新博客的 tag
+     * @param tags      标签列表
+     * @param articleId 文章 ID
+     */
+    @Override
+    public void updateBlogTag(List<Integer> tags, Integer articleId) {
+
     }
 }

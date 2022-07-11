@@ -113,4 +113,40 @@ public class PersonalAPI {
         articleDto.setUserid(currentUser.getUserid());
         return Result.success("获取成功", personalService.getArtical(articleDto));
     }
+
+    @GetMapping("/relationship")
+    public Result getRelationship(@RequestHeader("Token") String token, Integer userid){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        Integer myid = currentUser.getUserid();
+        return Result.success("获取成功",personalService.getRelationship(myid, userid));
+    }
+
+    @PostMapping("/follow")
+    public Result follow(@RequestHeader("Token") String token,@RequestBody Integer userid){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        Integer myid = currentUser.getUserid();
+        personalService.follow(myid, userid);
+        return Result.successMsg("成功关注");
+    }
+    @PostMapping("/block")
+    public Result block(@RequestHeader("Token") String token,@RequestBody Integer userid){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        Integer myid = currentUser.getUserid();
+        personalService.block(myid, userid);
+        return Result.successMsg("成功关注");
+    }
+    @PostMapping("/disfollow")
+    public Result disfollow(@RequestHeader("Token") String token,@RequestBody Integer userid){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        Integer myid = currentUser.getUserid();
+        personalService.disfollow(myid, userid);
+        return Result.successMsg("成功关注");
+    }
+    @PostMapping("/follow")
+    public Result disblock(@RequestHeader("Token") String token,@RequestBody Integer userid){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        Integer myid = currentUser.getUserid();
+        personalService.disblock(myid, userid);
+        return Result.successMsg("成功关注");
+    }
 }

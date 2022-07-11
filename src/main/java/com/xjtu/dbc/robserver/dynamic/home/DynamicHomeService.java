@@ -23,7 +23,7 @@ public interface DynamicHomeService {
     List<DynamicMyHomeListDto> getDynamicList(Integer userid);
 
 
-    List<DynamicMyHomeListDto> getFollowDynamicList(Integer userid);
+
 
 
 
@@ -78,7 +78,6 @@ public interface DynamicHomeService {
 
 
 
-
     /**
      * 根据动态的编号来获取该动态的点赞数
      * @param articleid  动态的编号
@@ -102,5 +101,7 @@ public interface DynamicHomeService {
      */
     int getCommentnumByArticleid(Integer articleid);
 
-    int getVoteTypeByU_A_id(Integer userid,Integer articleid);
+
+
+    int getVoteTypeByU_A_id(Integer userid,Integer aticleid);
 }

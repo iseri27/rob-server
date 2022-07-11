@@ -34,7 +34,7 @@ public class BlogDetailAPI {
                     TokenUtils.verifyToken(token, commonService);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return Result.fail(Result.ERR_CODE_BUSINESS, "随笔未发布，请登录！");
+                    return Result.fail(Result.ERR_CODE_BUSINESS, "博客未发布，请登录！");
                 }
 
                 // 虽然该用户登录了，但并非是这篇随笔的作者
@@ -51,5 +51,15 @@ public class BlogDetailAPI {
             e.printStackTrace();
             return Result.fail(Result.ERR_CODE_SYS, "系统错误！获取博客信息失败！");
         }
+    }
+
+    /**
+     * 获取当前用户id
+     */
+    @GetMapping("/currentUser")
+    public Result getCurrentUser(@RequestHeader("Token") String token) {
+        Integer myid = TokenUtils.getUserInfo(token,commonService).getUserid();
+        CurrentUserDto currentUser = blogDetailService.getCurrentUser(myid);
+        return Result.success("获取用户信息成功",currentUser);
     }
 }

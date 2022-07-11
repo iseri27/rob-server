@@ -48,4 +48,16 @@
         lastmodifytime
         desc
     </select>
+    <select id="getRelationship" resultType="java.lang.Integer">
+        select userlisttype
+        from userlist, userlist_has_user
+        where userlist.ownerid = #{myid}
+        and userlist.userlistid = userlist_has_user.userlistid
+        and userlist_has_user.userid = #{userid}
+        and userlist.userlisttype &lt;&gt; 601
+        and userlist.userlisttype &lt;&gt; 603
+    </select>
+    <update id="follow">
+        update
+    </update>
 </mapper>

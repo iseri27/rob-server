@@ -26,4 +26,10 @@
         from article,category
         where article.categoryid = category.categoryid and articleid = #{articleid}
     </select>
+
+    <select id="getCurrentUser" resultType="com.xjtu.dbc.robserver.blog.detail.CurrentUserDto">
+        select userid,username,useravatar
+        from user
+        where userid = #{myid}
+    </select>
 </mapper>

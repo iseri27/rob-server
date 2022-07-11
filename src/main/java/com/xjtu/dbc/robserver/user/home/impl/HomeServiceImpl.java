@@ -32,4 +32,9 @@ public class HomeServiceImpl implements HomeService {
 
         return homeDao.getMenusByUserId(userid);
     }
+
+    @Override
+    public Integer getUnReadNum(Integer userid) {
+        return homeDao.getUnReadNum(userid);
+    }
 }

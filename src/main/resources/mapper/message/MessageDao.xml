@@ -13,4 +13,18 @@
             WHERE chatlist.myid = #{myId}
                     AND chatlist.friendid = #{friendId} )
     </select>
+
+    <select id="getChatFriendList" resultType="com.xjtu.dbc.robserver.message.entity.ChatFriend">
+        SELECT
+            u.userid id,
+            u.username name,
+            u.useravatar avatar,
+            (select COUNT(m.msgid) from message m where m.senderid = friendid and m.receiverid = myid)unReadNum
+        FROM
+            chatlist
+            JOIN user u ON chatlist.friendid = u.userid
+        WHERE
+            myid = #{userId}
+        ORDER BY unReadNum DESC
+    </select>
 </mapper>

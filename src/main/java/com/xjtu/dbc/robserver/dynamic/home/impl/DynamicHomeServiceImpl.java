@@ -27,6 +27,7 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
 
     @Override
     public List<DynamicMyHomeListDto> getDynamicList(Integer userid){
+        System.out.println("测试输出的userid: " +  userid );
         return dynamicHomeDao.getDynamicList(userid);
     }
 
@@ -36,15 +37,12 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
     }
 
 
-    @Override
-    public List<DynamicMyHomeListDto> getFollowDynamicList(Integer userid){
-        return dynamicHomeDao.getFollowDynamicList(userid);
-    }
+
 
 
     @Override
-    public DynamicMyHomeListDto getDynamic(Integer articleid){
-        return dynamicHomeDao.getDynamic(articleid);
+    public DynamicMyHomeListDto getDynamic(Integer dynamicid){
+        return dynamicHomeDao.getDynamic(dynamicid);
     }
 
     @Override
@@ -64,7 +62,6 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
 
 
 
-
     @Override
     public int getLikenumByAriticleid(Integer articleid){
         return dynamicHomeDao.getLikenumByAriticleid(articleid);
@@ -79,6 +76,7 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
     public int getCommentnumByArticleid(Integer articleid){
         return dynamicHomeDao.getCommentnumByArticleid(articleid);
     }
+
 
     @Override
     public int getVoteTypeByU_A_id(Integer userid,Integer articleid){

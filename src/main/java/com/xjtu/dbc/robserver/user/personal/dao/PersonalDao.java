@@ -20,11 +20,11 @@ public interface PersonalDao {
 
     Integer getRelationship(Integer myid, Integer userid);
 
-    void follow(Integer myid,Integer userid);
+    Integer getListid(Integer myid, int constant);
 
-    void block(Integer myid,Integer userid);
+    void follow(Integer userlistid,Integer userid);
 
-    void disfollow(Integer myid,Integer userid);
+    void disfollow(Integer userlistid,Integer userid);
 
-    void disblock(Integer myid,Integer userid);
+    void deleteBlog(Integer articleid);
 }

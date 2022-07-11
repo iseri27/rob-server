@@ -29,4 +29,6 @@ public interface PersonalService {
     void disfollow(Integer myid,Integer userid);
 
     void disblock(Integer myid,Integer userid);
+
+    void deleteBlog(Integer articleid);
 }

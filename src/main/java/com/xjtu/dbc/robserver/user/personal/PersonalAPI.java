@@ -4,6 +4,7 @@ import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.CurrentUser;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
 import com.xjtu.dbc.robserver.user.personal.entity.Avatar;
@@ -142,11 +143,16 @@ public class PersonalAPI {
         personalService.disfollow(myid, userid);
         return Result.successMsg("成功关注");
     }
-    @PostMapping("/follow")
+    @PostMapping("/disblock")
     public Result disblock(@RequestHeader("Token") String token,@RequestBody Integer userid){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
         personalService.disblock(myid, userid);
         return Result.successMsg("成功关注");
+    }
+    @PostMapping("/delete/blog")
+    public Result deleteBlog(@RequestBody Article article){
+        personalService.deleteBlog(article.getArticleid());
+        return Result.successMsg("删除成功");
     }
 }

@@ -18,6 +18,8 @@ public interface DynamicHomeDao {
 
     DynamicMyHomeListDto getDynamic(Integer dynamicid);
 
+    Integer deleteDynamic(Integer articleid);
+
     Integer getFollownumByUserid(Integer userid);
 
 

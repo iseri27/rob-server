@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.blog.home;
 
+import com.xjtu.dbc.robserver.blog.home.entity.BlogDto;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 
@@ -25,11 +26,11 @@ public interface BlogHomeService {
 
     /**
      * 获取推荐的的博客列表
-     * @param pageParam 分页参数
+     * @param blogDto 分页参数
      * @param userId 用户 ID
      * @return 推荐的的博客列表
      */
-    Map<String, Object> getRecommendBlogList(PageParam pageParam, Integer userId);
+    Map<String, Object> getRecommendBlogList(BlogDto blogDto, Integer userId);
 
     /**
      * 获取分类列表

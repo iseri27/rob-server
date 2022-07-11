@@ -32,6 +32,7 @@
             <if test="userId      != null">     authorid      != #{userId}      </if>
             <if test="articleType != null"> and articletype   =  #{articleType} </if>
             <if test="true"               > and articlestatus =  402            </if>
+            <if test="categoryId  != null"> and categoryid    =  #{categoryId}  </if>
         </where>
         order by createtime desc
     </select>

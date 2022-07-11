@@ -37,6 +37,7 @@ public class QuestionHomeAPI {
                     listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
                     listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
                     listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setAnswer_num(questionHomeService.getAnswerNum((listDto.get(i).getQuestionid())));
                 }
                 return Result.success("获取悬赏大厅的全部问题列表成功!",listDto);
             }
@@ -50,6 +51,7 @@ public class QuestionHomeAPI {
                     listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
                     listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
                     listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setAnswer_num(questionHomeService.getAnswerNum((listDto.get(i).getQuestionid())));
                 }
                 return Result.success("获取悬赏大厅的未解决问题列表成功!", listDto);
 
@@ -64,6 +66,7 @@ public class QuestionHomeAPI {
                     listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
                     listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
                     listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
+                    listDto.get(i).setAnswer_num(questionHomeService.getAnswerNum((listDto.get(i).getQuestionid())));
                 }
                 return Result.success("获取悬赏大厅的已解决问题列表成功!", listDto);
             }
@@ -84,6 +87,7 @@ public class QuestionHomeAPI {
             questionDetailsDto.setDislike_num(questionHomeService.getDislikenumByQuestionId(questionid));
             questionDetailsDto.setComment_num(questionHomeService.getCommentNum(questionid));
             questionDetailsDto.setTaglist(questionHomeService.getTagListByQuestionid(questionid));
+            questionDetailsDto.setAnswer_num(questionHomeService.getAnswerNum(questionid));
             return Result.success("查找悬赏详情成功",questionDetailsDto);
         }catch (Exception e){
             e.printStackTrace();

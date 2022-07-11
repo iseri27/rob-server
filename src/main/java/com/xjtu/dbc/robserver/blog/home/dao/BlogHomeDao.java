@@ -26,7 +26,7 @@ public interface BlogHomeDao {
      * @param userId 用户 ID
      * @return 用推荐的博客
      */
-    List<BlogVO> getArticleListOfRecommend(Integer userId, int articleType);
+    List<BlogVO> getArticleListOfRecommend(Integer userId, Integer categoryId, int articleType);
 
     /**
      * 获取分类列表

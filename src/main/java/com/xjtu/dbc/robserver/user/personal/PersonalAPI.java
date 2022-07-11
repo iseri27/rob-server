@@ -36,6 +36,11 @@ public class PersonalAPI {
         return Result.success("获取成功",commonService.getUserWithoutPasswordById(userid));
     }
 
+    @GetMapping("/get/user")
+    public Result getUserById(Integer userid){
+        return Result.success("获取成功",commonService.getUserWithoutPasswordById(userid));
+    }
+
     /**
      * 修改头像
      * @param avatar 头像

@@ -2,10 +2,7 @@ package com.xjtu.dbc.robserver.blog.publish;
 
 import com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto;
 import com.xjtu.dbc.robserver.blog.publish.entity.TagDto;
-import com.xjtu.dbc.robserver.common.CommonService;
-import com.xjtu.dbc.robserver.common.Result;
-import com.xjtu.dbc.robserver.common.TokenUtils;
-import com.xjtu.dbc.robserver.common.Utils;
+import com.xjtu.dbc.robserver.common.*;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,29 +38,6 @@ public class BlogPublishAPI {
     }
 
     /**
-     * 重命名tag
-     * @param dto 包含原tag名称与新tag名称
-     * @param token 用户令牌,用户获取用户id
-     */
-    @PostMapping("/tag/rename")
-    public Result renameTag(@RequestBody TagDto dto, @RequestHeader("Token") String token) {
-        try {
-            int u_id = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
-            Integer cnt = blogPublishService.getTagCount(dto.getTagNameNew(), u_id);
-
-            if (cnt>0) {
-                return Result.fail(Result.ERR_CODE_BUSINESS, "该名称已存在！");
-            }
-
-            blogPublishService.renameTag(dto.getTagname(), u_id, dto.getTagNameNew());
-            return Result.successMsg("修改成功！");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Result.fail(Result.ERR_CODE_SYS, "修改失败！");
-        }
-    }
-
-    /**
      * 新增tag
      * @param tag 包含tag信息
      * @param token 用户令牌
@@ -76,17 +50,18 @@ public class BlogPublishAPI {
         }
 
         try {
-            int t_id = blogPublishService.getNewTagId();
-            int u_id = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
+            // 获取当前用户的 ID
+            Integer userId = TokenUtils.getUserInfo(token,commonService).getUserid();
 
-            if (blogPublishService.getTagCount(tag.getTagname(), u_id)>0) {
+            // 检查 tag 是否已经存在
+            if (blogPublishService.getTagCount(tag.getTagname(), userId) > 0) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "该Tag已存在！");
             }
 
-            tag.setTagid(t_id);
-            tag.setOwnerid(u_id);
-
+            // 新建 tag
+            tag.setOwnerid(userId);
             blogPublishService.addTag(tag);
+
             return Result.successMsg("添加成功！");
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,95 +70,59 @@ public class BlogPublishAPI {
     }
 
     /**
-     * 删除tag, 通过tag名删除
-     * @param tag 包含tag名
-     * @param token 用户令牌
-     */
-    @PostMapping("/tag/delete")
-    public Result deleteTag(@RequestBody Tag tag, @RequestHeader("Token") String token) {
-        if (tag.getTagname() == null || "".equals(tag.getTagname().trim())) {
-            return Result.fail(Result.ERR_CODE_BUSINESS, "Tag名不能为空!");
-        }
-
-        try {
-            int u_id = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
-
-            blogPublishService.deleteTag(tag.getTagname(), u_id);
-            return Result.successMsg("删除成功！");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Result.fail(Result.ERR_CODE_SYS, "删除Tag失败！");
-        }
-    }
-
-    /**
      * 编辑博客
-     * @param dto 随笔数据传输对象，包含新增/被编辑随笔的数据
+     * @param blogPublishDto 随笔数据传输对象，包含新增/被编辑随笔的数据
      * @param token 令牌
      * @return 新增/编辑成功返回data: 随笔id；失败返回fail
      */
     @PostMapping("/publish")
-    public Result blogPublish(@RequestBody BlogPublishDto dto, @RequestHeader("Token") String token) {
-        int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
-        if (blogPublishService.getUserStatus(myid) != 200) {
-          return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
+    public Result blogPublish(@RequestBody BlogPublishDto blogPublishDto, @RequestHeader("Token") String token) {
+        Integer myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
+        if (blogPublishService.getUserStatus(myid) != Constants.USER_STATUS_MUTED) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
         }
-        if (dto.getContent()==null || "".equals(dto.getContent())) {
+
+        if (blogPublishDto.getContent() == null || "".equals(blogPublishDto.getContent())) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");
         }
 
-
-        /**
-         * 首先需要判断是第一次提交还是再次编辑
-         */
-        if (dto.getArticleid()==null) {
-            /**
-             * 第一次提交
-             */
-            // 设置时间选项
-            dto.setCreatetime(Utils.getNow());
-            dto.setLastmodifytime(dto.getCreatetime());
-
-            // 获取新的articleid
-            int articleid = blogPublishService.getNewArticleId();
-            dto.setArticleid(articleid);
-
-            // 设置作者authorid
-            int authorid = TokenUtils.getUserInfo(token, commonService).getUserid();
-            dto.setAuthorid(authorid);
+        // 首先需要判断是第一次提交还是再次编辑
+        if (blogPublishDto.getArticleid() == null) {
+            // 第一次提交
+            // 设置作者 ID
+            Integer authorId = TokenUtils.getUserInfo(token, commonService).getUserid();
+            blogPublishDto.setAuthorid(authorId);
 
             try {
-                blogPublishService.addBlog(dto);
-                blogPublishService.addTagForBlog(myid,dto);
+                blogPublishService.addBlog(blogPublishDto);
+                blogPublishService.addTagForBlog(myid, blogPublishDto);
                 // 检查博客是否需要审核
-                if (dto.getArticlestatus()!=null && dto.getArticlestatus()==401) {
-                    return Result.fail(Result.ERR_CODE_BUSINESS, "由于正文字数超过500或包含图片，博客正在审核中！");
+                if (blogPublishDto.getArticlestatus() != null && blogPublishDto.getArticlestatus() == Constants.ARTICLE_STATUS_WAITING_CHECK) {
+                    return Result.fail(Result.ERR_CODE_BUSINESS, "博客正在审核中！");
                 }
-                return Result.success("发布成功！", dto.getArticleid());
+                return Result.success("发布成功！", blogPublishDto.getArticleid());
             } catch (Exception e) {
                 e.printStackTrace();
-                return Result.fail(Result.ERR_CODE_SYS, "无法发布！");
+                return Result.fail(Result.ERR_CODE_SYS, "系统错误, 无法发布！");
             }
         } else {
-            /**
-             * 再次编辑
-             */
+            // 再次编辑
             // 检查博客是否被隐藏
-            int blogStatus = blogPublishService.getArticleStatus(dto.getArticleid());
+            int blogStatus = blogPublishService.getArticleStatus(blogPublishDto.getArticleid());
             if (blogStatus==403) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "博客被隐藏，无法编辑！");
             }
             // 设置最后编辑时间
-            dto.setLastmodifytime(Utils.getNow());
+            blogPublishDto.setLastmodifytime(Utils.getNow());
 
             try {
-                blogPublishService.updateBlogByArticleId(dto);
-                blogPublishService.updateBlogTag(myid,dto);
+                blogPublishService.updateBlogByArticleId(blogPublishDto);
+//                blogPublishService.updateBlogTag(myid, blogPublishDto);
                 // 检查博客是否需要审核
                 if (blogStatus==401) {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "由于正文字数超过500或包含图片，博客正在审核中！");
                 }
-                return Result.success("修改成功！", dto.getArticleid());
+                return Result.success("修改成功！", blogPublishDto.getArticleid());
             } catch (Exception e) {
                 e.printStackTrace();
                 return Result.fail(Result.ERR_CODE_SYS, "无法修改！");

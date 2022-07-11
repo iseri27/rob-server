@@ -7,35 +7,27 @@ import java.util.List;
 
 public interface BlogPublishDao {
 
-    int getLastId();
-    
-    int getLastTagId();
-    
+    /**
+     * 添加博客
+     * @param dto
+     */
     void addBlog(BlogPublishDto dto);
     
-    List<String> selectTagListByArtileid(int articleid);
+    List<String> selectTagListByArticleId(Integer articleId);
     
-    int selectTagidUseTagname(int myid, String tagname);
-    
-    List<Tag> selectTagListByUserid(int myid);
+    List<Tag> selectTagListByUserId(Integer myId);
 
-    void updateBlogByArticleid(BlogPublishDto dto);
+    void updateBlogByArticleId(BlogPublishDto blogPublishDto);
 
-    void addTagForBlog(int articleid, int tagid);
+    void addTagForBlog(Integer articleId, Integer tagId);
 
-    void dropTagForBlog(int articleid, int tagid);
+    BlogPublishDto selectBlogEditDtoByArticleId(Integer articleId);
 
-    BlogPublishDto selectBlogEditDtoByArticleid(int articleid);
+    int selectUserStatusByAuthorId(Integer authorId);
 
-    int selectUserStatusByAuthorid(int authorid);
-
-    int getArticleStatus(int articleid);
+    int getArticleStatus(Integer articleId);
 
     void addTag(Tag tag);
 
-    Integer selectTagCntByT_nameAndU_id(String t_name, int u_id);
-
-    void updateTagnameByT_nameAndU_id(String tagname, int u_id, String t_name_new);
-
-    void deleteTagByTagnameAndU_id(String tagname, int u_id);
+    Integer selectTagCountByTagNameAndUserId(String tagName, Integer userId);
 }

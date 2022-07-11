@@ -3,27 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.blog.publish.dao.BlogPublishDao">
-    <!-- 根据 ID 获取用户 -->
-    <select id="getLastId" resultType="java.lang.Integer">
-        select max(articleid)
-        from article
-    </select>
 
-    <select id="getLastTagId" resultType="java.lang.Integer">
-        select max(tagid)
-        from tag
-    </select>
-
+    <!-- 添加新的博客 -->
     <insert id="addBlog">
-        INSERT INTO article(articleid, articletype, articlestatus, title, content, cost, createtime, lastmodifytime, replyto, authorid, categoryid, rootid)
-        VALUES (#{articleid}, 300, #{articlestatus}, #{title}, #{content}, #{cost}, #{createtime}, #{lastmodifytime}, #{replyto}, #{authorid}, #{categoryid}, #{rootid})
+        INSERT INTO
+            article (
+                articletype  , articlestatus    ,
+                title        , content          , cost         ,
+                createtime   , lastmodifytime   , replyto      ,
+                authorid     , categoryid       , rootid
+            )
+        VALUES (
+                300          , #{articlestatus} ,
+                #{title}     , #{content}       , #{cost}         ,
+                now()        , now()            , #{replyto}      ,
+                #{authorid}  , #{categoryid}    , #{rootid}
+            )
     </insert>
 
+    <!-- 新建 tag -->
     <insert id="addTag">
-        INSERT INTO tag(tagid,tagname,ownerid)
-        VALUES (#{tagid}, #{tagname}, #{ownerid})
+        INSERT INTO tag(tagname, ownerid)
+        VALUES (#{tagname}, #{ownerid})
     </insert>
 
+    <!-- 查询博客拥有的 Tag -->
     <select id="selectTagListByArtileid" resultType="java.lang.String">
         select tagname
         from article_has_tag,tag

@@ -21,100 +21,100 @@ public class BlogPublishServiceImpl implements BlogPublishService {
     private BlogPublishDao blogPublishDao;
 
     /**
-     * 获取用户tag列表(Tag类，包括id与name）
+     * 通过用户 ID 获取所有的 tag 列表
+     * @param myId 用户 ID
+     * @return Tag 列表
      */
     @Override
-    public List<Tag> getAllTagListByUserId(int myid){
-        List<Tag> list = blogPublishDao.selectTagListByUserid(myid);
+    public List<Tag> getAllTagListByUserId(Integer myId){
+        List<Tag> list = blogPublishDao.selectTagListByUserId(myId);
         return list;
     }
 
+    /**
+     * 新建博客
+     * @param blogPublishDto 博客参数
+     */
     @Override
-    public Integer getTagCount(String t_name, Integer u_id){
-        return blogPublishDao.selectTagCntByT_nameAndU_id(t_name, u_id);
-    }
-
-    @Override
-    public void renameTag(String tagname, Integer u_id, String t_name_new){
-        blogPublishDao.updateTagnameByT_nameAndU_id(tagname, u_id, t_name_new);
-    }
-
-    @Override
-    public void deleteTag(String tagname, Integer u_id){
-        blogPublishDao.deleteTagByTagnameAndU_id(tagname, u_id);
+    public void addBlog(BlogPublishDto blogPublishDto) {
+        blogPublishDao.addBlog(blogPublishDto);
     }
 
     /**
-     * 获取新的博客id
+     * 为博客添加 Tag
+     * @param myId 用户 ID
+     * @param blogPublishDto 博客参数
      */
     @Override
-    public Integer getNewArticleId() {
-        return blogPublishDao.getLastId()+1;
-    }
-
-    /**
-     * 获取新的tagid
-     */
-    @Override
-    public Integer getNewTagId() {
-        return blogPublishDao.getLastTagId()+1;
-    }
-
-    /**
-     * 新增博客
-     */
-    @Override
-    public void addBlog(BlogPublishDto dto) {
-        blogPublishDao.addBlog(dto);
-    }
-
-    /**
-     * 更新博客
-     */
-    @Override
-    public void updateBlogByArticleId(BlogPublishDto dto) {
-        blogPublishDao.updateBlogByArticleid(dto);
-    }
-
-    /**
-     * 为博客添加tag
-     */
-    @Override
-    public void addTagForBlog(Integer myId, BlogPublishDto dto) {
+    public void addTagForBlog(Integer myId, BlogPublishDto blogPublishDto) {
         int t_id;
-        int articleid = dto.getArticleid();
-        if(dto.getTags()!=null) {
-            for (Integer tagId : dto.getTags()) {
+        int articleid = blogPublishDto.getArticleid();
+        if(blogPublishDto.getTags()!=null) {
+            for (Integer tagId : blogPublishDto.getTags()) {
                 blogPublishDao.addTagForBlog(articleid, tagId);
             }
         }
     }
 
+    /**
+     * 更新博客
+     * @param dto 博客参数
+     */
+    @Override
+    public void updateBlogByArticleId(BlogPublishDto dto) {
+        blogPublishDao.updateBlogByArticleId(dto);
+    }
 
     /**
-     * 增加我的tag
+     * 获取已存在的博客的参数
+     * @param articleId 博客 ID
+     * @return 博客的各项参数
+     */
+    @Override
+    public BlogPublishDto getBlogPublishDtoByArticleId(Integer articleId){
+        BlogPublishDto dto = blogPublishDao.selectBlogEditDtoByArticleId(articleId);
+        List<String> tagList = blogPublishDao.selectTagListByArticleId(articleId);
+//        dto.setTags(tagList);
+        return dto;
+    }
+
+    /**
+     * 获取用户的状态
+     * @param authorId 用户 ID
+     * @return 用户状态
+     */
+    @Override
+    public Integer getUserStatus(Integer authorId){
+        return blogPublishDao.selectUserStatusByAuthorId(authorId);
+    }
+
+    /**
+     * 获取博客的状态
+     * @param articleId 博客 ID
+     * @return 博客状态
+     */
+    @Override
+    public Integer getArticleStatus(Integer articleId){
+        return blogPublishDao.getArticleStatus(articleId);
+    }
+
+    /**
+     * 新增 Tag
+     * @param tag
      */
     @Override
     public void addTag(Tag tag){
         blogPublishDao.addTag(tag);
     }
 
+    /**
+     * 查询拥有该名字的 tag 的数量
+     * @param tagName tag 的名字
+     * @param userId 用户 ID
+     * @return tag 的数量
+     */
     @Override
-    public BlogPublishDto getBlogPublishDtoByArticleId(Integer articleId){
-        BlogPublishDto dto = blogPublishDao.selectBlogEditDtoByArticleid(articleId);
-        List<String> tagList = blogPublishDao.selectTagListByArtileid(articleId);
-//        dto.setTags(tagList);
-        return dto;
+    public Integer getTagCount(String tagName, Integer userId){
+        return blogPublishDao.selectTagCountByTagNameAndUserId(tagName, userId);
     }
-
-    @Override
-    public Integer getUserStatus(Integer authorId){
-        return blogPublishDao.selectUserStatusByAuthorid(authorId);
-    }
-
-    @Override
-    public Integer getArticleStatus(Integer articleId){
-        return blogPublishDao.getArticleStatus(articleId);
-    }
-
 }

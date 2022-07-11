@@ -71,7 +71,7 @@
         WHERE tagid = #{tagid} and articleid=#{articleid}
     </delete>
 
-    <select id="selectBlogEditDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.publish.BlogEditDto">
+    <select id="selectBlogEditDtoByArticleid" resultType="com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto">
         select *
         from article
         where articleid=#{articleid}

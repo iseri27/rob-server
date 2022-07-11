@@ -1,11 +1,12 @@
 package com.xjtu.dbc.robserver.blog.publish;
 
+import com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto;
+import com.xjtu.dbc.robserver.blog.publish.entity.TagDto;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.Utils;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
-import com.xjtu.dbc.robserver.common.model.tag.TagDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,13 +23,16 @@ public class BlogPublishAPI {
 
     /**
      * 获取该用户所有的tag(tagid)
+     * @param token 用户令牌
+     * @return Result { data: tag id 列表 }
      */
     @GetMapping("/get/tagList")
     public Result gelAllTagList(@RequestHeader("Token") String token) {
         try {
-            int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
+            // 当前用户 ID
+            Integer myId = TokenUtils.getUserInfo(token,commonService).getUserid();
 
-            List<Tag> list = blogPublishService.getAllTagListByUserid(myid);
+            List<Tag> list = blogPublishService.getAllTagListByUserId(myId);
             return Result.successData(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,13 +49,13 @@ public class BlogPublishAPI {
     public Result renameTag(@RequestBody TagDto dto, @RequestHeader("Token") String token) {
         try {
             int u_id = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
-            Integer cnt = blogPublishService.getTagCount(dto.getT_name_new(), u_id);
+            Integer cnt = blogPublishService.getTagCount(dto.getTagNameNew(), u_id);
 
             if (cnt>0) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "该名称已存在！");
             }
 
-            blogPublishService.renameTag(dto.getTagname(), u_id, dto.getT_name_new());
+            blogPublishService.renameTag(dto.getTagname(), u_id, dto.getTagNameNew());
             return Result.successMsg("修改成功！");
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +76,7 @@ public class BlogPublishAPI {
         }
 
         try {
-            int t_id = blogPublishService.getNewTagid();
+            int t_id = blogPublishService.getNewTagId();
             int u_id = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
 
             if (blogPublishService.getTagCount(tag.getTagname(), u_id)>0) {
@@ -119,7 +123,7 @@ public class BlogPublishAPI {
      * @return 新增/编辑成功返回data: 随笔id；失败返回fail
      */
     @PostMapping("/publish")
-    public Result blogPublish(@RequestBody BlogEditDto dto, @RequestHeader("Token") String token) {
+    public Result blogPublish(@RequestBody BlogPublishDto dto, @RequestHeader("Token") String token) {
         int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id
         if (blogPublishService.getUserStatus(myid) != 200) {
           return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
@@ -141,7 +145,7 @@ public class BlogPublishAPI {
             dto.setLastmodifytime(dto.getCreatetime());
 
             // 获取新的articleid
-            int articleid = blogPublishService.getNewArticleid();
+            int articleid = blogPublishService.getNewArticleId();
             dto.setArticleid(articleid);
 
             // 设置作者authorid
@@ -173,7 +177,7 @@ public class BlogPublishAPI {
             dto.setLastmodifytime(Utils.getNow());
 
             try {
-                blogPublishService.updateBlogByArticleid(dto);
+                blogPublishService.updateBlogByArticleId(dto);
                 blogPublishService.updateBlogTag(myid,dto);
                 // 检查博客是否需要审核
                 if (blogStatus==401) {
@@ -196,7 +200,7 @@ public class BlogPublishAPI {
     @GetMapping("/get/essayEditDto")
     public Result getEssayEditDto(@RequestParam("articleid") int articleid, @RequestHeader("Token") String token) {
         try {
-            BlogEditDto dto= blogPublishService.getBlogEditDtoByArticleid(articleid);
+            BlogPublishDto dto= blogPublishService.getBlogPublishDtoByArticleId(articleid);
 
             /*
              * 检查是否是随笔的作者

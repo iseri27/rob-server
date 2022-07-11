@@ -1,35 +1,34 @@
 package com.xjtu.dbc.robserver.blog.publish;
 
+import com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
 
 import java.util.List;
 
 public interface BlogPublishService {
-    List<Tag> getAllTagListByUserid(int myid);
+    List<Tag> getAllTagListByUserId(int myid);
 
-    int getNewArticleid();
+    Integer getNewArticleId();
 
-    int getNewTagid();
+    Integer getNewTagId();
 
-    void addBlog(BlogEditDto dto);
+    void addBlog(BlogPublishDto dto);
 
-    void addTagForBlog(int myid,BlogEditDto dto);
+    void addTagForBlog(Integer myId, BlogPublishDto dto);
 
-    void updateBlogByArticleid(BlogEditDto dto);
+    void updateBlogByArticleId(BlogPublishDto dto);
 
-    void updateBlogTag(int myid, BlogEditDto dto);
+    BlogPublishDto getBlogPublishDtoByArticleId(Integer articleId);
 
-    BlogEditDto getBlogEditDtoByArticleid(int articleid);
+    Integer getUserStatus(Integer authorId);
 
-    int getUserStatus(int authorid);
-
-    int getArticleStatus(int articleid);
+    Integer getArticleStatus(Integer articleId);
 
     void addTag(Tag tag);
 
-    Integer getTagCount(String t_name, int u_id);
+    Integer getTagCount(String t_name, Integer u_id);
 
-    void renameTag(String tagname, int u_id, String t_name_new);
+    void renameTag(String tagname, Integer u_id, String t_name_new);
 
-    void deleteTag(String tagname, int u_id);
+    void deleteTag(String tagname, Integer u_id);
 }

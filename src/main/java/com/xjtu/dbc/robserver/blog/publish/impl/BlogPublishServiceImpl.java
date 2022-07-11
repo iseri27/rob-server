@@ -1,12 +1,11 @@
 package com.xjtu.dbc.robserver.blog.publish.impl;
 
 
-import com.xjtu.dbc.robserver.blog.publish.BlogEditDto;
+import com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto;
 
 import com.xjtu.dbc.robserver.blog.publish.BlogPublishService;
 import com.xjtu.dbc.robserver.blog.publish.dao.BlogPublishDao;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
-import com.xjtu.dbc.robserver.common.model.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,32 +24,31 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      * 获取用户tag列表(Tag类，包括id与name）
      */
     @Override
-    public List<Tag> getAllTagListByUserid(int myid){
+    public List<Tag> getAllTagListByUserId(int myid){
         List<Tag> list = blogPublishDao.selectTagListByUserid(myid);
         return list;
     }
 
     @Override
-    public Integer getTagCount(String t_name, int u_id){
+    public Integer getTagCount(String t_name, Integer u_id){
         return blogPublishDao.selectTagCntByT_nameAndU_id(t_name, u_id);
     }
 
     @Override
-    public void renameTag(String tagname, int u_id, String t_name_new){
+    public void renameTag(String tagname, Integer u_id, String t_name_new){
         blogPublishDao.updateTagnameByT_nameAndU_id(tagname, u_id, t_name_new);
     }
 
     @Override
-    public void deleteTag(String tagname, int u_id){
+    public void deleteTag(String tagname, Integer u_id){
         blogPublishDao.deleteTagByTagnameAndU_id(tagname, u_id);
     }
-
 
     /**
      * 获取新的博客id
      */
     @Override
-    public int getNewArticleid() {
+    public Integer getNewArticleId() {
         return blogPublishDao.getLastId()+1;
     }
 
@@ -58,7 +56,7 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      * 获取新的tagid
      */
     @Override
-    public int getNewTagid() {
+    public Integer getNewTagId() {
         return blogPublishDao.getLastTagId()+1;
     }
 
@@ -66,7 +64,7 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      * 新增博客
      */
     @Override
-    public void addBlog(BlogEditDto dto) {
+    public void addBlog(BlogPublishDto dto) {
         blogPublishDao.addBlog(dto);
     }
 
@@ -74,7 +72,7 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      * 更新博客
      */
     @Override
-    public void updateBlogByArticleid(BlogEditDto dto) {
+    public void updateBlogByArticleId(BlogPublishDto dto) {
         blogPublishDao.updateBlogByArticleid(dto);
     }
 
@@ -82,13 +80,12 @@ public class BlogPublishServiceImpl implements BlogPublishService {
      * 为博客添加tag
      */
     @Override
-    public void addTagForBlog(int myid,BlogEditDto dto) {
+    public void addTagForBlog(Integer myId, BlogPublishDto dto) {
         int t_id;
         int articleid = dto.getArticleid();
         if(dto.getTags()!=null) {
-            for (String tagname : dto.getTags()) {
-                t_id = blogPublishDao.selectTagidUseTagname(myid, tagname);
-                blogPublishDao.addTagForBlog(articleid, t_id);
+            for (Integer tagId : dto.getTags()) {
+                blogPublishDao.addTagForBlog(articleid, tagId);
             }
         }
     }
@@ -102,51 +99,22 @@ public class BlogPublishServiceImpl implements BlogPublishService {
         blogPublishDao.addTag(tag);
     }
 
-    /**
-     * 更新博客的tag
-     */
     @Override
-    public void updateBlogTag(int myid, BlogEditDto dto) {
-        //  获取之前的tag列表
-        int articleid = dto.getArticleid();
-        int t_id;
-        List<String> oldList = blogPublishDao.selectTagListByArtileid(articleid);
-        List<String> newList = dto.getTags();
-
-        // 去除需要删除的tag
-        for (String tagname1: oldList) {
-            if (!newList.contains(tagname1)) {
-                t_id=blogPublishDao.selectTagidUseTagname(myid,tagname1);
-                blogPublishDao.dropTagForBlog(articleid, t_id);
-            }
-        }
-
-        // 新增之前没有的tag
-        for (String tagname2: newList) {
-            if (!oldList.contains(tagname2)) {
-                t_id=blogPublishDao.selectTagidUseTagname(myid,tagname2);
-                blogPublishDao.addTagForBlog(articleid, t_id);
-            }
-        }
-    }
-
-
-    @Override
-    public BlogEditDto getBlogEditDtoByArticleid(int articleid){
-        BlogEditDto dto = blogPublishDao.selectBlogEditDtoByArticleid(articleid);
-        List<String> tagList = blogPublishDao.selectTagListByArtileid(articleid);
-        dto.setTags(tagList);
+    public BlogPublishDto getBlogPublishDtoByArticleId(Integer articleId){
+        BlogPublishDto dto = blogPublishDao.selectBlogEditDtoByArticleid(articleId);
+        List<String> tagList = blogPublishDao.selectTagListByArtileid(articleId);
+//        dto.setTags(tagList);
         return dto;
     }
 
     @Override
-    public int getUserStatus(int authorid){
-        return blogPublishDao.selectUserStatusByAuthorid(authorid);
+    public Integer getUserStatus(Integer authorId){
+        return blogPublishDao.selectUserStatusByAuthorid(authorId);
     }
 
     @Override
-    public int getArticleStatus(int articleid){
-        return blogPublishDao.getArticleStatus(articleid);
+    public Integer getArticleStatus(Integer articleId){
+        return blogPublishDao.getArticleStatus(articleId);
     }
 
 }

@@ -43,4 +43,31 @@ public class PersonalServiceImpl implements PersonalService {
         articleDto.setType(Constants.ARTICLE_TYPE_BLOG);
         return Utils.getPage(articleDto, () -> personalDao.getArtical(articleDto));
     }
+
+    @Override
+    public Integer getRelationship(Integer myid, Integer userid) {
+        return personalDao.getRelationship(myid, userid);
+    }
+
+    @Override
+    public void follow(Integer myid, Integer userid) {
+        personalDao.disblock(myid,userid);
+        personalDao.follow(myid,userid);
+    }
+
+    @Override
+    public void block(Integer myid, Integer userid) {
+        personalDao.disfollow(myid,userid);
+        personalDao.block(myid,userid);
+    }
+
+    @Override
+    public void disfollow(Integer myid, Integer userid) {
+        personalDao.disfollow(myid,userid);
+    }
+
+    @Override
+    public void disblock(Integer myid, Integer userid) {
+        personalDao.disblock(myid,userid);
+    }
 }

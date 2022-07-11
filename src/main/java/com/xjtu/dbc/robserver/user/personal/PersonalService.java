@@ -19,4 +19,14 @@ public interface PersonalService {
     void changePassword(User user);
 
     Map<String,Object> getArtical(ArticleDto articleDto);
+
+    Integer getRelationship(Integer myid,Integer userid);
+
+    void follow(Integer myid,Integer userid);
+
+    void block(Integer myid,Integer userid);
+
+    void disfollow(Integer myid,Integer userid);
+
+    void disblock(Integer myid,Integer userid);
 }

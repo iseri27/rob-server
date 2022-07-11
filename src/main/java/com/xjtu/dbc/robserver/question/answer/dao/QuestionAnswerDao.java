@@ -8,7 +8,7 @@ import com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto;
 import java.util.List;
 
 public interface QuestionAnswerDao {
-    List<QuestionAnswerListDto> getAList(Integer questionid);
+    List<QuestionAnswerListDto> getAllAnswerList(Integer questionid);
 
     Integer getDislikenumByAnswerId(Integer answerid);
 
@@ -19,4 +19,6 @@ public interface QuestionAnswerDao {
     AnswerDetailsDto getAnswerDetails(Integer answerid);
 
     void createAnswer(AnswerDto answerDto);
+
+    List<QuestionAnswerListDto> getGoodAnswerList(Integer questionid);
 }

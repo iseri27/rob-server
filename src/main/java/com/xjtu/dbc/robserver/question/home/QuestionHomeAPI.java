@@ -33,11 +33,7 @@ public class QuestionHomeAPI {
                 List<QuestionHomeListDto> listDto = questionHomeService.getAllQuestionList(cid);
                 //获取每条评论的点赞数与点踩数
                 for(int i=0; i<listDto.size();i++){
-                    listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
                     listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setAnswer_num(questionHomeService.getAnswerNum((listDto.get(i).getQuestionid())));
                 }
                 return Result.success("获取悬赏大厅的全部问题列表成功!",listDto);
             }
@@ -47,11 +43,7 @@ public class QuestionHomeAPI {
 
                 //获取每条评论的点赞数与点踩数
                 for(int i=0; i<listDto.size();i++){
-                    listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
                     listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setAnswer_num(questionHomeService.getAnswerNum((listDto.get(i).getQuestionid())));
                 }
                 return Result.success("获取悬赏大厅的未解决问题列表成功!", listDto);
 
@@ -62,11 +54,7 @@ public class QuestionHomeAPI {
 
                 //获取每条评论的点赞数与点踩数
                 for(int i=0; i<listDto.size();i++){
-                    listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setComment_num(questionHomeService.getCommentNum(listDto.get(i).getQuestionid()));
                     listDto.get(i).setTaglist(questionHomeService.getTagListByQuestionid(listDto.get(i).getQuestionid()));
-                    listDto.get(i).setAnswer_num(questionHomeService.getAnswerNum((listDto.get(i).getQuestionid())));
                 }
                 return Result.success("获取悬赏大厅的已解决问题列表成功!", listDto);
             }
@@ -83,11 +71,7 @@ public class QuestionHomeAPI {
         try{
             int questionid = qid;
             QuestionDetailsDto questionDetailsDto= questionHomeService.getQuestionDetails(questionid);
-            questionDetailsDto.setLike_num(questionHomeService.getLikenumByQuestionId(questionid));
-            questionDetailsDto.setDislike_num(questionHomeService.getDislikenumByQuestionId(questionid));
-            questionDetailsDto.setComment_num(questionHomeService.getCommentNum(questionid));
             questionDetailsDto.setTaglist(questionHomeService.getTagListByQuestionid(questionid));
-            questionDetailsDto.setAnswer_num(questionHomeService.getAnswerNum(questionid));
             return Result.success("查找悬赏详情成功",questionDetailsDto);
         }catch (Exception e){
             e.printStackTrace();

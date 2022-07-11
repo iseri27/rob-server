@@ -22,16 +22,18 @@ public class QuestionAnswerAPI {
     private QuestionAnswerService questionAnswerService;
 
     @GetMapping("/alist")
-    public Result getAList(@RequestParam("qid") int qid){
+    public Result getAList(@RequestParam("qid") int qid,@RequestParam("selectid") int selectid){
         try{
             int questionid = qid;
-            List<QuestionAnswerListDto> listDto = questionAnswerService.getAnswerList(questionid);
-            for(int i=0;i < listDto.size();i++){
-                listDto.get(i).setLike_num(questionAnswerService.getLikenumByAnswerId(listDto.get(i).getAnswerid()));
-                listDto.get(i).setDislike_num(questionAnswerService.getDislikenumByAnswerId(listDto.get(i).getAnswerid()));
-                listDto.get(i).setComment_num(questionAnswerService.getCommentNum(listDto.get(i).getAnswerid()));
+            int sid = selectid;
+            if(sid == 1){
+                List<QuestionAnswerListDto> listDto = questionAnswerService.getAnswerList(questionid);
+                return Result.success("获取回答列表成功",listDto);
             }
-            return Result.success("获取回答列表成功",listDto);
+            else{
+                List<QuestionAnswerListDto> listDto = questionAnswerService.getGoodAnswerList(questionid);
+                return Result.success("获取优质回答列表成功",listDto);
+            }
         }catch (Exception e){
             e.printStackTrace();
             return Result.fail(Result.ERR_CODE_BUSINESS, "未找到匹配回答！");
@@ -43,9 +45,6 @@ public class QuestionAnswerAPI {
         try{
             int questionid = qid;
             AnswerDetailsDto answerDetailsDto= questionAnswerService.getAnswerDetails(questionid);
-            answerDetailsDto.setLike_num(questionAnswerService.getLikenumByAnswerId(questionid));
-            answerDetailsDto.setDislike_num(questionAnswerService.getDislikenumByAnswerId(questionid));
-            answerDetailsDto.setComment_num(questionAnswerService.getCommentNum(questionid));
             return Result.success("查找回答详情成功",answerDetailsDto);
         }catch (Exception e){
             e.printStackTrace();

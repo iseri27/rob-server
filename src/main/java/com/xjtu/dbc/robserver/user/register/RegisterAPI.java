@@ -97,11 +97,11 @@ public class RegisterAPI {
             return Result.fail(Result.ERR_CODE_SYS, "系统错误");
         }
 
-        // 为用户创建关注列表、粉丝列表与黑名单
+        // 为用户创建关注列表、粉丝列表、私信列表与黑名单
         registerService.createUserList(userId, Constants.USERLIST_FOLLOW);
         registerService.createUserList(userId, Constants.USERLIST_FANS);
         registerService.createUserList(userId, Constants.USERLIST_BLACKLIST);
-
+        registerService.createUserList(userId, Constants.USERLIST_CHAT);
         // 为用户创建收藏夹
         registerService.createBookmark(userId);
 

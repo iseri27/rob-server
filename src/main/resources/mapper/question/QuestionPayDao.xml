@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.question.answer.dao.QuestionAnswerDao">
+
+    <!--查询优质回答数量-->
+    <select id="countGoodAnswer">
+        select count(articleid)
+        from article
+        where relpyto = #{questionid} and articletype = 305
+    </select>
+
+    <!--设置为优质回答-->
+    <update id="setGoodAnswer">
+        update article
+        <set>
+            articletype = 305
+        </set>
+        where articleid = #{answerid}
+    </update>
+
+    <!--支付悬赏-->
+    <update id="payQuestion">
+        update article
+        <set>
+            cost = -cost
+        </set>
+        where articleid = #{questionid}
+    </update>
+
+</mapper>

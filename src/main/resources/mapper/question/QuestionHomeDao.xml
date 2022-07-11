@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.question.home.dao.QuestionHomeDao">
+
+    <!-- 获取全部问题列表-->
+    <select id="getAllQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
+    select article.articleid questionid,article.articlestatus questionstatus,
+           article.title questiontitle,user.userid authorid,
+           user.username authorname,user.useravatar authoravatar,
+           article.createtime createtime,article.cost cost,article.articletype type,
+           article.lastmodifytime lastmodifytime
+    from article join user on user.userid = article.authorid
+	where article.articletype = 302 and article.articlestatus = 402
+        <if test="categoryid != 0">
+            and article.categoryid=#{cid}
+        </if>
+        <if test="categoryid = 0">
+
+        </if>
+    </select>
+
+    <!-- 获取未解决问题列表-->
+    <select id="getNotSolveQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
+    select article.articleid questionid,article.articlestatus questionstatus,
+           article.title questiontitle,user.userid authorid,
+           user.username authorname,user.useravatar authoravatar,
+           article.createtime createtime,article.cost cost,article.articletype type,
+           article.lastmodifytime lastmodifytime
+    from article join user on user.userid = article.authorid
+	where article.articletype = 302 and article.cost > 0 and article.articlestatus = 402
+        <if test="categoryid != 0">
+            and article.categoryid=#{cid}
+        </if>
+        <if test="categoryid = 0">
+
+        </if>
+    </select>
+
+    <!-- 获取已解决问题列表-->
+    <select id="getSolveQuestionList" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto">
+        select article.articleid questionid,article.articlestatus questionstatus,
+               article.title questiontitle,user.userid authorid,
+               user.username authorname,user.useravatar authoravatar,
+               article.createtime createtime,article.cost cost,article.articletype type,
+               article.lastmodifytime lastmodifytime
+        from article join user on user.userid = article.authorid
+        where article.articletype = 302 and article.cost &lt; 0 and article.articlestatus = 402
+        <if test="categoryid != 0">
+            and article.categoryid=#{cid}
+        </if>
+        <if test="categoryid = 0">
+
+        </if>
+    </select>
+
+    <!-- 获取问题的获得的赞的数量-->
+    <select id="getLikenumByQuestionId" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{questionid} and votetype = 800
+    </select>
+
+    <!-- 获取问题的获得的踩的数量-->
+    <select id="getDislikenumByQuestionId" resultType="java.lang.Integer">
+    select count(voteid)
+    from vote
+    where articleid = #{questionid} and votetype = 801
+    </select>
+
+    <!-- 获取问题评论的数量-->
+    <select id="getCommentNum" resultType="java.lang.Integer">
+    select count(articleid)
+    from article
+    where articletype = 303 and rootid = #{questionid}
+    </select>
+
+    <!-- 通过文章ID查tag-->
+    <select id="getTagListByQuestionid" resultType="java.lang.String">
+        select tagname
+        from article_has_tag,tag
+        where articleid=#{questionid} and article_has_tag.tagid = tag.tagid
+    </select>
+
+    <!--获取文章详情-->
+    <select id="getQuestionDetails" resultType="com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto">
+        select  article.articleid questionid,article.articlestatus questionstatus,
+                article.title questiontitle,user.userid authorid,user.username authorname,
+                user.useravatar authoravatar,article.createtime createtime,
+                article.lastmodifytime lastmodifytime,
+                article.content answercontent,article.articletype type
+        from article join user on user.userid = article.authorid
+        where article.articleid = #{questionid}
+    </select>
+
+    <select id="getCategory" resultType="com.xjtu.dbc.robserver.common.model.category.Category">
+        select * from category
+    </select>
+
+</mapper>

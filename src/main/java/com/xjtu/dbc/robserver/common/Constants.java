@@ -36,6 +36,7 @@ public class Constants {
     public static int USERLIST_FOLLOW = 600;
     public static int USERLIST_FANS = 601;
     public static int USERLIST_BLACKLIST = 602;
+    public static int USERLIST_CHAT = 603;
 
     public static int HISTORY_TYPE = 7;
     public static int HISTORY_LOGIN = 700;
@@ -54,4 +55,7 @@ public class Constants {
     public static int ROLE_SUPERADMIN = 1000;
     public static int ROLE_NORMAL_USER = 1001;
     public static int ROLE_ADMIN = 1002;
+
+    // Redis中敏感词集合的key
+    public static final String SENSITIVE_KEY = "sensitive";
 }

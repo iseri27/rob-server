@@ -30,4 +30,18 @@ public interface PersonalDao {
     void deleteBlog(Integer articleid);
 
     List<FollowDto> getFollow(Integer userlistid);
+
+    List<FollowDto> getFans(Integer userid,int type);
+
+    Integer getFollowNum(Integer userlistid);
+
+    Integer getFansNum(Integer userid,int type);
+
+    Integer getFavoritesid(Integer userid);
+
+    Integer getFavoritesNum(Integer bookmarkid);
+
+    Integer getHistoryNum(Integer userid,int type);
+
+    Integer getHuntNum(Integer userid,int type);
 }

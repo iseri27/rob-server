@@ -12,10 +12,10 @@ public interface RegisterService {
 
     /**
      * 根据用户邮箱获取用户数量
-     * @param useremail  用户邮箱
+     * @param userEmail  用户邮箱
      * @return 持有该邮箱的用户数量
      */
-    int getUserCountByEmail(String useremail);
+    Integer getUserCountByEmail(String userEmail);
 
     /**
      * 用户注册

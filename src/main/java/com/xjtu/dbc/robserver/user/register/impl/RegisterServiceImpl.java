@@ -27,12 +27,12 @@ public class RegisterServiceImpl implements RegisterService {
     /**
      * 根据用户邮箱获取用户数量
      *
-     * @param useremail 用户邮箱
+     * @param userEmail 用户邮箱
      * @return 持有该邮箱的用户数量
      */
     @Override
-    public int getUserCountByEmail(String useremail) {
-        return registerDao.getUserCountByEmail(useremail);
+    public Integer getUserCountByEmail(String userEmail) {
+        return registerDao.getUserCountByEmail(userEmail);
     }
 
     /**

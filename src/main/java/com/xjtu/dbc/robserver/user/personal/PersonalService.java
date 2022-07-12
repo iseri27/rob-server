@@ -34,4 +34,16 @@ public interface PersonalService {
     void deleteBlog(Integer articleid);
 
     List<FollowDto> getFollow(Integer userid, int type);
+
+    List<FollowDto> getFans(Integer userid);
+
+    Integer getFollowNum(Integer userid);
+
+    Integer getFansNum(Integer userid);
+
+    Integer getFavoritesNum(Integer userid);
+
+    Integer getHistoryNum(Integer userid);
+
+    Integer getHuntNum(Integer userid);
 }

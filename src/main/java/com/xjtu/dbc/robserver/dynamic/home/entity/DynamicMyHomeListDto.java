@@ -38,6 +38,7 @@ public class DynamicMyHomeListDto {
     private String useremail;
     private String userabout;
     private Integer roleid;
+    private Integer userexp;
     private Integer userstatus;
 
 
@@ -210,4 +211,13 @@ public class DynamicMyHomeListDto {
     public void setOwnerid(Integer ownerid) {
         this.ownerid = ownerid;
     }
+
+    public Integer getUserexp() {
+        return userexp;
+    }
+
+    public void setUserexp(Integer userexp) {
+        this.userexp = userexp;
+    }
+
 }

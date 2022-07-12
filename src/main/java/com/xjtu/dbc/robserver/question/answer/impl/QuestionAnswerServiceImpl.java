@@ -21,22 +21,12 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
 
     @Override
     public List<QuestionAnswerListDto> getAnswerList(Integer questionid) {
-        return questionAnswerDao.getAList(questionid);
+        return questionAnswerDao.getAllAnswerList(questionid);
     }
 
     @Override
-    public Integer getDislikenumByAnswerId(Integer answerid) {
-        return questionAnswerDao.getDislikenumByAnswerId(answerid);
-    }
-
-    @Override
-    public Integer getLikenumByAnswerId(Integer answerid) {
-        return questionAnswerDao.getLikenumByAnswerId(answerid);
-    }
-
-    @Override
-    public Integer getCommentNum(Integer answerid) {
-        return questionAnswerDao.getCommentNum(answerid);
+    public List<QuestionAnswerListDto> getGoodAnswerList(Integer questionid) {
+        return questionAnswerDao.getGoodAnswerList(questionid);
     }
 
     @Override

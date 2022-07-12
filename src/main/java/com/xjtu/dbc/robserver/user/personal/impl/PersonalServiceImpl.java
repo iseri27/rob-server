@@ -81,4 +81,34 @@ public class PersonalServiceImpl implements PersonalService {
     public List<FollowDto> getFollow(Integer userid, int type) {
         return personalDao.getFollow(personalDao.getListid(userid,type));
     }
+
+    @Override
+    public List<FollowDto> getFans(Integer userid) {
+        return personalDao.getFans(userid,Constants.USERLIST_FOLLOW);
+    }
+
+    @Override
+    public Integer getFollowNum(Integer userid) {
+        return personalDao.getFollowNum(personalDao.getListid(userid,Constants.USERLIST_FOLLOW));
+    }
+
+    @Override
+    public Integer getFansNum(Integer userid) {
+        return personalDao.getFansNum(userid,Constants.USERLIST_FOLLOW);
+    }
+
+    @Override
+    public Integer getFavoritesNum(Integer userid) {
+        return personalDao.getFavoritesNum(personalDao.getFavoritesid(userid));
+    }
+
+    @Override
+    public Integer getHistoryNum(Integer userid) {
+        return personalDao.getHistoryNum(userid, Constants.HISTORY_BROWSE);
+    }
+
+    @Override
+    public Integer getHuntNum(Integer userid) {
+        return personalDao.getHuntNum(userid,Constants.ARTICLE_TYPE_QUESTION);
+    }
 }

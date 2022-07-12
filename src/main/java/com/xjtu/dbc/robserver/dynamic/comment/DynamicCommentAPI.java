@@ -23,20 +23,21 @@ public class DynamicCommentAPI {
     @Resource
     private DynamicHomeService dynamicHomeService;
 
-    /*
-     * 动态详情页的评论显示
-     * */
+    /**
+     * 获取评论列表
+     * @param num
+     * @return Result(msg, listDto)
+     */
     @GetMapping("")
     public Result getCommnent(@RequestParam("num") Integer num) {
         Integer articleid = num;
         System.out.println("测试articleid: "+articleid);
         List<DynamicCommentDto> listDto = dynamicCommentService.getDynamicCommentList(articleid);
 
-        //获取每条评论的点赞数与点踩数
-        //这里调用了之前在DynamicHome中写的赞数与踩数的统计的方法
+
         for(int i=0; i<listDto.size();i++){
-            listDto.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto.get(i).getArticleid()));
-            listDto.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto.get(i).getArticleid()));
+            listDto.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto.get(i).getArticleid()));       //获取每条评论的点赞数
+            listDto.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto.get(i).getArticleid()));        //获取每条评论的点踩数
             listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 null:未投票  800:赞  801:踩
         }
 
@@ -48,7 +49,11 @@ public class DynamicCommentAPI {
 
 
 
-
+    /**
+     * 发布用户评论
+     * @param dynamicCommentDto
+     * @return Result(msg, dynamicCommentDto)
+     */
     @PostMapping("publishcomment")
     public Result publishComment(@RequestBody DynamicCommentDto dynamicCommentDto) {
 

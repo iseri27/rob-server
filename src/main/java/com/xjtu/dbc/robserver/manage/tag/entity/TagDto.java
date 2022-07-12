@@ -1,4 +1,4 @@
-package com.xjtu.dbc.robserver.manage.entity;
+package com.xjtu.dbc.robserver.manage.tag.entity;
 
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import lombok.Getter;

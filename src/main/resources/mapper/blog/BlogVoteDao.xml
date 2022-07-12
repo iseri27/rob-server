@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.blog.vote.dao.BlogVoteDao">
+    <delete id="deleteVote">
+        DELETE FROM vote
+        WHERE userid = #{userid} and articleid = #{articleid}
+    </delete>
+
+    <update id="updateVote">
+        UPDATE vote
+        SET votetype = 1601-votetype
+        WHERE userid = #{userid} and articleid = #{articleid}
+
+    </update>
+
+    <insert id="insertLike">
+        INSERT INTO vote(votetype,userid,articleid)
+        VALUES (800, #{userid}, #{articleid})
+    </insert>
+
+    <insert id="insertDislike">
+        INSERT INTO vote(votetype,userid,articleid)
+        VALUES (801, #{userid}, #{articleid})
+    </insert>
+
+    <select id="hadLikedOrNot" resultType="java.lang.Integer">
+        select count(voteid)
+        from vote
+        where userid = #{userid} and articleid = #{articleid} and votetype = 800
+    </select>
+
+    <select id="hadDislikedOrNot" resultType="java.lang.Integer">
+        select count(voteid)
+        from vote
+        where userid = #{userid} and articleid = #{articleid} and votetype = 801
+    </select>
+
+    <select id="findLikes" resultType="java.lang.Integer">
+        select count(voteid)
+        from vote
+        where articleid = #{articleid} and votetype = 800
+    </select>
+
+    <select id="findDislikes" resultType="java.lang.Integer">
+        select count(voteid)
+        from vote
+        where articleid = #{articleid} and votetype = 801
+    </select>
+
+</mapper>

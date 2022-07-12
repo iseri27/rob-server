@@ -88,6 +88,11 @@ public class BlogPublishAPI {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");
         }
 
+        // 检查是否选择了分区
+        if (blogPublishDto.getCategoryid() == null) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "请选择分区!");
+        }
+
         // 判断是第一次提交还是再次编辑
         if (blogPublishDto.getArticleid() == null) {
             // 第一次提交
@@ -110,17 +115,15 @@ public class BlogPublishAPI {
             // 再次编辑
             // 检查博客是否被隐藏
             int blogStatus = blogPublishService.getArticleStatus(blogPublishDto.getArticleid());
-            if (blogStatus==403) {
+            if (blogStatus == Constants.ARTICLE_STATUS_HIDDEN) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "博客被隐藏，无法编辑！");
             }
-            // 设置最后编辑时间
-            blogPublishDto.setLastmodifytime(Utils.getNow());
 
             try {
                 blogPublishService.updateBlogByArticleId(blogPublishDto);
                 blogPublishService.updateBlogTag(blogPublishDto.getTags(), blogPublishDto.getArticleid());
                 // 检查博客是否需要审核
-                if (blogStatus==401) {
+                if (blogStatus == Constants.ARTICLE_STATUS_WAITING_CHECK) {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "由于正文字数超过500或包含图片，博客正在审核中！");
                 }
                 return Result.success("修改成功！", blogPublishDto.getArticleid());
@@ -142,16 +145,14 @@ public class BlogPublishAPI {
         try {
             BlogPublishDto blogPublishDto= blogPublishService.getBlogPublishDtoByArticleId(articleId);
 
-            /*
-             * 检查是否是随笔的作者
-             */
+            // 检查是否是博客的作者
             Integer authorId = TokenUtils.getUserInfo(token, commonService).getUserid();
             if (!blogPublishDto.getAuthorid().equals(authorId)) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "您不是该博客的作者，没有修改权限！");
             }
 
             // 检查博客是否被隐藏
-            if (blogPublishDto.getArticlestatus()==403) {
+            if (blogPublishDto.getArticlestatus() == Constants.ARTICLE_STATUS_HIDDEN) {
                 return Result.fail(Result.ERR_CODE_BUSINESS, "博客被隐藏，无法编辑！");
             }
 

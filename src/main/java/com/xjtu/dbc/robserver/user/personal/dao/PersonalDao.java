@@ -3,6 +3,7 @@ package com.xjtu.dbc.robserver.user.personal.dao;
 import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
+import com.xjtu.dbc.robserver.user.personal.entity.FollowDto;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface PersonalDao {
     void disfollow(Integer userlistid,Integer userid);
 
     void deleteBlog(Integer articleid);
+
+    List<FollowDto> getFollow(Integer userlistid);
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.manage.main.dao.ManageDao">
+    <select id="getManageMenus" resultType="com.xjtu.dbc.robserver.user.home.entity.Menu">
+        SELECT
+            m1.moduleid menuid,
+            m1.modulename menuname,
+            m1.url menuroute
+        FROM
+            module m1
+            JOIN module m2 ON m1.parentid = m2.moduleid
+        WHERE
+            m2.modulename = "管理系统"
+    </select>
+
+</mapper>

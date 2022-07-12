@@ -1,9 +1,6 @@
 package com.xjtu.dbc.robserver.user.personal;
 
-import com.xjtu.dbc.robserver.common.CommonService;
-import com.xjtu.dbc.robserver.common.CurrentUser;
-import com.xjtu.dbc.robserver.common.Result;
-import com.xjtu.dbc.robserver.common.TokenUtils;
+import com.xjtu.dbc.robserver.common.*;
 import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
@@ -103,56 +100,59 @@ public class PersonalAPI {
         return Result.successMsg("密码修改完成");
     }
 
-    /**
-     *
-     * @param token 获取当前用户id
-     * @return 返回该用户发布的所有博文（包括草稿，审核中，隐藏贴）
-     */
+
     @GetMapping("/article")
-    public Result getArtical(@RequestHeader("Token") String token, ArticleDto articleDto){
-        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
-        articleDto.setUserid(currentUser.getUserid());
+    public Result getArtical( ArticleDto articleDto){
         return Result.success("获取成功", personalService.getArtical(articleDto));
     }
 
     @GetMapping("/relationship")
-    public Result getRelationship(@RequestHeader("Token") String token, Integer userid){
+    public Result getRelationship(@RequestHeader("Token") String token, User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        return Result.success("获取成功",personalService.getRelationship(myid, userid));
+        return Result.success("获取成功",personalService.getRelationship(myid, user.getUserid()));
     }
 
     @PostMapping("/follow")
-    public Result follow(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result follow(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.follow(myid, userid);
+        personalService.follow(myid, user.getUserid());
         return Result.successMsg("成功关注");
     }
     @PostMapping("/block")
-    public Result block(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result block(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.block(myid, userid);
+        personalService.block(myid, user.getUserid());
         return Result.successMsg("成功关注");
     }
     @PostMapping("/disfollow")
-    public Result disfollow(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result disfollow(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.disfollow(myid, userid);
+        personalService.disfollow(myid, user.getUserid());
         return Result.successMsg("成功关注");
     }
     @PostMapping("/disblock")
-    public Result disblock(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result disblock(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.disblock(myid, userid);
+        personalService.disblock(myid, user.getUserid());
         return Result.successMsg("成功关注");
     }
     @PostMapping("/delete/blog")
     public Result deleteBlog(@RequestBody Article article){
         personalService.deleteBlog(article.getArticleid());
         return Result.successMsg("删除成功");
+    }
+    @GetMapping("/get/follow")
+    public Result getFollow(User user){
+        return Result.success("获取成功", personalService.getFollow(user.getUserid(), Constants.USERLIST_FOLLOW));
+    }
+    @GetMapping("/get/block")
+    public Result getBlock(User user){
+
+        return Result.success("获取成功", personalService.getFollow(user.getUserid(), Constants.USERLIST_BLACKLIST));
     }
 }

@@ -78,4 +78,11 @@
         from article
         where articleid = #{articleid}
     </delete>
+    <select id="getFollow" resultType="com.xjtu.dbc.robserver.user.personal.entity.FollowDto">
+        select userid,username,useravatar
+        from user
+        where userid in (select userid
+        from userlist_has_user
+        where userlistid = #{userlistid})
+    </select>
 </mapper>

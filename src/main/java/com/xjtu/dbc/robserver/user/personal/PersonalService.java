@@ -4,6 +4,7 @@ package com.xjtu.dbc.robserver.user.personal;
 import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
+import com.xjtu.dbc.robserver.user.personal.entity.FollowDto;
 
 import java.util.List;
 import java.util.Map;
@@ -31,4 +32,6 @@ public interface PersonalService {
     void disblock(Integer myid,Integer userid);
 
     void deleteBlog(Integer articleid);
+
+    List<FollowDto> getFollow(Integer userid, int type);
 }

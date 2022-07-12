@@ -71,11 +71,63 @@
         delete
         from userlist_has_user
         where userlistid = #{userlistid}
-        and userid = {userid}
+        and userid = #{userid}
     </delete>
     <delete id="deleteBlog">
         delete
         from article
         where articleid = #{articleid}
     </delete>
+    <select id="getFollow" resultType="com.xjtu.dbc.robserver.user.personal.entity.FollowDto">
+        select userid,username,useravatar
+        from user
+        where userid in (select userid
+        from userlist_has_user
+        where userlistid = #{userlistid})
+    </select>
+    <select id="getFans" resultType="com.xjtu.dbc.robserver.user.personal.entity.FollowDto">
+        select userid,username,useravatar
+        from user
+        where userid in (select ownerid
+        from userlist
+        where userlisttype = #{type}
+        and userlistid in (select userlistid
+        from userlist_has_user
+        where userid = #{userid}))
+    </select>
+    <select id="getFollowNum" resultType="java.lang.Integer">
+        select count(*)
+        from userlist_has_user
+        where userlistid = #{userlistid}
+    </select>
+    <select id="getFansNum" resultType="java.lang.Integer">
+        select count(*)
+        from userlist
+        where userlisttype = #{type}
+        and userlistid in (select userlistid
+        from userlist_has_user
+        where userid = #{userid})
+    </select>
+    <select id="getFavoritesid" resultType="java.lang.Integer">
+        select bookmarkid
+        from bookmark
+        where ownerid = #{userid}
+    </select>
+    <select id="getFavoritesNum" resultType="java.lang.Integer">
+        select count(*)
+        from bookmark_has_article
+        where bookmarkid = #{bookmarkid}
+    </select>
+    <select id="getHistoryNum" resultType="java.lang.Integer">
+        select count(*)
+        from history
+        where userid = #{userid}
+        and historytype = #{type}
+    </select>
+    <select id="getHuntNum" resultType="java.lang.Integer">
+        select count(*)
+        from article
+        where articletype = #{type}
+        and authorid = #{userid}
+    </select>
 </mapper>

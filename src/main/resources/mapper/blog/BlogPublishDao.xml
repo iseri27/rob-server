@@ -41,24 +41,29 @@
         VALUES (#{tagname}, #{ownerid})
     </insert>
 
-
     <!-- 更新博客 -->
     <update id="updateBlogById">
         UPDATE article
         SET
             <if test="articlestatus != null">
-            articlestatus  = #{articlestatus}
+            articlestatus  = #{articlestatus},
             </if>
             title          = #{title},
             content        = #{content},
-            lastmodifytime = #{lastmodifytime},
+            lastmodifytime = now(),
             categoryid     = #{categoryid}
-        WHERE articleid = #{articleid}
+        WHERE articleid    = #{articleid}
     </update>
+
+    <!-- 为博客删除标签 -->
+    <delete id="deleteTagForBlog">
+        delete from article_has_tag
+        where articleid = #{articleId} and tagid = #{tagId}
+    </delete>
 
     <!-- 为博客添加 tag -->
     <insert id="addTagForBlog">
-        INSERT INTO article_has_tag(articleid,tagid)
+        INSERT INTO article_has_tag(articleid, tagid)
         VALUES (#{articleId}, #{tagId})
     </insert>
 

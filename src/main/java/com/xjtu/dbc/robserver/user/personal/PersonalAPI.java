@@ -1,13 +1,11 @@
 package com.xjtu.dbc.robserver.user.personal;
 
-import com.xjtu.dbc.robserver.common.CommonService;
-import com.xjtu.dbc.robserver.common.CurrentUser;
-import com.xjtu.dbc.robserver.common.Result;
-import com.xjtu.dbc.robserver.common.TokenUtils;
+import com.xjtu.dbc.robserver.common.*;
 import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
 import com.xjtu.dbc.robserver.user.personal.entity.Avatar;
+import com.xjtu.dbc.robserver.user.personal.entity.NumDto;
 import org.bouncycastle.jcajce.provider.symmetric.Serpent;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 
 /**
- * @author Ichabod
- * @version 1.0.2
- * @date 2022/7/7
+ * @author 李家乐
+ * @version 1.0.8
+ * @date 2022/7/12
  */
 @RestController
 @RequestMapping("/user/personal")
@@ -30,6 +28,11 @@ public class PersonalAPI {
     private PersonalService personalService;
 
 
+    /**
+     * 获取当前用户信息
+     * @param token 用户id
+     * @return 当前用户信息，不含密码
+     */
     @GetMapping("/get")
     public Result getCurrentUser(@RequestHeader("Token") String token){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
@@ -37,9 +40,14 @@ public class PersonalAPI {
         return Result.success("获取成功",commonService.getUserWithoutPasswordById(userid));
     }
 
+    /**
+     * 获取页面用户信息
+     * @param user 用户id
+     * @return 用户信息，不含密码
+     */
     @GetMapping("/get/user")
-    public Result getUserById(Integer userid){
-        return Result.success("获取成功",commonService.getUserWithoutPasswordById(userid));
+    public Result getUserById(User user){
+        return Result.success("获取成功",commonService.getUserWithoutPasswordById(user.getUserid()));
     }
 
     /**
@@ -104,55 +112,138 @@ public class PersonalAPI {
     }
 
     /**
-     *
-     * @param token 获取当前用户id
-     * @return 返回该用户发布的所有博文（包括草稿，审核中，隐藏贴）
+     * 获取一个用户写的博文
+     * @param articleDto 文章分页信息
+     * @return 分页文章
      */
     @GetMapping("/article")
-    public Result getArtical(@RequestHeader("Token") String token, ArticleDto articleDto){
-        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
-        articleDto.setUserid(currentUser.getUserid());
+    public Result getArtical( ArticleDto articleDto){
         return Result.success("获取成功", personalService.getArtical(articleDto));
     }
 
+    /**
+     * 判断两个用户的关系（关注和拉黑与否）
+     * @param token 获取当前用户id
+     * @param user 页面用户id
+     * @return 返回二者关系，具体参照Contents的常量值
+     */
     @GetMapping("/relationship")
-    public Result getRelationship(@RequestHeader("Token") String token, Integer userid){
+    public Result getRelationship(@RequestHeader("Token") String token, User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        return Result.success("获取成功",personalService.getRelationship(myid, userid));
+        return Result.success("获取成功",personalService.getRelationship(myid, user.getUserid()));
     }
 
+    /**
+     * 关注用户
+     * @param token 当前用户id
+     * @param user 要关注的用户的id
+     * @return 成功关注
+     */
     @PostMapping("/follow")
-    public Result follow(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result follow(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.follow(myid, userid);
+        personalService.follow(myid, user.getUserid());
         return Result.successMsg("成功关注");
     }
+
+    /**
+     * 拉黑用户
+     * @param token 当前用户id
+     * @param user 要拉黑的用户的id
+     * @return 成功拉黑
+     */
     @PostMapping("/block")
-    public Result block(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result block(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.block(myid, userid);
-        return Result.successMsg("成功关注");
+        personalService.block(myid, user.getUserid());
+        return Result.successMsg("成功拉黑");
     }
+
+    /**
+     * 取关用户
+     * @param token 当前用户id
+     * @param user 要取关的用户的id
+     * @return 成功取关
+     */
     @PostMapping("/disfollow")
-    public Result disfollow(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result disfollow(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.disfollow(myid, userid);
-        return Result.successMsg("成功关注");
+        personalService.disfollow(myid, user.getUserid());
+        return Result.successMsg("成功取关");
     }
+
+    /**
+     * 取黑用户
+     * @param token 当前用户id
+     * @param user 要取黑的用户的id
+     * @return 成功取黑
+     */
     @PostMapping("/disblock")
-    public Result disblock(@RequestHeader("Token") String token,@RequestBody Integer userid){
+    public Result disblock(@RequestHeader("Token") String token,@RequestBody User user){
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         Integer myid = currentUser.getUserid();
-        personalService.disblock(myid, userid);
-        return Result.successMsg("成功关注");
+        personalService.disblock(myid, user.getUserid());
+        return Result.successMsg("成功取黑");
     }
+
+    /**
+     * 删除一个博文
+     * @param article 获取文章id
+     * @return 删除成功
+     */
     @PostMapping("/delete/blog")
     public Result deleteBlog(@RequestBody Article article){
         personalService.deleteBlog(article.getArticleid());
         return Result.successMsg("删除成功");
+    }
+
+    /**
+     * 获取关注列表
+     * @param user 页面用户id
+     * @return 关注列表
+     */
+    @GetMapping("/get/follow")
+    public Result getFollow(User user){
+        return Result.success("获取成功", personalService.getFollow(user.getUserid(), Constants.USERLIST_FOLLOW));
+    }
+
+    /**
+     * 获取黑名单
+     * @param user 页面用户id
+     * @return 黑名单
+     */
+    @GetMapping("/get/block")
+    public Result getBlock(User user){
+        return Result.success("获取成功", personalService.getFollow(user.getUserid(), Constants.USERLIST_BLACKLIST));
+    }
+
+    /**
+     * 获取粉丝列表
+     * @param user 页面用户id
+     * @return 粉丝列表
+     */
+    @GetMapping("/get/fans")
+    public Result getFans(User user){
+        return Result.success("获取成功", personalService.getFans(user.getUserid()));
+    }
+
+    /**
+     * 获取页面的一些数据信息，具体查看NumDto
+     * @param user 页面用户id
+     * @return NumDto中的对应数据
+     */
+    @GetMapping("/get/num")
+    public Result getNum(User user){
+        NumDto numDto = new NumDto();
+        numDto.setFollow(personalService.getFollowNum(user.getUserid()));
+        numDto.setFans(personalService.getFansNum(user.getUserid()));
+        numDto.setFavorites(personalService.getFavoritesNum(user.getUserid()));
+        numDto.setHistory(personalService.getHistoryNum(user.getUserid()));
+        numDto.setHunt(personalService.getHuntNum(user.getUserid()));
+        return Result.success("获取成功",numDto);
     }
 }

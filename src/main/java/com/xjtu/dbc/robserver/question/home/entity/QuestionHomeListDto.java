@@ -24,7 +24,7 @@ public class QuestionHomeListDto {
     private Integer categoryid;
     private int cost;
     private int answer_num;
-
+    private int vote_type;
 
     @JsonFormat(pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd  HH:mm:ss")

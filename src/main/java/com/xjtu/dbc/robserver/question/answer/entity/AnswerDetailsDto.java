@@ -21,6 +21,7 @@ public class AnswerDetailsDto {
     private Integer dislike_num;
     private Integer comment_num;
     private Integer replyto;
+    private Integer vote_type;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "GMT+8")

@@ -22,4 +22,18 @@ public interface LoginService {
      * @return 用户 ID
      */
     Integer getUserIdByName(String username);
+
+    /**
+     * 添加经验
+     * @param userId 用户 ID
+     * @param num 增加的经验值数量
+     */
+    void addExp(Integer userId, Integer num);
+
+    /**
+     * 添加用户易拉罐
+     * @param userId 用户 ID
+     * @param num 增加的易拉罐的数量
+     */
+    void addCans(Integer userId, Integer num);
 }

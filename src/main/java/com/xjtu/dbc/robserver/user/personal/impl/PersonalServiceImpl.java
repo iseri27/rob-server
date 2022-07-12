@@ -7,6 +7,7 @@ import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.PersonalService;
 import com.xjtu.dbc.robserver.user.personal.dao.PersonalDao;
 import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
+import com.xjtu.dbc.robserver.user.personal.entity.FollowDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +75,10 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     public void deleteBlog(Integer articleid) {
         personalDao.deleteBlog(articleid);
+    }
+
+    @Override
+    public List<FollowDto> getFollow(Integer userid, int type) {
+        return personalDao.getFollow(personalDao.getListid(userid,type));
     }
 }

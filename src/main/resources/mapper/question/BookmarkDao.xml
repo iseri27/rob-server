@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.question.bookmark.dao.BookmarkDao">
+    <!-- 新增收藏 -->
+    <insert id="addBookmark">
+        insert into bookmark_has_article (bookmarkid,articleid,createtime)
+        values((select bookmark.bookmarkid from bookmark where bookmark.ownerid = #{userid} ),#{articleid},now())
+    </insert>
+    <!-- 判断是否收藏过 -->
+    <select id="ifBookmark" resultType="java.lang.Integer">
+        select count(articleid)
+        from bookmark_has_article join bookmark on bookmark_has_article.bookmarkid = bookmark.bookmarkid
+        where bookmark.ownerid = #{userid} and bookmark_has_article.articleid=#{articleid}
+    </select>
+    <!-- 取消收藏 -->
+    <delete id="deleteBookmark">
+        delete from bookmark_has_article
+        WHERE articleid = #{articleid}
+        and bookmarkid = (select bookmark.bookmarkid from bookmark where bookmark.ownerid = #{userid})
+    </delete>
+
+
+
+</mapper>

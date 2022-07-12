@@ -108,6 +108,18 @@ public class DynamicHomeAPI {
 
 
     /*
+     * 根据文本编号来删除动态
+     * */
+    @GetMapping("delete")
+    public Result deleteDynamic(@RequestParam("articleid") Integer articleid) {
+        Integer deleteDto = dynamicHomeService.deleteDynamic(articleid);
+        return Result.success("删除动态成功!", deleteDto);
+    }
+
+
+
+
+    /*
      * 访问的自己的动态主页时调用的接口，可以看到自己的动态以及自己关注的人的主页，有一定问题
      * */
     @GetMapping("mydList")

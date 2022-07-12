@@ -44,6 +44,12 @@ public interface DynamicHomeService {
     DynamicMyHomeListDto getDynamic(Integer authorid);
 
 
+    /**
+     * 根据动态的编号删除动态
+     * @param articleid 动态编号
+     * @return 动态信息
+     */
+    Integer deleteDynamic(Integer articleid);
 
     /**
      * 根据用户的编号来获取该用户的关注的用户数

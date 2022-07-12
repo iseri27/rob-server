@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.common;
 
+import com.corundumstudio.socketio.SocketIOClient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -92,5 +93,14 @@ public class Utils {
         page.put("last",pageInfo.getPages());
 
         return page;
+    }
+
+    /**
+     * 获取 IP 地址
+     */
+    public static String getIpByClient(SocketIOClient client) {
+        String addr = client.getRemoteAddress().toString();
+        String clientIP = addr.substring(1, addr.indexOf(":"));
+        return clientIP;
     }
 }

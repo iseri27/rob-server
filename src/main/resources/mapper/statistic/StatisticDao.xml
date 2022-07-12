@@ -21,4 +21,25 @@
         from user;
 
     </select>
+
+    <select id="getActiveUserReport" resultType="com.xjtu.dbc.robserver.manage.statistic.entity.ActiveUserReport">
+        SELECT
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 0 THEN 1 ELSE NULL END ) log1,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 1 THEN 1 ELSE NULL END ) log2,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 2 THEN 1 ELSE NULL END ) log3,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 3 THEN 1 ELSE NULL END ) log4,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 4 THEN 1 ELSE NULL END ) log5,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 5 THEN 1 ELSE NULL END ) log6,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 6 THEN 1 ELSE NULL END ) log7,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 7 THEN 1 ELSE NULL END ) log8,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 8 THEN 1 ELSE NULL END ) log9,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 9 THEN 1 ELSE NULL END ) log10,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 10 THEN 1 ELSE NULL END ) log11,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 11 THEN 1 ELSE NULL END ) log12,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 12 THEN 1 ELSE NULL END ) log13,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 13 THEN 1 ELSE NULL END ) log14,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 14 THEN 1 ELSE NULL END ) log15
+        FROM
+        ( SELECT DISTINCT date( historytime ) AS log, userid FROM history WHERE historytype = 700 ) log;
+    </select>
 </mapper>

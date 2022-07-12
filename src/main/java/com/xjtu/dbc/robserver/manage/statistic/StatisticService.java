@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.manage.statistic;
 
+import com.xjtu.dbc.robserver.manage.statistic.entity.ActiveUserReport;
 import com.xjtu.dbc.robserver.manage.statistic.entity.UserSexAgeReport;
 
 import java.util.List;
@@ -12,4 +13,5 @@ import java.util.List;
 public interface StatisticService {
     List<Integer> getUserTotalCount();
     UserSexAgeReport getUserSexAgeReport();
+    ActiveUserReport getActiveUserReport();
 }

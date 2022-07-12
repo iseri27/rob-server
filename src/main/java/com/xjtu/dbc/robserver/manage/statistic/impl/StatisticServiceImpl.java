@@ -2,6 +2,7 @@ package com.xjtu.dbc.robserver.manage.statistic.impl;
 
 import com.xjtu.dbc.robserver.manage.statistic.StatisticService;
 import com.xjtu.dbc.robserver.manage.statistic.dao.StatisticDao;
+import com.xjtu.dbc.robserver.manage.statistic.entity.ActiveUserReport;
 import com.xjtu.dbc.robserver.manage.statistic.entity.UserSexAgeReport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +28,10 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public UserSexAgeReport getUserSexAgeReport() {
         return statisticDao.getUserSexAgeReport();
+    }
+
+    @Override
+    public ActiveUserReport getActiveUserReport() {
+        return statisticDao.getActiveUserReport();
     }
 }

@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.manage.statistic;
 
 import com.xjtu.dbc.robserver.common.Result;
+import com.xjtu.dbc.robserver.manage.statistic.entity.ActiveUserReport;
 import com.xjtu.dbc.robserver.manage.statistic.entity.UserSexAgeReport;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,21 +24,34 @@ public class StatisticAPI {
 
     /**
      * 获取总数分析
+     *
      * @return [普通用户数，管理员数量，总浏览量]
      */
     @GetMapping("/user/total")
-    public Result getUserTotalCount(){
+    public Result getUserTotalCount() {
         List<Integer> userTotal = statisticService.getUserTotalCount();
-        return  Result.success("获取总数分析成功",userTotal);
+        return Result.success("获取总数分析成功", userTotal);
     }
 
     /**
      * 获取用户性别年龄分布
+     *
      * @return 用户男女比与五个年龄段分布数量
      */
     @GetMapping("/user/sex&age")
-    public Result getUserSexAgeReport(){
+    public Result getUserSexAgeReport() {
         UserSexAgeReport userSexAgeReport = statisticService.getUserSexAgeReport();
-        return Result.success("获取用户性别年龄分析成功",userSexAgeReport);
+        return Result.success("获取用户性别年龄分析成功", userSexAgeReport);
+    }
+
+    /**
+     * 获取最近十五日活跃用户数量
+     *
+     * @return [log1, log2, ..., log15]
+     */
+    @GetMapping("/user/active")
+    public Result getActiveUserReport() {
+        ActiveUserReport activeUserReport = statisticService.getActiveUserReport();
+        return Result.success("获取最近十五日活跃用户成功", activeUserReport);
     }
 }

@@ -21,6 +21,13 @@ public class DynamicVoteAPI {
     @Resource
     private DynamicVoteService dynamicVoteService;
 
+
+
+    /**
+     * 点赞点踩动态
+     * @param dynamicVoteDto
+     * @return Result(msg, dynamicVoteDto)
+     */
     @PostMapping("")
     public Result vote( @RequestBody DynamicVoteDto dynamicVoteDto) {
 

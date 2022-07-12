@@ -39,7 +39,6 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
 
 
 
-
     @Override
     public DynamicMyHomeListDto getDynamic(Integer dynamicid){
         return dynamicHomeDao.getDynamic(dynamicid);

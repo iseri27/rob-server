@@ -42,7 +42,8 @@ public interface CommonService {
 
     /**
      * 删除用户的tag
-     * @param tagid
+     * @param tagId tag ID
      */
-    void deleteTag(int tagid);
+    void deleteTag(Integer tagId);
+
 }

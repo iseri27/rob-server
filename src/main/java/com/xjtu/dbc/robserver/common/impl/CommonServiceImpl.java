@@ -73,7 +73,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void deleteTag(int tagid) {
-        commonDao.deleteTag(tagid);
+    public void deleteTag(Integer tagId) {
+        commonDao.deleteTag(tagId);
     }
 }

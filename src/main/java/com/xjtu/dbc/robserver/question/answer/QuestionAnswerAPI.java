@@ -41,10 +41,10 @@ public class QuestionAnswerAPI {
     }
 
     @GetMapping("/detail")
-    public Result getQuestionDetails(@RequestParam("qid") int qid) {
+    public Result getAnswerDetails(@RequestParam("aid") int aid) {
         try{
-            int questionid = qid;
-            AnswerDetailsDto answerDetailsDto= questionAnswerService.getAnswerDetails(questionid);
+            int answerid = aid;
+            AnswerDetailsDto answerDetailsDto= questionAnswerService.getAnswerDetails(answerid);
             return Result.success("查找回答详情成功",answerDetailsDto);
         }catch (Exception e){
             e.printStackTrace();

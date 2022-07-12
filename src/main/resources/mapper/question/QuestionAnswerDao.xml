@@ -22,7 +22,7 @@
     <select id="getAnswerDetails" resultType="com.xjtu.dbc.robserver.question.answer.entity.AnswerDetailsDto">
         select *
         from answer_like
-	    where answer_like.replyto = #{answerid}
+	    where answer_like.answerid = #{answerid}
     </select>
 
     <insert id="createAnswer">

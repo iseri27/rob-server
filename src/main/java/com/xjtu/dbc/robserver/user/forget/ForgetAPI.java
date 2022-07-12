@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/forget")
+@RequestMapping("/user/forget")
 public class ForgetAPI {
     @Resource
     private ForgetService forgetService;

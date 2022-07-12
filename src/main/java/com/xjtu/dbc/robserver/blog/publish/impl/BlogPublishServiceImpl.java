@@ -6,6 +6,7 @@ import com.xjtu.dbc.robserver.blog.publish.entity.BlogPublishDto;
 import com.xjtu.dbc.robserver.blog.publish.BlogPublishService;
 import com.xjtu.dbc.robserver.blog.publish.dao.BlogPublishDao;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 
+@Slf4j
 @Service
 @Transactional
 public class BlogPublishServiceImpl implements BlogPublishService {
@@ -120,10 +122,29 @@ public class BlogPublishServiceImpl implements BlogPublishService {
     /**
      * 更新博客的 tag
      * @param tags      标签列表
-     * @param articleId 文章 ID
+     * @param articleId 博客 ID
      */
     @Override
     public void updateBlogTag(List<Integer> tags, Integer articleId) {
 
+        // 删除旧的 tag
+        List<Integer> tagListPre = blogPublishDao.getTagListByArticleId(articleId);
+
+        log.info("Old Tags : " + tagListPre);
+
+        for (Integer tagId: tagListPre) {
+            if (!tags.contains(tagId)) {
+                blogPublishDao.deleteTagForBlog(articleId, tagId);
+            }
+        }
+
+        log.info("New Tags : " + tags);
+        // 添加新的 tag
+        for (Integer tagId: tags) {
+            if (!tagListPre.contains(tagId)) {
+                blogPublishDao.addTagForBlog(articleId, tagId);
+            }
+        }
     }
+
 }

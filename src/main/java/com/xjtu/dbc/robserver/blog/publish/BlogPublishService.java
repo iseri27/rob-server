@@ -70,7 +70,7 @@ public interface BlogPublishService {
     /**
      * 更新博客的 tag
      * @param tags 标签列表
-     * @param articleId 文章 ID
+     * @param articleId 博客各项参数
      */
     void updateBlogTag(List<Integer> tags, Integer articleId);
 }

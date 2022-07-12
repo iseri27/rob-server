@@ -13,21 +13,27 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+
+
+/**
+ * 动态图主页模块的API,主要包括获取各种动态信息
+ * @author 陈邦昕
+ */
 @RestController
 @RequestMapping("/dynamic/home")
 public class DynamicHomeAPI {
+
     @Resource
     private CommonService commonService;
     @Resource
     private DynamicHomeService dynamicHomeService;
 
 
-
-
-
-    /*
-     * 获取动态页信息栏的信息,本接口用于获取登陆用户的
-     * */
+    /**
+     * 获取用户信息(本人).
+     * @param token
+     * @return Result(msg, homeDto)
+     */
     @GetMapping("uInfo")
     public Result getUInfo(@RequestHeader("Token") String token) {
 
@@ -45,9 +51,14 @@ public class DynamicHomeAPI {
     }
 
 
+    /**
+     * 获取其他用户的信息.
+     * @param Userid
+     * @return Result(msg, homeDto)
+     */
     @GetMapping("otherInfo")
     public Result getUInfo(Integer Userid) {
-//        @RequestParam("Userid")
+
         Integer userid;
 
         userid = Userid;
@@ -62,83 +73,77 @@ public class DynamicHomeAPI {
     }
 
 
-    /*
-     * 获取输入用户id对应的自己的动态列表
-     * */
+
+    /**
+     * 获取动态列表(只获取用户主页对应用户的动态).
+     * @param Userid
+     * @return Result(msg, listDto)
+     */
     @GetMapping("dList")
     public Result getDList(@RequestParam("Userid") Integer Userid) {
-        System.out.println("测试进入1");
+
         List<DynamicMyHomeListDto> listDto = dynamicHomeService.getDynamicList(Userid);
-        System.out.println("测试进入2");
-        //获取每条评论的点赞数与点踩数
+
+
         for(int i=0; i<listDto.size();i++){
-              System.out.println("测试进入3");
-//            listDto.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto.get(i).getDynamicid()));
-//            listDto.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto.get(i).getDynamicid()));
-//            listDto.get(i).setComment_num(dynamicHomeService.getCommentnumByArticleid(listDto.get(i).getDynamicid()));
             listDto.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
             listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getDynamicid())); // vote_type表示用户赞踩的情况
         }
 
-        //还需要得到用户的粉丝数 动态数
         return Result.success("获取动态主页的动态列表成功!", listDto);
     }
 
 
+    /**
+     * 获取动态列表(包括用户自身与其关注的用户的动态).
+     * @param Userid
+     * @return Result(msg, listDto2)
+     */
+    @GetMapping("mydList")
+    public Result getmyDList(@RequestParam("Userid") Integer Userid) {
 
+        List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(Userid);
+        for(int i=0; i<listDto2.size();i++){
+            listDto2.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
+            listDto2.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto2.get(i).getUserid(),listDto2.get(i).getDynamicid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 0:未投票  800:赞  801:踩
+        }
 
-
-    /*
-     * 动态详情页面
-     * */
-    @GetMapping("detail")
-    public Result getDdetail(@RequestParam("articleid") Integer articleid) {
-
-        DynamicMyHomeListDto detailDto = dynamicHomeService.getDynamic(articleid);
-
-        //获取动态的点赞数与点踩数
-        detailDto.setLike_num(dynamicHomeService.getLikenumByAriticleid(detailDto.getDynamicid()));
-        detailDto.setDislike_num(dynamicHomeService.getDislikenumByAriticleid(detailDto.getDynamicid()));
-        detailDto.setComment_num(dynamicHomeService.getCommentnumByArticleid(detailDto.getDynamicid()));
-        detailDto.setVote_type(dynamicHomeService.getVoteTypeByU_A_id(detailDto.getUserid(),detailDto.getDynamicid())); // vote_type表示用户赞踩的情况
-
-
-        return Result.success("获取动态的详情的信息成功!", detailDto);
+        return Result.success("获取我的动态主页的动态列表成功!", listDto2);
     }
 
 
-    /*
-     * 根据文本编号来删除动态
-     * */
+
+
+    /**
+     * 删除用户动态.
+     * @param articleid
+     * @return Result(msg, deleteDto)
+     */
     @GetMapping("delete")
     public Result deleteDynamic(@RequestParam("articleid") Integer articleid) {
         Integer deleteDto = dynamicHomeService.deleteDynamic(articleid);
         return Result.success("删除动态成功!", deleteDto);
     }
 
+    /**
+     * 获取动态详情信息.
+     * @param articleid
+     * @return Result(msg, detailDto)
+     */
+    @GetMapping("detail")
+    public Result getDdetail(@RequestParam("articleid") Integer articleid) {
+
+        DynamicMyHomeListDto detailDto = dynamicHomeService.getDynamic(articleid);
 
 
-
-    /*
-     * 访问的自己的动态主页时调用的接口，可以看到自己的动态以及自己关注的人的主页，有一定问题
-     * */
-    @GetMapping("mydList")
-    public Result getmyDList(@RequestParam("Userid") Integer Userid) {
+        detailDto.setLike_num(dynamicHomeService.getLikenumByAriticleid(detailDto.getDynamicid()));             //获取动态的点赞数
+        detailDto.setDislike_num(dynamicHomeService.getDislikenumByAriticleid(detailDto.getDynamicid()));     //获取动态的点踩数
+        detailDto.setComment_num(dynamicHomeService.getCommentnumByArticleid(detailDto.getDynamicid()));      //获取动态的评论数
+        detailDto.setVote_type(dynamicHomeService.getVoteTypeByU_A_id(detailDto.getUserid(),detailDto.getDynamicid())); // vote_type表示用户赞踩的情况
 
 
-        List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(Userid);
-
-        //获取每条评论的点赞数与点踩数
-        for(int i=0; i<listDto2.size();i++){
-            listDto2.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
-            listDto2.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto2.get(i).getUserid(),listDto2.get(i).getDynamicid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 0:未投票  800:赞  801:踩
-        }
-
-        //还需要得到用户的粉丝数 动态数
-        return Result.success("获取我的动态主页的动态列表成功!", listDto2);
+        return Result.success("获取动态的详情的信息成功!", detailDto);
     }
-
-
 
 
 

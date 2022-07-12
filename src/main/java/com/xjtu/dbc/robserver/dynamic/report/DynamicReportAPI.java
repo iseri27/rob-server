@@ -19,7 +19,11 @@ public class DynamicReportAPI {
     @Resource
     private DynamicReportService dynamicReportService;
 
-
+    /**
+     * 举报动态或评论
+     * @param dynamicReportDto
+     * @return Result(msg, dynamicReportDto)
+     */
     @PostMapping("")
     public Result report(@RequestBody DynamicReportDto dynamicReportDto) {
 

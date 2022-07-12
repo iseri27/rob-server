@@ -55,7 +55,20 @@ public class Constants {
     public static int ROLE_SUPERADMIN = 1000;
     public static int ROLE_NORMAL_USER = 1001;
     public static int ROLE_ADMIN = 1002;
+    //消息类型
+    public static final int MSG_TYPE = 11;
+    public static final int MSG_CHAT = 1101;
+    public static final int MSG_LIKE  = 1102;
+    public static final int MSG_REWARD = 1103;
+    public static final int MSG_FOLLOW = 1104;
+    public static final int MSA_EXAMINE = 1105;
 
+
+    /**
+     * 自定义事件, 用于服务端与客户端通信
+     */
+    public static final String EVENT_MESSAGE_TO_SERVER = "send_trigger";
+    public static final String EVENT_MESSAGE_SEND = "send";
     // Redis中敏感词集合的key
     public static final String SENSITIVE_KEY = "sensitive";
 }

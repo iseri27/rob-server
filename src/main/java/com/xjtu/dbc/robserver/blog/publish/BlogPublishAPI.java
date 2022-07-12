@@ -88,6 +88,11 @@ public class BlogPublishAPI {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");
         }
 
+        // 检查是否选择了分区
+        if (blogPublishDto.getCategoryid() == null) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "请选择分区!");
+        }
+
         // 判断是第一次提交还是再次编辑
         if (blogPublishDto.getArticleid() == null) {
             // 第一次提交

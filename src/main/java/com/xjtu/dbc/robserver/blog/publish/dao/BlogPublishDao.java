@@ -40,6 +40,13 @@ public interface BlogPublishDao {
     void updateBlogById(BlogPublishDto blogPublishDto);
 
     /**
+     * 为博客删除 tag
+     * @param articleId 博客 ID
+     * @param tagId 要被删除的 tag 的标签
+     */
+    void deleteTagForBlog(Integer articleId, Integer tagId);
+
+    /**
      * 为博客添加 tag
      * @param articleId 博客 ID
      * @param tagId tag ID
@@ -67,7 +74,6 @@ public interface BlogPublishDao {
      */
     Integer getArticleStatus(Integer articleId);
 
-
     /**
      * 获取某用户创建的某名字的 tag 的数量
      * @param tagName tag 名
@@ -75,4 +81,5 @@ public interface BlogPublishDao {
      * @return tag 的数量
      */
     Integer getTagCountByTagNameAndUserId(String tagName, Integer userId);
+
 }

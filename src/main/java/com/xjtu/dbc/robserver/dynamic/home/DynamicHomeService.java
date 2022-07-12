@@ -23,10 +23,6 @@ public interface DynamicHomeService {
     List<DynamicMyHomeListDto> getDynamicList(Integer userid);
 
 
-
-
-
-
     /**
      * 根据主页用户的编号获取用户的动态列表,用于自己主页的动态的展示
      * @param userid 用户编号
@@ -59,12 +55,6 @@ public interface DynamicHomeService {
     int getFollownumByUserid(Integer userid);
 
 
-    /**
-     * 根据主页用户的编号获取用户的动态列表,用于自己主页的动态的展示
-     * @param userid 用户编号
-     * @return 用户的动态列表
-     */
-//    List<DynamicMyHomeListDto> getMyDynamicList(Integer userid);
 
     /**
      * 根据用户的编号来获取该用户的粉丝数
@@ -108,6 +98,10 @@ public interface DynamicHomeService {
     int getCommentnumByArticleid(Integer articleid);
 
 
-
+    /**
+     * 根据用户的编号与动态的编号来获取该动态的点赞点踩类型
+     * @param userid,aticleid  用户编编号与动态的编号
+     * @return 该动态的点赞点踩类型
+     */
     int getVoteTypeByU_A_id(Integer userid,Integer aticleid);
 }

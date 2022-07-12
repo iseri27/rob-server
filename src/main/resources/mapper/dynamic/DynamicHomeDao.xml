@@ -30,12 +30,9 @@
     <!-- 在自己主页,获取用户的动态列表-->
     <select id="getMyDynamicList" resultType="com.xjtu.dbc.robserver.dynamic.home.entity.DynamicMyHomeListDto">
 
-
     select *
     from my_user_dynamic_like
     where my_user_dynamic_like.ownerid  = #{userid}
-
-
 
     </select>
 
@@ -104,9 +101,6 @@
     select votetype
     from vote
     where userid =  #{userid} and articleid = #{articleid}
-
-
-
 
     </select>
 

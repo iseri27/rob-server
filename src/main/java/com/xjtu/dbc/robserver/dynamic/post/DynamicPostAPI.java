@@ -19,6 +19,12 @@ public class DynamicPostAPI {
     @Resource
     private DynamicPostService dynamicPostService;
 
+
+    /**
+     * 发布用户动态
+     * @param dynamicPostDto
+     * @return Result(msg, dynamicPostDto)
+     */
     @PostMapping("")
     public Result postDynamic(@RequestBody DynamicPostDto dynamicPostDto) {
 

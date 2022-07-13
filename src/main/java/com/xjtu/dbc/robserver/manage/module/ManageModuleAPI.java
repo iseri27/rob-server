@@ -3,6 +3,7 @@ package com.xjtu.dbc.robserver.manage.module;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Result;
+import com.xjtu.dbc.robserver.common.model.module.Module;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleDto;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleVO;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,15 @@ public class ManageModuleAPI {
 
         log.info("Module Status :" + moduleStatus);
         manageModuleService.setModuleUnavailable(moduleDto.getModuleid());
+        return Result.success();
+    }
+
+    @PostMapping("/protect")
+    public Result setModuleProtected(@RequestBody ModuleDto moduleDto, @RequestHeader("Token") String token) {
+        Integer moduleStatus = manageModuleService.getModuleStatus(moduleDto.getParentid());
+
+        manageModuleService.setModuleProtected(moduleDto.getModuleid());
+
         return Result.success();
     }
 }

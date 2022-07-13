@@ -5,12 +5,27 @@ import com.xjtu.dbc.robserver.manage.module.entity.ModuleVO;
 import java.util.List;
 
 public interface ManageModuleService {
+
+    /**
+     * 根据请求路径获得模块 ID
+     * @param path 请求路径
+     * @return 模块 ID
+     */
+    Integer getModuleIdByPath(String path);
+
     /**
      * 检查模块是否可用
      * @param path 请求路径
      * @return 可用返回 true; 不可用返回 false
      */
     Boolean moduleAvailable(String path);
+
+    /**
+     * 获取某一模块的状态
+     * @param moduleId 模块 ID
+     * @return 模块的状态
+     */
+    Integer getModuleStatus(Integer moduleId);
 
     /**
      * 获取所有的模块, 并组织成树形
@@ -29,4 +44,5 @@ public interface ManageModuleService {
      * @param moduleId 模块 ID
      */
     void setModuleUnavailable(Integer moduleId);
+
 }

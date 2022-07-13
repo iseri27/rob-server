@@ -41,18 +41,22 @@ public class SecurityFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getServletPath();
 
-        log.info("path: " + path);
+        Integer moduleId = manageModuleService.getModuleIdByPath(path);
+        log.info("Module ID : " + moduleId);
 
-        // 检查该模块是否可用
-        Boolean available = manageModuleService.moduleAvailable(path);
-
-        if (available) {
-            log.info("该模块可用.");
+        if (moduleId == null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            Utils.outJson(response, Result.fail(Result.ERR_CODE_BUSINESS, "维修中, 功能未开放!"));
-        }
+            // 检查该模块是否可用
+            Boolean available = manageModuleService.moduleAvailable(path);
 
+            if (available) {
+                log.info("该模块可用.");
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else {
+                Utils.outJson(response, Result.fail(Result.ERR_CODE_BUSINESS, "维修中, 功能未开放!"));
+            }
+        }
     }
 
     @Override

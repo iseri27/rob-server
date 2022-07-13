@@ -1,14 +1,17 @@
 package com.xjtu.dbc.robserver.manage.module;
 
 import com.xjtu.dbc.robserver.common.CommonService;
+import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleDto;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/manage/module")
 public class ManageModuleAPI {
@@ -48,6 +51,17 @@ public class ManageModuleAPI {
      */
     @PostMapping("/ban")
     public Result setModuleUnavailable(@RequestBody ModuleDto moduleDto, @RequestHeader("Token") String token) {
+        if (moduleDto.getModuleid() == null) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "未指定模块");
+        }
+
+        Integer moduleStatus = manageModuleService.getModuleStatus(moduleDto.getModuleid());
+
+        if (moduleStatus == Constants.MODULE_STATUS_PROTECT) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "该模块处于保护状态");
+        }
+
+        log.info("Module Status :" + moduleStatus);
         manageModuleService.setModuleUnavailable(moduleDto.getModuleid());
         return Result.success();
     }

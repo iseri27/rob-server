@@ -42,6 +42,7 @@ public class Constants {
     public static int HISTORY_LOGIN = 700;
     public static int HISTORY_BROWSE = 701;
     public static int HISTORY_REWARD = 702;
+    public static int HISTORY_PUBLISH = 703;
 
     public static int VOTE_TYPE = 8;
     public static int VOTE = 800;
@@ -67,6 +68,7 @@ public class Constants {
     public static final int MODULE_STATUS = 12;
     public static final int MODULE_STATUS_NORMAL = 1200;
     public static final int MODULE_STATUS_STOP_USE = 1201;
+    public static final int MODULE_STATUS_PROTECT = 1202;
 
     /**
      * 自定义事件, 用于服务端与客户端通信

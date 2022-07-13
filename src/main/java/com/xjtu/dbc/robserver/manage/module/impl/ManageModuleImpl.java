@@ -15,9 +15,19 @@ import java.util.List;
 
 @Slf4j
 @Service @Transactional
-public class ManagePermitModuleImpl implements ManageModuleService {
+public class ManageModuleImpl implements ManageModuleService {
     @Resource
     private ManageModuleDao manageModuleDao;
+
+    /**
+     * 根据请求路径获得模块 ID
+     * @param path 请求路径
+     * @return 模块 ID
+     */
+    @Override
+    public Integer getModuleIdByPath(String path) {
+        return manageModuleDao.getModuleIdByPath(path);
+    }
 
     /**
      * 检查模块是否可用
@@ -32,9 +42,19 @@ public class ManagePermitModuleImpl implements ManageModuleService {
         Integer moduleStatus = manageModuleDao.getModuleStatus(moduleId);
         Integer parentModuleStatus = manageModuleDao.getModuleStatus(parentId);
 
-        return moduleStatus       != null
-                && moduleStatus       == Constants.MODULE_STATUS_NORMAL
-                && !(parentModuleStatus != null && parentModuleStatus != Constants.MODULE_STATUS_NORMAL);
+        return moduleStatus != null
+                && moduleStatus != Constants.MODULE_STATUS_STOP_USE
+                && (parentModuleStatus == null || parentModuleStatus != Constants.MODULE_STATUS_STOP_USE);
+    }
+
+    /**
+     * 获取某一模块的状态
+     * @param moduleId 模块 ID
+     * @return 模块的状态
+     */
+    @Override
+    public Integer getModuleStatus(Integer moduleId) {
+        return manageModuleDao.getModuleStatus(moduleId);
     }
 
     /**
@@ -78,7 +98,6 @@ public class ManagePermitModuleImpl implements ManageModuleService {
 
     /**
      * 将模块及其子模块设为不可访问
-     *
      * @param moduleId 模块 ID
      */
     @Override

@@ -1,4 +1,4 @@
-package com.xjtu.dbc.robserver.message;
+package com.xjtu.dbc.robserver.message.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -13,17 +13,20 @@ import java.util.Date;
  */
 @Data
 public class MessageDto {
-    String sender_name;
-    String receiver_name;
-    String content;
-    String type;
+    Integer msgid;
+    Integer senderid;
+    Integer receiverid;
+    String msgcontent;
+    Integer msgtype;
 
     @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "HH:mm:ss")
+    @DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     Date time;
+
+    Integer msgstatus;
 
     @Override
     public String toString(){
-        return sender_name + "在 "+time+" 给" +receiver_name+"发送消息："+content;
+        return senderid + "在 "+time+" 给" +receiverid+"发送消息："+msgcontent;
     }
 }

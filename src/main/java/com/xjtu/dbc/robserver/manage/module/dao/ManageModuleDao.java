@@ -1,6 +1,10 @@
-package com.xjtu.dbc.robserver.manage.permit.dao;
+package com.xjtu.dbc.robserver.manage.module.dao;
 
-public interface ManagePermitDao {
+import com.xjtu.dbc.robserver.common.model.module.Module;
+
+import java.util.List;
+
+public interface ManageModuleDao {
 
     /**
      * 根据请求路径获取模块的 ID
@@ -22,4 +26,10 @@ public interface ManagePermitDao {
      * @return 模块状态
      */
     Integer getModuleStatus(Integer moduleId);
+
+    /**
+     * 获取所有的 module
+     * @return 所有 module 组成的的列表
+     */
+    List<Module> getModules();
 }

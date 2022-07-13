@@ -13,5 +13,6 @@ public class Module {
     private String modulename;
     private String url;
     private String request;
-    private Integer parenid;
+    private Integer parentid;
+    private Integer modulestatus;
 }

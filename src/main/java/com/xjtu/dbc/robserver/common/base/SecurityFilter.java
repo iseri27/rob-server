@@ -3,8 +3,7 @@ package com.xjtu.dbc.robserver.common.base;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.Utils;
-import com.xjtu.dbc.robserver.manage.permit.ManagePermitService;
-import com.xjtu.dbc.robserver.manage.permit.dao.ManagePermitDao;
+import com.xjtu.dbc.robserver.manage.module.ManageModuleService;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
@@ -30,7 +29,7 @@ public class SecurityFilter implements Filter {
     private CommonService commonService;
 
     @Resource
-    private ManagePermitService managePermitService;
+    private ManageModuleService manageModuleService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -45,7 +44,7 @@ public class SecurityFilter implements Filter {
         log.info("path: " + path);
 
         // 检查该模块是否可用
-        Boolean available = managePermitService.moduleAvailable(path);
+        Boolean available = manageModuleService.moduleAvailable(path);
 
         if (available) {
             log.info("该模块可用.");

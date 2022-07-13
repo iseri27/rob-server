@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xjtu.dbc.robserver.manage.permit.dao.ManagePermitDao">
+<mapper namespace="com.xjtu.dbc.robserver.manage.module.dao.ManageModuleDao">
     <!-- 根据请求路径获取模块 ID -->
     <select id="getModuleIdByPath" resultType="java.lang.Integer">
-        select moduleid
-        from module
-        where request like concat(#{path}, '%')
+        select *
+        from robdb.module m
+        where #{path} = m.request or #{path} regexp concat(m.request , '/[a-z]+$') or #{path} = m.request;
     </select>
 
     <!-- 获取某一模块的父模块的 ID -->
@@ -22,5 +22,10 @@
         select modulestatus
         from module
         where moduleid = #{moduleId}
+    </select>
+
+    <!-- 获取所有 module -->
+    <select id="getModules" resultType="com.xjtu.dbc.robserver.common.model.module.Module">
+        select * from module;
     </select>
 </mapper>

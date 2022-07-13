@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.manage.permit.dao.ManagePermitDao">
+    <!-- 根据请求路径获取模块 ID -->
+    <select id="getModuleIdByPath" resultType="java.lang.Integer">
+        select moduleid
+        from module
+        where request like concat(#{path}, '%')
+    </select>
+
+    <!-- 获取某一模块的父模块的 ID -->
+    <select id="getParentModuleId" resultType="java.lang.Integer">
+        select parentid
+        from module
+        where moduleid = #{moduleId}
+    </select>
+
+    <!-- 获取模块的状态 -->
+    <select id="getModuleStatus" resultType="java.lang.Integer">
+        select modulestatus
+        from module
+        where moduleid = #{moduleId}
+    </select>
+</mapper>

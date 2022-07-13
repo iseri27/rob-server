@@ -35,6 +35,8 @@ public interface DynamicHomeDao {
     Integer getCommentnumByArticleid(Integer articleid);
 
 
+    Integer is_in_blacklist(Integer userid,Integer loginid);
+
     Integer getVoteTypeByU_A_id(Integer userid,Integer articleid);
 
 }

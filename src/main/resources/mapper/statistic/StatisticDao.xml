@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.manage.statistic.dao.StatisticDao">
+    <select id="getUserTotalCount" resultType="java.lang.Integer">
+        select count(userid)count_total from user u where   u.roleid = 1001 UNION ALL
+        select count(userid) from user u where u.roleid = 1002 UNION ALL
+        select sum(coins) from user
+    </select>
+
+    <select id="getUserSexAgeReport" resultType="com.xjtu.dbc.robserver.manage.statistic.entity.UserSexAgeReport">
+        select
+        count(case when usersex=101 then 1 else null end) manNum,
+        count(case when usersex=100 then 1 else null end) womanNum,
+        count(case when  (YEAR(CURDATE())-YEAR(userbirth)) >0 and (YEAR(CURDATE())-YEAR(userbirth)) &lt;=18 then 1 else null end) ageOne,
+        count(case when  (YEAR(CURDATE())-YEAR(userbirth)) >18 and (YEAR(CURDATE())-YEAR(userbirth)) &lt;=25 then 1 else null end) ageTwo,
+        count(case when  (YEAR(CURDATE())-YEAR(userbirth)) >25 and (YEAR(CURDATE())-YEAR(userbirth)) &lt;=35 then 1 else null end) ageThree,
+        count(case when  (YEAR(CURDATE())-YEAR(userbirth)) >35 and (YEAR(CURDATE())-YEAR(userbirth)) &lt;=50 then 1 else null end) ageFour,
+        count(case when  (YEAR(CURDATE())-YEAR(userbirth)) >50 then 1 else null end) ageFive
+        from user;
+
+    </select>
+
+    <select id="getActiveUserReport" resultType="com.xjtu.dbc.robserver.manage.statistic.entity.ActiveUserReport">
+        SELECT
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 0 THEN 1 ELSE NULL END ) log1,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 1 THEN 1 ELSE NULL END ) log2,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 2 THEN 1 ELSE NULL END ) log3,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 3 THEN 1 ELSE NULL END ) log4,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 4 THEN 1 ELSE NULL END ) log5,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 5 THEN 1 ELSE NULL END ) log6,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 6 THEN 1 ELSE NULL END ) log7,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 7 THEN 1 ELSE NULL END ) log8,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 8 THEN 1 ELSE NULL END ) log9,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 9 THEN 1 ELSE NULL END ) log10,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 10 THEN 1 ELSE NULL END ) log11,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 11 THEN 1 ELSE NULL END ) log12,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 12 THEN 1 ELSE NULL END ) log13,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 13 THEN 1 ELSE NULL END ) log14,
+        count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 14 THEN 1 ELSE NULL END ) log15
+        FROM
+        ( SELECT DISTINCT date( historytime ) AS log, userid FROM history WHERE historytype = 700 ) log;
+    </select>
+
+    <select id="getBlogTotalCount" resultType="java.lang.Integer">
+        select count(articleid) from article where articletype = 300 union all
+        select count(historyid) from history where historytype = 701 union all
+        select count(voteid) from vote join article on vote.articleid = article.articleid where votetype = 800 and articletype = 300
+    </select>
+
+    <select id="getBlogNum" resultType="com.xjtu.dbc.robserver.manage.statistic.entity.BlogNum">
+        SELECT
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 0 THEN 1 ELSE NULL END ) log1,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 1 THEN 1 ELSE NULL END ) log2,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 2 THEN 1 ELSE NULL END ) log3,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 3 THEN 1 ELSE NULL END ) log4,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 4 THEN 1 ELSE NULL END ) log5,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 5 THEN 1 ELSE NULL END ) log6,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 6 THEN 1 ELSE NULL END ) log7,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 7 THEN 1 ELSE NULL END ) log8,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 8 THEN 1 ELSE NULL END ) log9,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 9 THEN 1 ELSE NULL END ) log10,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 10 THEN 1 ELSE NULL END ) log11,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 11 THEN 1 ELSE NULL END ) log12,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 12 THEN 1 ELSE NULL END ) log13,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 13 THEN 1 ELSE NULL END ) log14,
+            count( CASE WHEN TimeStampDiff( DAY, log.log, CURRENT_DATE ) = 14 THEN 1 ELSE NULL END ) log15
+        FROM
+            ( SELECT date( article.createtime ) AS log FROM article WHERE articletype = 300 ) log
+    </select>
+
+    <select id="getBlogCategory" resultType="com.xjtu.dbc.robserver.manage.statistic.entity.BlogCategory">
+        SELECT
+            category.categoryname category,
+            count( articleid ) num
+        FROM
+            article
+            JOIN category ON article.categoryid = category.categoryid
+        GROUP BY
+            article.categoryid
+    </select>
+
+    <select id="getQuestionAnswerCount" resultType="java.lang.Integer">
+        select count(articleid) from article where articletype = 302 union all
+        select count(articleid) from article where articletype = 304 or articleid=305 union all
+        select count(DISTINCT replyto) from article where articletype = 305
+    </select>
+
+    <select id="getQuestionCategory" resultType="com.xjtu.dbc.robserver.manage.statistic.entity.QuestionCategory">
+        (SELECT
+            category.categoryname category,
+            count( articleid ) num
+        FROM
+            article
+            JOIN category ON article.categoryid = category.categoryid
+        WHERE
+            articletype = 302
+        GROUP BY
+            article.categoryid)
+    </select>
+</mapper>

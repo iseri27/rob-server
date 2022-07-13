@@ -76,6 +76,7 @@ public class PersonalAPI {
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         user.setUserid(currentUser.getUserid());
         personalService.changeInformation(user);
+        personalService.useCoins(user.getUserid());
         return Result.successMsg("个人信息修改成功");
     }
 
@@ -245,5 +246,29 @@ public class PersonalAPI {
         numDto.setHistory(personalService.getHistoryNum(user.getUserid()));
         numDto.setHunt(personalService.getHuntNum(user.getUserid()));
         return Result.success("获取成功",numDto);
+    }
+
+    @GetMapping("/get/favorites")
+    public Result getFavorites(ArticleDto articleDto){
+        return Result.success("获取成功",personalService.getFavorites(articleDto));
+    }
+
+    @PostMapping("/delete/favorite")
+    public Result deleteFavorite(@RequestHeader("Token") String token,@RequestBody Article article){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        personalService.deleteFavorite(currentUser.getUserid(),article.getArticleid());
+        return Result.successMsg("成功取消收藏");
+    }
+
+    @GetMapping("/get/history")
+    public Result getHistory(ArticleDto articleDto){
+        return Result.success("获取成功",personalService.getHistory(articleDto));
+    }
+
+    @PostMapping("/delete/history")
+    public Result deleteHistory(@RequestHeader("Token") String token,@RequestBody Article article){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        personalService.deleteHistory(currentUser.getUserid(),article.getArticleid());
+        return Result.successMsg("成功取消收藏");
     }
 }

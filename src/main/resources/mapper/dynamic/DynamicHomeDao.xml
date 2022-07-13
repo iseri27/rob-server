@@ -96,6 +96,14 @@
     </select>
 
 
+    <!-- 判断是否被动态主页对应的用户拉入黑名单-->
+    <select id="is_in_blacklist" resultType="java.lang.Integer">
+	select count(userlist.userlistid)
+	from userlist JOIN userlist_has_user on userlist.userlistid = userlist_has_user.userlistid
+	where userlist.ownerid = #{userid} and userlist.userlisttype = 602 and userlist_has_user.userid =#{loginid}
+    </select>
+
+
     <!-- 获取用户对动态的赞踩状态-->
     <select id="getVoteTypeByU_A_id" resultType="java.lang.Integer">
     select votetype

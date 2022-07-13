@@ -46,4 +46,14 @@ public interface PersonalService {
     Integer getHistoryNum(Integer userid);
 
     Integer getHuntNum(Integer userid);
+
+    Map<String,Object> getFavorites(ArticleDto articleDto);
+
+    void deleteFavorite(Integer userid, Integer articleid);
+
+    Map<String,Object> getHistory(ArticleDto articleDto);
+
+    void deleteHistory(Integer userid, Integer articleid);
+
+    void useCoins(Integer userid);
 }

@@ -21,7 +21,7 @@ import java.util.Set;
  * @version 1.0
  * @date 2022/7/12 8:50
  */
-@Transactional@Service
+@Transactional @Service
 public class TagServiceImpl implements TagService {
 
     @Resource
@@ -40,7 +40,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public void deleteTag(Tag tag) {
         tagDao.deleteRelation(tag.getTagid());
-       tagDao.deleteTag(tag);
+        tagDao.deleteTag(tag);
     }
 
     @Override

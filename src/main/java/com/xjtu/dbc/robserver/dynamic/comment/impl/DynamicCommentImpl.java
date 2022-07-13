@@ -23,6 +23,23 @@ public class DynamicCommentImpl implements DynamicCommentService {
         return dynamicCommentDao.getDynamicCommentList(articleid);
     }
 
+
+    /**
+     * 判断是否在黑名单中
+     * @param authorid,articleid
+     */
+    @Override
+    public Boolean is_in_blacklist( Integer authorid,Integer articleid) {
+
+        if( dynamicCommentDao.is_in_blacklist(authorid,articleid) >=1){
+            return  true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
     /**
      * 新增评论
      * @param dynamicCommentDto {评论内容, 作者编号, 被回复这编号, 回复根节点编号}

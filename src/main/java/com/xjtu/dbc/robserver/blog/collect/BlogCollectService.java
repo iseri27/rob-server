@@ -1,7 +1,7 @@
 package com.xjtu.dbc.robserver.blog.collect;
 
 public interface BlogCollectService {
-    void addCollect(BlogCollectDto dto);
+    Integer addCollect(BlogCollectDto dto);
 
     void deCollect(BlogCollectDto dto);
 

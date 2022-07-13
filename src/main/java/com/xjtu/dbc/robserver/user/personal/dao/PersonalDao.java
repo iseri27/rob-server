@@ -4,6 +4,7 @@ import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.user.personal.entity.ArticleDto;
 import com.xjtu.dbc.robserver.user.personal.entity.FollowDto;
+import com.xjtu.dbc.robserver.user.personal.entity.MyArticle;
 
 import java.util.List;
 
@@ -44,4 +45,16 @@ public interface PersonalDao {
     Integer getHistoryNum(Integer userid,int type);
 
     Integer getHuntNum(Integer userid,int type);
+
+    List<MyArticle> getFavorites(ArticleDto articleDto);
+
+    void deleteFavorite(Integer userid, Integer articleid);
+
+    List<MyArticle> getHistory(ArticleDto articleDto);
+
+    void deleteHistory(Integer userid, Integer articleid);
+
+    Integer getCoins(Integer userid);
+
+    void useCoins(Integer userid, Integer coins);
 }

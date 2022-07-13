@@ -76,6 +76,7 @@ public class PersonalAPI {
         CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
         user.setUserid(currentUser.getUserid());
         personalService.changeInformation(user);
+        personalService.useCoins(user.getUserid());
         return Result.successMsg("个人信息修改成功");
     }
 

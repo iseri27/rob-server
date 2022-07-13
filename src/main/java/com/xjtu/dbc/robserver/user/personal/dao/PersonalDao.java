@@ -53,4 +53,8 @@ public interface PersonalDao {
     List<MyArticle> getHistory(ArticleDto articleDto);
 
     void deleteHistory(Integer userid, Integer articleid);
+
+    Integer getCoins(Integer userid);
+
+    void useCoins(Integer userid, Integer coins);
 }

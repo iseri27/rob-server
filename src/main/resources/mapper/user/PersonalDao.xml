@@ -165,4 +165,14 @@
         and userid = #{userid}
         and historytype = 702
     </delete>
+    <select id="getCoins" resultType="java.lang.Integer">
+        select coins
+        from user
+        where userid = #{userid}
+    </select>
+    <update id="useCoins">
+        update user
+        set user.coins = #{coins}
+        where userid = #{userid}
+    </update>
 </mapper>

@@ -131,4 +131,9 @@ public class PersonalServiceImpl implements PersonalService {
     public void deleteHistory(Integer userid, Integer articleid) {
         personalDao.deleteHistory(userid, articleid);
     }
+
+    @Override
+    public void useCoins(Integer userid) {
+        personalDao.useCoins(userid,personalDao.getCoins(userid)-6);
+    }
 }

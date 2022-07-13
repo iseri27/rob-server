@@ -54,4 +54,6 @@ public interface PersonalService {
     Map<String,Object> getHistory(ArticleDto articleDto);
 
     void deleteHistory(Integer userid, Integer articleid);
+
+    void useCoins(Integer userid);
 }

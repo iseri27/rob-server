@@ -57,11 +57,18 @@ public class DynamicHomeAPI {
      * @return Result(msg, homeDto)
      */
     @GetMapping("otherInfo")
-    public Result getUInfo(Integer Userid) {
+    public Result getUInfo(Integer Userid,Integer Loginid) {
 
-        Integer userid;
+        Integer userid = Userid;
+        Integer loginid = Loginid;
+        System.out.println("测试输入数据: "+userid+" "+loginid+" "+dynamicHomeService.is_in_blacklist(userid,loginid));
 
-        userid = Userid;
+
+        if( dynamicHomeService.is_in_blacklist(userid,loginid)){
+            System.out.println("测试进入2 ");
+            return Result.fail(Result.ERR_CODE_BUSINESS,"你已被该用户拉黑无法访问!");
+        }
+        System.out.println("测试进入3 ");
 
         DynamicHomeDto homeDto = dynamicHomeService.getUserInfo(userid);
         homeDto.setFollow_num(dynamicHomeService.getFollownumByUserid(userid));
@@ -101,9 +108,11 @@ public class DynamicHomeAPI {
      */
     @GetMapping("mydList")
     public Result getmyDList(@RequestParam("Userid") Integer Userid) {
-
+        System.out.println("测试进入； "+Userid);
         List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(Userid);
+        System.out.println("测试进入1");
         for(int i=0; i<listDto2.size();i++){
+            System.out.println("测试进入3");
             listDto2.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
             listDto2.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto2.get(i).getUserid(),listDto2.get(i).getDynamicid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 0:未投票  800:赞  801:踩
         }
@@ -135,14 +144,15 @@ public class DynamicHomeAPI {
 
         DynamicMyHomeListDto detailDto = dynamicHomeService.getDynamic(articleid);
 
-
-        detailDto.setLike_num(dynamicHomeService.getLikenumByAriticleid(detailDto.getDynamicid()));             //获取动态的点赞数
-        detailDto.setDislike_num(dynamicHomeService.getDislikenumByAriticleid(detailDto.getDynamicid()));     //获取动态的点踩数
-        detailDto.setComment_num(dynamicHomeService.getCommentnumByArticleid(detailDto.getDynamicid()));      //获取动态的评论数
-        detailDto.setVote_type(dynamicHomeService.getVoteTypeByU_A_id(detailDto.getUserid(),detailDto.getDynamicid())); // vote_type表示用户赞踩的情况
+        detailDto.setLike_num(dynamicHomeService.getLikenumByAriticleid(detailDto.getArticleid()));             //获取动态的点赞数
+        detailDto.setDislike_num(dynamicHomeService.getDislikenumByAriticleid(detailDto.getArticleid()));     //获取动态的点踩数
+        detailDto.setComment_num(dynamicHomeService.getCommentnumByArticleid(detailDto.getArticleid()));      //获取动态的评论数
+        detailDto.setVote_type(dynamicHomeService.getVoteTypeByU_A_id(detailDto.getUserid(),detailDto.getArticleid())); // vote_type表示用户赞踩的情况
 
 
         return Result.success("获取动态的详情的信息成功!", detailDto);
+
+//        return Result.fail("获取动态的详情的信息成功!", "detailDto");
     }
 
 

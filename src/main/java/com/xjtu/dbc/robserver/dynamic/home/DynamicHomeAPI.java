@@ -8,6 +8,7 @@ import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeDto;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeListDto;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicMyHomeListDto;
+import com.xjtu.dbc.robserver.manage.sensitive.SensitiveService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,7 +28,8 @@ public class DynamicHomeAPI {
     private CommonService commonService;
     @Resource
     private DynamicHomeService dynamicHomeService;
-
+    @Resource
+    private SensitiveService sensitiveService;
 
     /**
      * 获取用户信息(本人).
@@ -93,6 +95,7 @@ public class DynamicHomeAPI {
 
 
         for(int i=0; i<listDto.size();i++){
+            listDto.get(i).setContent(sensitiveService.filter(listDto.get(i).getContent(), '*'));
             listDto.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
             listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getDynamicid())); // vote_type表示用户赞踩的情况
         }
@@ -108,11 +111,9 @@ public class DynamicHomeAPI {
      */
     @GetMapping("mydList")
     public Result getmyDList(@RequestParam("Userid") Integer Userid) {
-        System.out.println("测试进入； "+Userid);
         List<DynamicMyHomeListDto> listDto2 = dynamicHomeService.getMyDynamicList(Userid);
-        System.out.println("测试进入1");
         for(int i=0; i<listDto2.size();i++){
-            System.out.println("测试进入3");
+            listDto2.get(i).setContent(sensitiveService.filter(listDto2.get(i).getContent(), '*'));
             listDto2.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
             listDto2.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto2.get(i).getUserid(),listDto2.get(i).getDynamicid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 0:未投票  800:赞  801:踩
         }
@@ -144,6 +145,7 @@ public class DynamicHomeAPI {
 
         DynamicMyHomeListDto detailDto = dynamicHomeService.getDynamic(articleid);
 
+        detailDto.setContent(  sensitiveService.filter(detailDto.getContent(), '*'));
         detailDto.setLike_num(dynamicHomeService.getLikenumByAriticleid(detailDto.getArticleid()));             //获取动态的点赞数
         detailDto.setDislike_num(dynamicHomeService.getDislikenumByAriticleid(detailDto.getArticleid()));     //获取动态的点踩数
         detailDto.setComment_num(dynamicHomeService.getCommentnumByArticleid(detailDto.getArticleid()));      //获取动态的评论数

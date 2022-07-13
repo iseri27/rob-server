@@ -17,4 +17,16 @@ public interface ManageModuleService {
      * @return 树形组织的模块列表
      */
     List<ModuleVO> getModulesTree();
+
+    /**
+     * 将模块及其子模块设为可以访问
+     * @param moduleId 模块 ID
+     */
+    void setModuleAvailable(Integer moduleId);
+
+    /**
+     * 将模块及其子模块设为不可访问
+     * @param moduleId 模块 ID
+     */
+    void setModuleUnavailable(Integer moduleId);
 }

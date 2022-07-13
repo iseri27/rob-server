@@ -28,4 +28,12 @@
     <select id="getModules" resultType="com.xjtu.dbc.robserver.common.model.module.Module">
         select * from module;
     </select>
+
+    <!-- 设置某一模块及其子模块的状态 -->
+    <update id="setModuleStatus">
+        update module
+        set modulestatus = #{moduleStatus}
+        where moduleid = #{moduleId} or parentid = #{moduleId}
+    </update>
+
 </mapper>

@@ -57,12 +57,32 @@ public class ManagePermitModuleImpl implements ManageModuleService {
         for (Module module: modules) {
             if (module.getParentid() != null) {
                 for (ModuleVO moduleVO: moduleVOForest) {
-                    if (moduleVO.getKey().equals(module.getParentid())) {
-                        moduleVO.getChildren().add(new ModuleVO(module));
+                    boolean result = ModuleVO.setChildrenTree(moduleVO, module);
+                    if (result) {
+                        break;
                     }
                 }
             }
         }
         return moduleVOForest;
+    }
+
+    /**
+     * 将模块及其子模块设为可以访问
+     * @param moduleId 模块 ID
+     */
+    @Override
+    public void setModuleAvailable(Integer moduleId) {
+        manageModuleDao.setModuleStatus(moduleId, Constants.MODULE_STATUS_NORMAL);
+    }
+
+    /**
+     * 将模块及其子模块设为不可访问
+     *
+     * @param moduleId 模块 ID
+     */
+    @Override
+    public void setModuleUnavailable(Integer moduleId) {
+        manageModuleDao.setModuleStatus(moduleId, Constants.MODULE_STATUS_STOP_USE);
     }
 }

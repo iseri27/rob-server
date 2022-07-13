@@ -32,4 +32,11 @@ public interface ManageModuleDao {
      * @return 所有 module 组成的的列表
      */
     List<Module> getModules();
+
+    /**
+     * 设置模块及其子模块的状态
+     * @param moduleId 模块 ID
+     * @param moduleStatus 模块状态
+     */
+    void setModuleStatus(Integer moduleId, Integer moduleStatus);
 }

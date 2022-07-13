@@ -31,4 +31,5 @@ public interface CommonDao {
      * @param tagid 标签id
      */
     void deleteTag(int tagid);
+
 }

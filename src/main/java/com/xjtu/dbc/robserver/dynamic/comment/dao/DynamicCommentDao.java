@@ -10,6 +10,10 @@ public interface DynamicCommentDao {
 
     List<DynamicCommentDto> getDynamicCommentList(Integer articleid);
 
+
+
+    Integer is_in_blacklist(Integer authorid,Integer articleid);
+
     /**
      * 新增评论
      * @param dynamicCommentDto 评论的信息

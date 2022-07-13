@@ -130,4 +130,49 @@
         where articletype = #{type}
         and authorid = #{userid}
     </select>
+    <select id="getFavorites" resultType="com.xjtu.dbc.robserver.user.personal.entity.MyArticle">
+        select articleid,title,content,authorid,useravatar
+        from article,user
+        where article.articletype = #{type}
+        and article.authorid = user.userid
+        and article.articleid in (select articleid
+        from bookmark_has_article
+        where bookmarkid in (select bookmarkid
+        from bookmark
+        where ownerid = #{userid}))
+    </select>
+    <delete id="deleteFavorite">
+        delete
+        from bookmark_has_article
+        where articleid = #{articleid}
+        and bookmarkid in (select bookmarkid
+        from bookmark
+        where ownerid = #{userid})
+    </delete>
+    <select id="getHistory" resultType="com.xjtu.dbc.robserver.user.personal.entity.MyArticle">
+        select articleid,title,content,authorid,useravatar
+        from article,user
+        where article.articleid in (select articleid
+        from history
+        where userid = #{userid}
+        and historytype = 702)
+        and user.userid = #{userid}
+    </select>
+    <delete id="deleteHistory">
+        delete
+        from history
+        where articleid = #{articleid}
+        and userid = #{userid}
+        and historytype = 702
+    </delete>
+    <select id="getCoins" resultType="java.lang.Integer">
+        select coins
+        from user
+        where userid = #{userid}
+    </select>
+    <update id="useCoins">
+        update user
+        set user.coins = #{coins}
+        where userid = #{userid}
+    </update>
 </mapper>

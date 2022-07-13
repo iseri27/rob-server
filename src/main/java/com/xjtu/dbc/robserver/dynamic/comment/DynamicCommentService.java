@@ -22,6 +22,12 @@ public interface DynamicCommentService {
     void addComment(DynamicCommentDto dynamicCommentDto);
 
     /**
+     * 判断是否在黑名单
+     * @param authorid,articleid 
+     */
+    Boolean is_in_blacklist( Integer authorid,Integer articleid);
+
+    /**
      * 获取当前最大的评论记录的编号
      * @return 最大的评论记录的编号
      */

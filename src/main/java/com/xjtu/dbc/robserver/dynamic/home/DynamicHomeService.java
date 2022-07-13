@@ -98,10 +98,18 @@ public interface DynamicHomeService {
     int getCommentnumByArticleid(Integer articleid);
 
 
+
+    /**
+     * 判断是否在黑名单
+     * @param userid,articleid
+     */
+    Boolean is_in_blacklist( Integer userid,Integer loginid);
+
+
     /**
      * 根据用户的编号与动态的编号来获取该动态的点赞点踩类型
      * @param userid,aticleid  用户编编号与动态的编号
      * @return 该动态的点赞点踩类型
      */
-    int getVoteTypeByU_A_id(Integer userid,Integer aticleid);
+    int getVoteTypeByU_A_id(Integer userid,Integer articleid);
 }

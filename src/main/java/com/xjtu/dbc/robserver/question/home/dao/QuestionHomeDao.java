@@ -57,4 +57,9 @@ public interface QuestionHomeDao {
      *获取悬赏的回答数
      */
     Integer countAnswer(int questionid);
+
+    /**
+     *获取点赞类型
+     */
+    Integer getVoteTypeByU_A_id(int userid, Integer questionid);
 }

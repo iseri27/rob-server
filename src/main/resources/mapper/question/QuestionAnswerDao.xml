@@ -33,9 +33,8 @@
 
     <!-- 获取用户对动态的赞踩状态-->
     <select id="getVoteTypeByU_A_id" resultType="java.lang.Integer">
-    select votetype
-    from vote
-    where userid =  #{userid} and articleid = #{articleid}
-
+        select votetype
+        from vote
+        where userid =  #{userid} and articleid = #{articleid}
     </select>
 </mapper>

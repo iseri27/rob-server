@@ -45,4 +45,9 @@ public interface ManageModuleService {
      */
     void setModuleUnavailable(Integer moduleId);
 
+    /**
+     * 将模块设为保护状态
+     * @param moduleId 模块 ID
+     */
+    void setModuleProtected(Integer moduleId);
 }

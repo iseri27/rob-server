@@ -104,4 +104,14 @@ public class ManageModuleImpl implements ManageModuleService {
     public void setModuleUnavailable(Integer moduleId) {
         manageModuleDao.setModuleStatus(moduleId, Constants.MODULE_STATUS_STOP_USE);
     }
+
+    /**
+     * 将模块设为保护状态
+     *
+     * @param moduleId 模块 ID
+     */
+    @Override
+    public void setModuleProtected(Integer moduleId) {
+        manageModuleDao.setModuleStatus(moduleId, Constants.MODULE_STATUS_PROTECT);
+    }
 }

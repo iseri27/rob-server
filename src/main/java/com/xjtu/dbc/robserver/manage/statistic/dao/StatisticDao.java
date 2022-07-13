@@ -1,7 +1,6 @@
 package com.xjtu.dbc.robserver.manage.statistic.dao;
 
-import com.xjtu.dbc.robserver.manage.statistic.entity.ActiveUserReport;
-import com.xjtu.dbc.robserver.manage.statistic.entity.UserSexAgeReport;
+import com.xjtu.dbc.robserver.manage.statistic.entity.*;
 
 import java.util.List;
 
@@ -14,4 +13,11 @@ public interface StatisticDao {
     List<Integer> getUserTotalCount();
     UserSexAgeReport getUserSexAgeReport();
     ActiveUserReport getActiveUserReport();
+
+    List<Integer> getBlogTotalCount();
+    BlogNum getBlogNum();
+    List<BlogCategory> getBlogCategory();
+
+    List<Integer> getQuestionAnswerCount();
+    List<QuestionCategory> getQuestionCategory();
 }

@@ -2,8 +2,7 @@ package com.xjtu.dbc.robserver.manage.statistic.impl;
 
 import com.xjtu.dbc.robserver.manage.statistic.StatisticService;
 import com.xjtu.dbc.robserver.manage.statistic.dao.StatisticDao;
-import com.xjtu.dbc.robserver.manage.statistic.entity.ActiveUserReport;
-import com.xjtu.dbc.robserver.manage.statistic.entity.UserSexAgeReport;
+import com.xjtu.dbc.robserver.manage.statistic.entity.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,5 +32,30 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public ActiveUserReport getActiveUserReport() {
         return statisticDao.getActiveUserReport();
+    }
+
+    @Override
+    public List<Integer> getBlogTotalCount() {
+        return statisticDao.getBlogTotalCount();
+    }
+
+    @Override
+    public BlogNum getBlogNum() {
+        return statisticDao.getBlogNum();
+    }
+
+    @Override
+    public List<BlogCategory> getBlogCategory() {
+        return statisticDao.getBlogCategory();
+    }
+
+    @Override
+    public List<Integer> getQuestionAnswerCount() {
+        return statisticDao.getQuestionAnswerCount();
+    }
+
+    @Override
+    public List<QuestionCategory> getQuestionCategory() {
+        return statisticDao.getQuestionCategory();
     }
 }

@@ -65,12 +65,9 @@ public class BlogVoteServiceImpl implements BlogVoteService {
         int hadDisliked=voteDao.hadDislikedOrNot(dto);
         data3[0]=voteDao.findLikes(dto);
         data3[1]=voteDao.findDislikes(dto);
-        if(hadLiked==1)
+        if(hadLiked > 0)
             data3[2]=1;
-        else
-            data3[2]=0;
-
-        if(hadDisliked==1)
+        else if(hadDisliked > 0)
             data3[2]=-1;
         else
             data3[2]=0;

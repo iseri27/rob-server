@@ -16,16 +16,18 @@ public class BlogCollectServiceImpl implements BlogCollectService {
     private BlogCollectDao blogCollectDao;
 
     @Override
-    public void addCollect(BlogCollectDto dto){
+    public Integer addCollect(BlogCollectDto dto){
         int hadCollected=blogCollectDao.hadCollectedOrNot(dto);
         //已经收藏过
-        if(hadCollected == 1){
+        if(hadCollected > 0){
             deCollect(dto);
+            return 0;
         }
         //之前未收藏
         else{
             dto.setCreatetime(Utils.getNow());
             blogCollectDao.addCollect(dto);
+            return 1;
         }
     }
 

@@ -20,4 +20,16 @@ public class ManageArticleServiceImpl implements ManageArticleService {
     public Map<String, Object> getInformList(InformDto informDto) {
         return Utils.getPage(informDto, () -> manageArticleDao.getInformList(informDto));
     }
+
+    @Override
+    public void pass(int reportid) {
+        manageArticleDao.updateReportStatus(reportid, 502);
+    }
+
+    @Override
+    public void ban(Integer reportid) {
+        manageArticleDao.updateReportStatus(reportid, 501);
+        manageArticleDao.ban(reportid);
+        manageArticleDao.updateArticleStatus(reportid, 403);
+    }
 }

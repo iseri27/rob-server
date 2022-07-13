@@ -8,4 +8,10 @@ import java.util.List;
 public interface ManageArticleDao {
 
     List<Inform> getInformList(InformDto informDto);
+
+    void updateReportStatus(int reportid, int status);
+
+    void ban(Integer reportid);
+
+    void updateArticleStatus(Integer reportid, int status);
 }

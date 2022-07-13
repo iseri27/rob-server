@@ -6,4 +6,8 @@ import java.util.Map;
 
 public interface ManageArticleService {
     Map<String, Object> getInformList(InformDto informDto);
+
+    void pass(int reportid);
+
+    void ban(Integer reportid);
 }

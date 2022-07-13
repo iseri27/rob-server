@@ -18,4 +18,23 @@
         order by `submittime` asc
     </select>
 
+    <update id="updateReportStatus">
+        update `report`
+        set `reportstatus` = #{status}
+        where `reportid` = #{reportid}
+    </update>
+
+    <update id="ban">
+        update `user`
+        set `userstatus` = 901
+        where `userid` =
+         (select `authorid` from `article` where `articleid` =
+         (select `articleid` from `report` where `reportid` = #{reportid}))
+    </update>
+
+    <update id="updateArticleStatus">
+        update `article`
+        set articlestatus = #{status}
+        where `articleid` = (select `articleid` from `report` where `reportid` = #{reportid})
+    </update>
 </mapper>

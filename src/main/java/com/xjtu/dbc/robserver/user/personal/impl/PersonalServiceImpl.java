@@ -111,4 +111,24 @@ public class PersonalServiceImpl implements PersonalService {
     public Integer getHuntNum(Integer userid) {
         return personalDao.getHuntNum(userid,Constants.ARTICLE_TYPE_QUESTION);
     }
+
+    @Override
+    public Map<String, Object> getFavorites(ArticleDto articleDto) {
+        return Utils.getPage(articleDto, () -> personalDao.getFavorites(articleDto));
+    }
+
+    @Override
+    public void deleteFavorite(Integer userid, Integer articleid) {
+        personalDao.deleteFavorite(userid, articleid);
+    }
+
+    @Override
+    public Map<String, Object> getHistory(ArticleDto articleDto) {
+        return Utils.getPage(articleDto, () -> personalDao.getHistory(articleDto));
+    }
+
+    @Override
+    public void deleteHistory(Integer userid, Integer articleid) {
+        personalDao.deleteHistory(userid, articleid);
+    }
 }

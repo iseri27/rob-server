@@ -47,6 +47,7 @@ public class BlogDetailAPI {
             int value = levelService.getLevel(blog.getAuthorid());
             Level level = new Level(value);
             blog.setLevelname(level.getName());
+            commonService.addHistory(myid,701,articleid);
             return Result.successData(blog);
         } catch (Exception e) {
             e.printStackTrace();

@@ -20,9 +20,12 @@ public class BlogReportAPI {
     private CommonService commonService;
 
     @PostMapping("/report")
-    public Result DoInform(@RequestBody ReportDto dto, @RequestHeader("Token") String token){
-        int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
+    public Result DoInform(@RequestBody Report report, @RequestHeader("Token") String token){
+        Integer myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
+        ReportDto dto = new ReportDto();
         dto.setUserid(myid);
+        dto.setArticleid(report.getArticleid());
+        dto.setReason(report.getReason());
         dto.setSubmittime(Utils.getNow());
         dto.setReportstatus(500);
         blogReportService.report(dto);

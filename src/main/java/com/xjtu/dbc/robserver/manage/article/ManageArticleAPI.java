@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.manage.article;
 
 import com.xjtu.dbc.robserver.common.Result;
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.inform.Inform;
 import com.xjtu.dbc.robserver.common.model.inform.InformDto;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,11 @@ public class ManageArticleAPI {
     public Result ban(@PathVariable("reportid") Integer reportid) {
         manageArticleService.ban(reportid);
         return Result.successMsg("禁言成功");
+    }
+
+    @GetMapping("/getArticle/{reportid}")
+    public Result getType(@PathVariable("reportid") Integer reportid) {
+        Article article = manageArticleService.getType(reportid);
+        return Result.success("获取article信息成功", article);
     }
 }

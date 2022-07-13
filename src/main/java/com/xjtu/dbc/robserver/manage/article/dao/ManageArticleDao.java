@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.manage.article.dao;
 
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.inform.Inform;
 import com.xjtu.dbc.robserver.common.model.inform.InformDto;
 
@@ -14,4 +15,6 @@ public interface ManageArticleDao {
     void ban(Integer reportid);
 
     void updateArticleStatus(Integer reportid, int status);
+
+    Article getType(Integer reportid);
 }

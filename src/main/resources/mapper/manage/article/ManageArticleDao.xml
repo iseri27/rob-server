@@ -37,4 +37,9 @@
         set articlestatus = #{status}
         where `articleid` = (select `articleid` from `report` where `reportid` = #{reportid})
     </update>
+
+    <select id="getType" resultType="com.xjtu.dbc.robserver.common.model.article.Article">
+        select * from `article`
+        where `articleid` = (select `articleid` from `report` where `reportid` = #{reportid})
+    </select>
 </mapper>

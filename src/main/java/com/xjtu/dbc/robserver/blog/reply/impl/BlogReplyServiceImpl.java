@@ -27,4 +27,9 @@ public class BlogReplyServiceImpl implements BlogReplyService {
         return replyDtoList;
     }
 
+    @Override
+    public Integer ifPullBlack(Integer myid, Integer replyto) {
+        return replyDao.ifPullBlack(myid, replyto);
+    }
+
 }

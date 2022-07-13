@@ -2,17 +2,23 @@ package com.xjtu.dbc.robserver.common;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import com.xjtu.dbc.robserver.common.page.QueryAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.*;
 
 
 import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.UUID;
@@ -103,4 +109,23 @@ public class Utils {
         String clientIP = addr.substring(1, addr.indexOf(":"));
         return clientIP;
     }
+
+    /**
+     * 将一个Java对象转化为json串，并向浏览器（客户端输出）
+     * @param resp 相应对象
+     * @param obj 需要转化为json串的java对象
+     */
+    public static void outJson(HttpServletResponse resp, Object obj) throws IOException {
+        resp.setContentType("application/json;charset=UTF-8");
+
+        PrintWriter out = resp.getWriter();//获取向客户端发送字符信息流对象
+        // 将list集合对象转化为json格式字符串
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(obj);
+        out.print(jsonString);
+
+        out.flush();
+        out.close();
+    }
+
 }

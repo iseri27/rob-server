@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.manage.article.impl;
 
 import com.xjtu.dbc.robserver.common.Utils;
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.inform.InformDto;
 import com.xjtu.dbc.robserver.manage.article.ManageArticleService;
 import com.xjtu.dbc.robserver.manage.article.dao.ManageArticleDao;
@@ -19,5 +20,22 @@ public class ManageArticleServiceImpl implements ManageArticleService {
     @Override
     public Map<String, Object> getInformList(InformDto informDto) {
         return Utils.getPage(informDto, () -> manageArticleDao.getInformList(informDto));
+    }
+
+    @Override
+    public void pass(int reportid) {
+        manageArticleDao.updateReportStatus(reportid, 502);
+    }
+
+    @Override
+    public void ban(Integer reportid) {
+        manageArticleDao.updateReportStatus(reportid, 501);
+        manageArticleDao.ban(reportid);
+        manageArticleDao.updateArticleStatus(reportid, 403);
+    }
+
+    @Override
+    public Article getType(Integer reportid) {
+        return manageArticleDao.getType(reportid);
     }
 }

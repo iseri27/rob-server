@@ -106,6 +106,8 @@ public class BlogPublishAPI {
                 if (blogPublishDto.getArticlestatus() != null && blogPublishDto.getArticlestatus() == Constants.ARTICLE_STATUS_WAITING_CHECK) {
                     return Result.fail(Result.ERR_CODE_BUSINESS, "博客正在审核中！");
                 }
+                // 添加发布历史
+                commonService.addHistory(authorId, Constants.HISTORY_PUBLISH, blogPublishDto.getArticleid());
                 return Result.success("发布成功！", blogPublishDto.getArticleid());
             } catch (Exception e) {
                 e.printStackTrace();

@@ -19,10 +19,14 @@
             receiverid = #{userId}
             AND msgtype = #{type};
     </update>
-    <insert id="sendNotice">
+    <insert id="sendNoticeByArticle">
         INSERT INTO message ( msgcontent, senderid, receiverid, msgstatus, msgtype, message.time, message.articleid )
         VALUES
             ( #{msgcontent}, #{senderid}, (select article.authorid from article where articleid = #{articleid}), #{msgstatus}, #{msgtype}, #{time}, #{articleid} )
     </insert>
-
+    <insert id="sendNoticeByReceiver">
+        INSERT INTO message ( msgcontent, senderid, receiverid, msgstatus, msgtype, message.time, message.articleid )
+        VALUES
+            ( #{msgcontent}, #{senderid}, #{receiverid}, #{msgstatus}, #{msgtype}, #{time}, #{articleid} )
+    </insert>
 </mapper>

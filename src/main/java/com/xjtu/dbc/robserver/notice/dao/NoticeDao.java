@@ -13,5 +13,6 @@ import java.util.List;
 public interface NoticeDao {
     List<Notice> getNoticeByType(Integer userId, Integer type);
     void updateUnReadNum(Integer userId,Integer type);
-    void sendNotice(Message message);
+    void sendNoticeByArticle(Message message);
+    void sendNoticeByReceiver(Message message);
 }

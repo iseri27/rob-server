@@ -19,7 +19,7 @@ public class MessageDto {
     String msgcontent;
     Integer msgtype;
 
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     Date time;
 

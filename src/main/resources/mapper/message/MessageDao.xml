@@ -5,10 +5,10 @@
 <mapper namespace="com.xjtu.dbc.robserver.message.dao.MessageDao">
     <select id="startChat" >
         INSERT INTO userlist_has_user SELECT
-        ( SELECT userlist.userlistid FROM userlist WHERE userlist.userlisttype = 603 AND userlist.ownerid = {myId} ),
-        1
+        ( SELECT userlist.userlistid FROM userlist WHERE userlist.userlisttype = 603 AND userlist.ownerid = #{myId} ),
+        #{friendId}
         WHERE
-        NOT EXISTS ( SELECT * FROM chatlist WHERE chatlist.myid = {myId} AND chatlist.friendid = {yourId} )
+        NOT EXISTS ( SELECT * FROM chatlist WHERE chatlist.myid = #{myId} AND chatlist.friendid = #{friendId} )
     </select>
 
     <select id="getChatFriendList" resultType="com.xjtu.dbc.robserver.message.entity.ChatFriend">
@@ -16,7 +16,7 @@
             u.userid id,
             u.username name,
             u.useravatar avatar,
-            (select COUNT(m.msgid) from message m where m.senderid = friendid and m.receiverid = myid and msgstatus = 0)unReadNum
+            (select COUNT(m.msgid) from message m where m.senderid = friendid and m.receiverid = myid and msgstatus = 0 and m.msgtype=1101)unReadNum
         FROM
             chatlist
             JOIN user u ON chatlist.friendid = u.userid
@@ -45,8 +45,9 @@
         FROM
             message
         WHERE
-            ( message.senderid = #{myId} AND receiverid = #{friendId} )
-            OR ( message.senderid = #{friendId} AND message.receiverid = #{myId} )
+            (( message.senderid = #{myId} AND receiverid = #{friendId} )
+            OR ( message.senderid = #{friendId} AND message.receiverid = #{myId} ))
+            AND(message.msgtype=1101)
         ORDER BY message.time
     </select>
 

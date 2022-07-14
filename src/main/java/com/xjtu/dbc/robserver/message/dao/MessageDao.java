@@ -16,4 +16,5 @@ public interface MessageDao {
     void updateUnRead(Integer myId,Integer friendId);
     void insertMessage(MessageDto messageDto);
     List<MessageDto> getMessageHistory(Integer myId,Integer friendId);
+
 }

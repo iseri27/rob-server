@@ -18,13 +18,13 @@
         SELECT
             count( message.msgid ) countSum,
             count( CASE WHEN message.msgtype = 1102 THEN 1 ELSE NULL END ) countLike,
-            count( CASE WHEN message.msgtype = 1103 THEN 1 ELSE NULL END ) countFollow,
-            count( CASE WHEN message.msgtype = 1104 THEN 1 ELSE NULL END ) countAnswer,
-            count( CASE WHEN message.msgtype = 1105 THEN 1 ELSE NULL END ) countAudit
+            count( CASE WHEN message.msgtype = 1103 THEN 1 ELSE NULL END ) countAnswer,
+            count( CASE WHEN message.msgtype = 1104 THEN 1 ELSE NULL END ) countFollow,
+            count( CASE WHEN message.msgtype = 1105 THEN 1 ELSE NULL END ) countComment
         FROM
             message
         WHERE
-            message.receiverid = 1
+            message.receiverid = #{userId}
             AND message.msgstatus = 0
     </select>
 

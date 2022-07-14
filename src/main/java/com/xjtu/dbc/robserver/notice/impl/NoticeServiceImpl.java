@@ -28,6 +28,11 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public void sendNotice(Message message) {
-        noticeDao.sendNotice(message);
+        if(message.getArticleid()==null){
+            noticeDao.sendNoticeByReceiver(message);
+        }else {
+            noticeDao.sendNoticeByArticle(message);
+        }
+
     }
 }

@@ -66,4 +66,15 @@ public class BlogReplyAPI {
         }
         return Result.success("获取回复列表成功！",replyList);
     }
+
+    @PostMapping("/delReply")
+    public Result delReply(@RequestBody Reply dto, @RequestHeader("Token") String token){
+        Integer myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
+        dto.setAuthorid(myid);
+        if (replyService.cannotDelReply(dto)) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "您没有删除该评论的权限！");
+        }
+        replyService.delReply(dto.getReplyid());
+        return Result.success("删除成功！",dto);
+    }
 }

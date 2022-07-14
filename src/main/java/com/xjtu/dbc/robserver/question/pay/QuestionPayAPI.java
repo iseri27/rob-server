@@ -27,7 +27,6 @@ public class QuestionPayAPI {
 
         System.out.println(dto.getAnswerid());
         if(dto.getCost() > 0){
-            System.out.println("恍恍惚惚");
             questionPayService.payQuestion(dto.getQuestionid());
             questionPayService.setGoodAnswer(dto.getAnswerid());
             levelService.updateCans(dto.getAuthorid(), dto.getCost());

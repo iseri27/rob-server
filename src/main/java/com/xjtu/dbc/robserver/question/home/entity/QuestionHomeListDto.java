@@ -22,6 +22,7 @@ public class QuestionHomeListDto {
     private Integer comment_num;
     private List<String> taglist;
     private Integer categoryid;
+    private String categoryname;
     private int cost;
     private int answer_num;
     private Integer vote_type;

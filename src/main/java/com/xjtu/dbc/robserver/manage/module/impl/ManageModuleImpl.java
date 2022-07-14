@@ -4,6 +4,7 @@ import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.model.module.Module;
 import com.xjtu.dbc.robserver.manage.module.ManageModuleService;
 import com.xjtu.dbc.robserver.manage.module.dao.ManageModuleDao;
+import com.xjtu.dbc.robserver.manage.module.entity.ModuleDto;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -113,5 +114,34 @@ public class ManageModuleImpl implements ManageModuleService {
     @Override
     public void setModuleProtected(Integer moduleId) {
         manageModuleDao.setModuleStatus(moduleId, Constants.MODULE_STATUS_PROTECT);
+    }
+
+    /**
+     * 新增模块
+     *
+     * @param moduleDto 模块参数
+     */
+    @Override
+    public void addModule(ModuleDto moduleDto) {
+        manageModuleDao.addModule(moduleDto);
+    }
+
+    /**
+     * 修改模块
+     * @param moduleDto 模块参数
+     */
+    @Override
+    public void updateModule(ModuleDto moduleDto) {
+        manageModuleDao.updateModule(moduleDto);
+    }
+
+    /**
+     * 删除模块
+     *
+     * @param moduleId 模块 ID
+     */
+    @Override
+    public void deleteModule(Integer moduleId) {
+        manageModuleDao.deleteModule(moduleId);
     }
 }

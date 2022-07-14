@@ -1,5 +1,6 @@
 package com.xjtu.dbc.robserver.manage.module;
 
+import com.xjtu.dbc.robserver.manage.module.entity.ModuleDto;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleVO;
 
 import java.util.List;
@@ -50,4 +51,22 @@ public interface ManageModuleService {
      * @param moduleId 模块 ID
      */
     void setModuleProtected(Integer moduleId);
+
+    /**
+     * 新增模块
+     * @param moduleDto 模块参数
+     */
+    void addModule(ModuleDto moduleDto);
+
+    /**
+     * 修改模块
+     * @param moduleDto 模块参数
+     */
+    void updateModule(ModuleDto moduleDto);
+
+    /**
+     * 删除模块
+     * @param moduleId 模块 ID
+     */
+    void deleteModule(Integer moduleId);
 }

@@ -5,6 +5,7 @@ import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.model.tag.Tag;
+import com.xjtu.dbc.robserver.level.LevelService;
 import com.xjtu.dbc.robserver.question.create.entity.QuestionPublishDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,9 @@ public class QuestionCreateAPI {
 
     @Resource
     private CommonService commonService;
+
+    @Resource
+    private LevelService levelService;
 
     /**
      * 获取该用户所有的tag(tagid)
@@ -95,6 +99,13 @@ public class QuestionCreateAPI {
         if (questionPublishDto.getCategoryid() == null) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "请选择分区!");
         }
+        //检查是否设置易拉罐数量
+        if(questionPublishDto.getCost() == null){
+            return Result.fail(Result.ERR_CODE_BUSINESS, "未设置易拉罐数量！");
+        }
+        else if(questionPublishDto.getCost() <=0){
+            return Result.fail(Result.ERR_CODE_BUSINESS, "悬赏易拉罐数量不能为负数或者0！");
+        }
 
         // 判断是第一次提交还是再次编辑
         if (questionPublishDto.getArticleid() == null) {
@@ -103,6 +114,8 @@ public class QuestionCreateAPI {
             questionPublishDto.setAuthorid(authorId);
 
             try {
+                levelService.updateCans(authorId, -questionPublishDto.getCost());
+                System.out.println(-questionPublishDto.getCost());
                 questionCreateService.addQuestion(questionPublishDto);
                 questionCreateService.addTagForQuestion(authorId, questionPublishDto);
                 // 检查博客是否需要审核
@@ -187,13 +200,7 @@ public class QuestionCreateAPI {
         if (questionPublishDto.getContent() == null || "".equals(questionPublishDto.getContent())) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");
         }
-        //检查是否设置易拉罐数量
-        if(questionPublishDto.getCost() == null){
-            return Result.fail(Result.ERR_CODE_BUSINESS, "未设置易拉罐数量！");
-        }
-        else if(questionPublishDto.getCost() <=0){
-            return Result.fail(Result.ERR_CODE_BUSINESS, "悬赏易拉罐数量不能为负数或者0！");
-        }
+
 
 //        // 检查是否选择了分区
 //        if (questionPublishDto.getCategoryid() == null) {

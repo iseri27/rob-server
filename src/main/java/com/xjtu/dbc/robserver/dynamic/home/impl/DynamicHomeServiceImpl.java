@@ -33,6 +33,7 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
 
     @Override
     public List<DynamicMyHomeListDto> getMyDynamicList(Integer userid){
+        System.out.println("测试进入2");
         return dynamicHomeDao.getMyDynamicList(userid);
     }
 
@@ -82,6 +83,23 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
         return dynamicHomeDao.getCommentnumByArticleid(articleid);
     }
 
+
+
+    /**
+     * 判断是否在黑名单中
+     * @param userid,articleid
+     */
+    @Override
+    public Boolean is_in_blacklist( Integer userid,Integer loginid) {
+        System.out.println("测试进入1 :"+ dynamicHomeDao.is_in_blacklist(userid,loginid));
+        if( dynamicHomeDao.is_in_blacklist(userid,loginid) >=1){
+            return  true;
+        }
+        else{
+            return false;
+        }
+
+    }
 
     @Override
     public int getVoteTypeByU_A_id(Integer userid,Integer articleid){

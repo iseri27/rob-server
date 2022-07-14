@@ -21,22 +21,23 @@ public class BlogCollectAPI {
 
     /**
      * 收藏博客
-     * @param dto
-     * @param token
-     * @return
      */
     @PostMapping("/collect")
-    public Result Collect(@RequestBody BlogCollectDto dto, @RequestHeader("Token") String token){
+    public Result Collect(@RequestBody BlogCollect collect, @RequestHeader("Token") String token){
+        BlogCollectDto dto = new BlogCollectDto();
+        dto.setArticleid(collect.getArticleid());
         int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
         dto.setOwnerid(myid);
         int bookmarkid = blogCollectService.getBookmarkid(dto);
         dto.setBookmarkid(bookmarkid);
-        blogCollectService.addCollect(dto);
-        return Result.successMsg("收藏成功！");
+        Integer res = blogCollectService.addCollect(dto);
+        return Result.successData(res);
     }
 
     @PostMapping("/decollect")
-    public Result Decollect(@RequestBody BlogCollectDto dto, @RequestHeader("Token") String token){
+    public Result Decollect(@RequestBody BlogCollect collect, @RequestHeader("Token") String token){
+        BlogCollectDto dto = new BlogCollectDto();
+        dto.setArticleid(collect.getArticleid());
         int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
         dto.setOwnerid(myid);
         int bookmarkid = blogCollectService.getBookmarkid(dto);
@@ -46,7 +47,9 @@ public class BlogCollectAPI {
     }
 
     @GetMapping("/getCollect")
-    public Result GetCollect(@RequestBody BlogCollectDto dto, @RequestHeader("Token") String token) {
+    public Result GetCollect(@RequestParam("articleid") Integer articleid, @RequestHeader("Token") String token) {
+        BlogCollectDto dto = new BlogCollectDto();
+        dto.setArticleid(articleid);
         int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
         dto.setOwnerid(myid);
         int bookmarkid = blogCollectService.getBookmarkid(dto);

@@ -4,13 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.blog.reply.dao.BlogReplyDao">
     <select id="getReplyList" resultType="com.xjtu.dbc.robserver.blog.reply.ReplyDto">
-        select content, createtime, replyto, authorid, rootid, username, useravatar
+        select articleid replyid, content, createtime, replyto, authorid, rootid, username, useravatar
         from article,user
         where userid = authorid and rootid = #{articleid}
+        order by replyid desc
     </select>
 
     <insert id="insertReply">
         INSERT INTO article(articletype, content, createtime, lastmodifytime, replyto, authorid, rootid)
         VALUES (303, #{content}, #{createtime}, #{createtime}, #{replyto}, #{authorid}, #{rootid});
     </insert>
+
+    <select id="ifPullBlack" resultType="java.lang.Integer">
+        select count(*)
+        from article, userlist, userlist_has_user
+        where articleid = #{replyto} and authorid = ownerid and userlist.userlisttype = 602 and userlist.userlistid = userlist_has_user.userlistid and userid = #{myid}
+    </select>
 </mapper>

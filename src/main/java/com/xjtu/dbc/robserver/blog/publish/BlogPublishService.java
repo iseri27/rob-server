@@ -73,4 +73,5 @@ public interface BlogPublishService {
      * @param articleId 博客各项参数
      */
     void updateBlogTag(List<Integer> tags, Integer articleId);
+
 }

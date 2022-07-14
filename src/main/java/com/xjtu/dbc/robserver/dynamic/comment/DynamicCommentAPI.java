@@ -57,6 +57,17 @@ public class DynamicCommentAPI {
     @PostMapping("publishcomment")
     public Result publishComment(@RequestBody DynamicCommentDto dynamicCommentDto) {
 
+//        Integer userststus =  dynamicHomeService.getUserstatus(dynamicCommentDto.getAuthorid());
+        DynamicHomeDto authorDto = dynamicHomeService.getUserInfo(dynamicCommentDto.getAuthorid());
+
+        if(authorDto.getUserstatus()==201 || authorDto.getUserstatus()==202){  //如果当前用户被禁言或封禁
+            return Result.fail(Result.ERR_CODE_BUSINESS, "当前用户状态不可发言！");
+        }
+
+        if(dynamicCommentService.is_in_blacklist(dynamicCommentDto.getAuthorid(),dynamicCommentDto.getReplyto())){
+            return Result.fail(Result.ERR_CODE_BUSINESS, "已被该用户拉黑不可回复！");
+        }
+
         Integer maxId = dynamicCommentService.getMaxCommentId();
         dynamicCommentDto.setArticleid(maxId + 1);
         dynamicCommentDto.setArticletype(303);  //评论所对应的文本类型为303

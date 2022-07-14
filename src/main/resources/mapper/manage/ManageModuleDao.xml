@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.manage.module.dao.ManageModuleDao">
+    <!-- 根据请求路径获取模块 ID -->
+    <select id="getModuleIdByPath" resultType="java.lang.Integer">
+        select *
+        from robdb.module m
+        where #{path} = m.request or #{path} regexp concat(m.request , '/[a-z]+$') or #{path} = m.request
+    </select>
+
+    <!-- 获取某一模块的父模块的 ID -->
+    <select id="getParentModuleId" resultType="java.lang.Integer">
+        select parentid
+        from module
+        where moduleid = #{moduleId}
+    </select>
+
+    <!-- 获取模块的状态 -->
+    <select id="getModuleStatus" resultType="java.lang.Integer">
+        select modulestatus
+        from module
+        where moduleid = #{moduleId}
+    </select>
+
+    <!-- 获取所有 module -->
+    <select id="getModules" resultType="com.xjtu.dbc.robserver.common.model.module.Module">
+        select * from module;
+    </select>
+
+    <!-- 设置某一模块及其子模块的状态 -->
+    <update id="setModuleStatus">
+        update module
+        set modulestatus = #{moduleStatus}
+        where moduleid = #{moduleId} or parentid = #{moduleId}
+    </update>
+    <!-- 新增模块 -->
+    <insert id="addModule">
+        insert into module (modulename, url, request, parentid, modulestatus)
+        values(#{modulename}, #{url}, #{request}, #{parentid}, #{modulestatus})
+    </insert>
+
+    <!-- 修改模块 -->
+    <update id="updateModule">
+        update module
+        <set>
+            <if test="modulename != null">modulename = #{modulename},</if>
+            <if test="url != null">url = #{url}</if>
+            <if test="request != null">request = #{request}</if>
+        </set>
+    </update>
+
+    <!-- 删除模块 -->
+    <delete id="deleteModule">
+        delete from module
+        where moduleid = #{moduleId}
+    </delete>
+</mapper>

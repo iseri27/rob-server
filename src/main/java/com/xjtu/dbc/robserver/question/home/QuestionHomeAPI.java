@@ -4,6 +4,7 @@ import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.page.PageParam;
+import com.xjtu.dbc.robserver.manage.sensitive.SensitiveService;
 import com.xjtu.dbc.robserver.question.answer.QuestionAnswerService;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
@@ -28,6 +29,9 @@ public class QuestionHomeAPI {
 
     @Resource
     private QuestionAnswerService questionAnswerService;
+
+    @Resource
+    private SensitiveService sensitiveService;
 
     @GetMapping("/qlist")
     public Result getQList(PageParam pageParam, @RequestParam("Number") int Number, @RequestParam("Categoryid") int Categoryid, @RequestParam("uid") int uid) {
@@ -65,6 +69,8 @@ public class QuestionHomeAPI {
             QuestionDetailsDto questionDetailsDto= questionHomeService.getQuestionDetails(questionid);
             questionDetailsDto.setTaglist(questionHomeService.getTagListByQuestionid(questionid));
             questionDetailsDto.setVote_type(questionAnswerService.getVoteTypeByU_A_id(userid,questionid));
+            questionDetailsDto.setQuestiontitle(sensitiveService.filter(questionDetailsDto.getQuestiontitle(),'*'));
+            questionDetailsDto.setQuestioncontent(sensitiveService.filter(questionDetailsDto.getQuestioncontent(), '*'));
             return Result.success("查找悬赏详情成功",questionDetailsDto);
         }catch (Exception e){
             e.printStackTrace();

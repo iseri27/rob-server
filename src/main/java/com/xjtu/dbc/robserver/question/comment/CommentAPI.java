@@ -2,6 +2,8 @@ package com.xjtu.dbc.robserver.question.comment;
 
 
 import com.xjtu.dbc.robserver.common.Result;
+import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeDto;
+import com.xjtu.dbc.robserver.manage.sensitive.SensitiveService;
 import com.xjtu.dbc.robserver.question.answer.QuestionAnswerService;
 import com.xjtu.dbc.robserver.question.comment.entity.CommentDto;
 import com.xjtu.dbc.robserver.question.home.QuestionHomeService;
@@ -23,6 +25,9 @@ public class CommentAPI {
     @Resource
     private QuestionAnswerService questionAnswerService;
 
+    @Resource
+    private SensitiveService sensitiveService;
+
     /**
      * 获取评论列表
      * @param num
@@ -39,6 +44,7 @@ public class CommentAPI {
             listDto.get(i).setLike_num(questionHomeService.getLikenumByQuestionId(listDto.get(i).getArticleid()));       //获取每条评论的点赞数
             listDto.get(i).setDislike_num(questionHomeService.getDislikenumByQuestionId(listDto.get(i).getArticleid()));        //获取每条评论的点踩数
             listDto.get(i).setVote_type(questionAnswerService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 null:未投票  800:赞  801:踩
+            listDto.get(i).setContent(sensitiveService.filter(listDto.get(i).getContent(), '*'));
         }
         //还需要得到用户的粉丝数 动态数
         return Result.success("获取动态的评论列表成功!", listDto);
@@ -55,6 +61,9 @@ public class CommentAPI {
      */
     @PostMapping("publishcomment")
     public Result publishComment(@RequestBody CommentDto commentDto) {
+
+
+
 
         Integer maxId = commentService.getMaxCommentId();
         commentDto.setArticleid(maxId + 1);

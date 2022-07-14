@@ -37,4 +37,14 @@
         from vote
         where userid =  #{userid} and articleid = #{articleid}
     </select>
+    <!-- 获取关系 -->
+    <select id="getRelationship" resultType="java.lang.Integer">
+        select userlisttype
+        from userlist, userlist_has_user
+        where userlist.ownerid = #{myid}
+        and userlist.userlistid = userlist_has_user.userlistid
+        and userlist_has_user.userid = #{userid}
+        and userlist.userlisttype != 603
+		and userlist.userlisttype != 601
+    </select>
 </mapper>

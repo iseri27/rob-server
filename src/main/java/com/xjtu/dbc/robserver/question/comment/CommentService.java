@@ -27,4 +27,10 @@ public interface CommentService {
      */
     Integer getMaxCommentId();
 
+    /**
+     * 判断是否在黑名单
+     * @param authorid,articleid
+     */
+    Boolean is_in_blacklist( Integer authorid,Integer articleid);
+
 }

@@ -12,6 +12,14 @@
 	WHERE  rootid = #{articleid}  and articletype = 303
     </select>
 
+    <!-- 判断是否被回复的文本的作者拉入黑名单-->
+    <select id="is_in_blacklist" resultType="java.lang.Integer">
+	select count(userlist.userlistid)
+	from userlist JOIN userlist_has_user on userlist.userlistid = userlist_has_user.userlistid
+								JOIN article  on article.authorid = userlist.ownerid
+	where article.articleid = #{articleid} and userlist.userlisttype = 602 and userlist_has_user.userid =#{authorid}
+    </select>
+
     <!-- 添加新的评论记录-->
     <insert id="addComment">
         insert into article (articleid, articletype, articlestatus, content, createtime, lastmodifytime,authorid,replyto,rootid)

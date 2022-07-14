@@ -22,4 +22,7 @@ public interface CommentDao {
      * @return 最大的评论记录的编号
      */
     Integer getMaxCommentId();
+
+
+    Integer is_in_blacklist(Integer authorid,Integer articleid);
 }

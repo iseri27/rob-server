@@ -75,4 +75,9 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
             return 0;
         }
     }
+
+    @Override
+    public Integer getRelationship(Integer myid, Integer userid) {
+        return questionAnswerDao.getRelationship(myid, userid);
+    }
 }

@@ -41,7 +41,6 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Override
     public Map<String,Object> getArtical(ArticleDto articleDto ) {
-        articleDto.setType(Constants.ARTICLE_TYPE_BLOG);
         return Utils.getPage(articleDto, () -> personalDao.getArtical(articleDto));
     }
 
@@ -136,4 +135,5 @@ public class PersonalServiceImpl implements PersonalService {
     public void useCoins(Integer userid) {
         personalDao.useCoins(userid,personalDao.getCoins(userid)-6);
     }
+
 }

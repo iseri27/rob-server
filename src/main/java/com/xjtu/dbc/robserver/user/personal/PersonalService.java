@@ -56,4 +56,6 @@ public interface PersonalService {
     void deleteHistory(Integer userid, Integer articleid);
 
     void useCoins(Integer userid);
+
+
 }

@@ -152,10 +152,11 @@
     <select id="getHistory" resultType="com.xjtu.dbc.robserver.user.personal.entity.MyArticle">
         select articleid,title,content,authorid,useravatar
         from article,user
-        where article.articleid in (select articleid
+        where article.articletype = #{type}
+        and article.articleid in (select articleid
         from history
         where userid = #{userid}
-        and historytype = 702)
+        and historytype = 701)
         and user.userid = #{userid}
     </select>
     <delete id="deleteHistory">
@@ -163,7 +164,7 @@
         from history
         where articleid = #{articleid}
         and userid = #{userid}
-        and historytype = 702
+        and historytype = 701
     </delete>
     <select id="getCoins" resultType="java.lang.Integer">
         select coins
@@ -175,4 +176,5 @@
         set user.coins = #{coins}
         where userid = #{userid}
     </update>
+
 </mapper>

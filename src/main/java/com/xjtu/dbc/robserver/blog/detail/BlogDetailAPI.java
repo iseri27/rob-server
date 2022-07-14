@@ -5,6 +5,7 @@ import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.level.Level;
 import com.xjtu.dbc.robserver.level.LevelService;
+import com.xjtu.dbc.robserver.manage.sensitive.SensitiveService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,6 +21,9 @@ public class BlogDetailAPI {
 
     @Resource
     private CommonService commonService;
+
+    @Resource
+    private SensitiveService sensitiveService;
     /**
      * 获取博客详情
      */
@@ -47,6 +51,7 @@ public class BlogDetailAPI {
             int value = levelService.getLevel(blog.getAuthorid());
             Level level = new Level(value);
             blog.setLevelname(level.getName());
+            blog.setContent(sensitiveService.filter(blog.getContent(),'*'));
             commonService.addHistory(myid,701,articleid);
             return Result.successData(blog);
         } catch (Exception e) {

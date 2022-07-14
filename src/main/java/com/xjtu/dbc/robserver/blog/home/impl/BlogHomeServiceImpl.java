@@ -80,15 +80,15 @@ public class BlogHomeServiceImpl implements BlogHomeService {
      */
     @Override
     public Map<String, Object> getRecommendBlogList(BlogDto blogDto, Integer userId) {
-        class queryAction implements  QueryAction<BlogVO> {
-            @Override
-            public List<BlogVO> execute() {
-                return blogHomeDao.getArticleListOfRecommend(userId, blogDto.getCategoryId(), Constants.ARTICLE_TYPE_BLOG);
-            }
-        }
-
-        queryAction query = new queryAction();
-        return Utils.getPage(blogDto, query);
+//        class queryAction implements  QueryAction<BlogVO> {
+//            @Override
+//            public List<BlogVO> execute() {
+//                return blogHomeDao.getArticleListOfRecommend(userId, blogDto.getCategoryId(), Constants.ARTICLE_TYPE_BLOG);
+//            }
+//        }
+//
+//        queryAction query = new queryAction();
+        return Utils.getPage(blogDto, () -> blogHomeDao.getArticleListOfRecommend(userId, blogDto.getCategoryId(), Constants.ARTICLE_TYPE_BLOG));
     }
 
     /**
@@ -102,7 +102,6 @@ public class BlogHomeServiceImpl implements BlogHomeService {
 
     /**
      * 获取所有博客的列表
-     *
      * @param userId 用户 ID
      * @return 博客列表
      */

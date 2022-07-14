@@ -13,6 +13,6 @@ public class UnReadCount {
     int countChat;
     int countLike;
     int countFollow;
-    int countAudit;
+    int countComment;
     int countAnswer;
 }

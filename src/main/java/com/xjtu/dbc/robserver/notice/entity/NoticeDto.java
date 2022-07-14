@@ -15,6 +15,7 @@ import java.util.Date;
 public class NoticeDto {
     Integer type;
     Integer articleid;
+    Integer receiverid;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date time;

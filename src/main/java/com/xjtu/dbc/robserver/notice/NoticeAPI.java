@@ -52,6 +52,7 @@ public class NoticeAPI {
         Message message = new Message();
         message.setArticleid(noticeDto.getArticleid());
         message.setSenderid(userId);
+        message.setReceiverid(noticeDto.getReceiverid());
         message.setTime(noticeDto.getTime());
         Integer type = noticeDto.getType();//获取类型
         log.info(noticeDto.toString());

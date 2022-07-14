@@ -32,9 +32,15 @@ public class BlogReplyAPI {
 
     @PostMapping("/reply")
     public Result reply(@RequestBody Reply dto, @RequestHeader("Token") String token){
-        int myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
+        Integer myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
         if (blogPublishService.getUserStatus(myid) != 200) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
+        }
+        if (replyService.ifPullBlack(myid,dto.getRootid()) > 0) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "您已被博主拉黑！");
+        }
+        if (dto.getRootid()!=dto.getReplyto() && replyService.ifPullBlack(myid,dto.getReplyto()) > 0) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "您已被当前用户拉黑！");
         }
         int blogStatus = blogPublishService.getArticleStatus(dto.getRootid());
         if (blogStatus != 402) {
@@ -59,5 +65,16 @@ public class BlogReplyAPI {
             reply.setLevelname(level.getName());
         }
         return Result.success("获取回复列表成功！",replyList);
+    }
+
+    @PostMapping("/delReply")
+    public Result delReply(@RequestBody Reply dto, @RequestHeader("Token") String token){
+        Integer myid = TokenUtils.getUserInfo(token,commonService).getUserid();//当前用户id;
+        dto.setAuthorid(myid);
+        if (replyService.cannotDelReply(dto)) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "您没有删除该评论的权限！");
+        }
+        replyService.delReply(dto.getReplyid());
+        return Result.success("删除成功！",dto);
     }
 }

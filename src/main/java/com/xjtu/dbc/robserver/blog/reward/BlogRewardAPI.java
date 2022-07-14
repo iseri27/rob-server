@@ -22,12 +22,15 @@ public class BlogRewardAPI {
     private CommonService commonService;
 
     @PostMapping("/reward")
-    public Result rewardBlog(@RequestBody RewardDto dto, @RequestHeader("Token") String token) {
+    public Result rewardBlog(@RequestBody Reward reward, @RequestHeader("Token") String token) {
         try {
-            int myid = TokenUtils.getUserInfo(token, commonService).getUserid();//当前用户id
+            RewardDto dto = new RewardDto();
+            dto.setArticleid(reward.getArticleid());
+            dto.setCoins(reward.getCoins());
+            Integer myid = TokenUtils.getUserInfo(token, commonService).getUserid();//当前用户id
             dto.setUserid(myid);
             if(blogRewardService.getRewardHistory(dto) > 0){
-                return Result.fail(Result.ERR_CODE_BUSINESS, "请勿重复打赏！");
+                return Result.fail(Result.ERR_CODE_ALREADYREWARD, "请勿重复打赏！");
             }
             else {
                 int balance = levelService.getCans(myid);//用户代币余额
@@ -39,7 +42,7 @@ public class BlogRewardAPI {
                     levelService.updateCans(articleAuthorid, dto.getCoins());
                     return Result.success("打赏成功！", dto.getCoins());
                 } else
-                    return Result.fail(Result.ERR_CODE_BUSINESS, "余额不足！");
+                    return Result.fail(Result.ERR_CODE_NOTENOUGHCOINS, "余额不足！");
             }
         } catch (Exception e) {
             e.printStackTrace();

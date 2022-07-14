@@ -4,17 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.manage.article.dao.ManageArticleDao">
     <select id="getInformList" resultType="com.xjtu.dbc.robserver.common.model.inform.Inform">
-        select * from `report`
-        where `reportstatus` = 500
-        <if test="reason != null and reason != ''">
-            and `reason` like concat('%', #{reason}, '%')
-        </if>
-        <if test="userid != null">
-            and `userid` = #{userid}
-        </if>
-        <if test="articleid != null">
-            and `articleid` = #{articleid}
-        </if>
+        select * from `inform`
+        <where>
+            <if test="reason != null and reason != ''">
+                `reason` like concat('%', #{reason}, '%')
+            </if>
+            <if test="userid != null">
+                and `userid` = #{userid}
+            </if>
+            <if test="articleid != null">
+                and `articleid` = #{articleid}
+            </if>
+        </where>
         order by `submittime` asc
     </select>
 
@@ -38,7 +39,7 @@
         where `articleid` = (select `articleid` from `report` where `reportid` = #{reportid})
     </update>
 
-    <select id="getType" resultType="com.xjtu.dbc.robserver.common.model.article.Article">
+    <select id="getArticle" resultType="com.xjtu.dbc.robserver.common.model.article.Article">
         select * from `article`
         where `articleid` = (select `articleid` from `report` where `reportid` = #{reportid})
     </select>

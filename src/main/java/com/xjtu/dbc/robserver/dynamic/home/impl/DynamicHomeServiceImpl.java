@@ -109,7 +109,6 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
         else{
             return 0;
         }
-
     }
 
 }

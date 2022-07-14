@@ -57,4 +57,8 @@ public interface PersonalDao {
     Integer getCoins(Integer userid);
 
     void useCoins(Integer userid, Integer coins);
+
+
+
+
 }

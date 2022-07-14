@@ -271,4 +271,15 @@ public class PersonalAPI {
         personalService.deleteHistory(currentUser.getUserid(),article.getArticleid());
         return Result.successMsg("成功取消收藏");
     }
+
+    @GetMapping("/checkBlock")
+    public Result checkBlock(@RequestHeader("Token") String token, User user){
+        CurrentUser currentUser = TokenUtils.getUserInfo(token,commonService);
+        System.out.println(personalService.getRelationship( user.getUserid(), currentUser.getUserid()));
+        if(personalService.getRelationship( user.getUserid(), currentUser.getUserid()) != null && personalService.getRelationship( user.getUserid(), currentUser.getUserid()) == Constants.USERLIST_BLACKLIST){
+            return Result.success("你被对方拉黑了",false);
+        }
+        else return Result.success("你没被拉黑",false);
+    }
+
 }

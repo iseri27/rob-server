@@ -36,4 +36,10 @@ public interface LoginService {
      * @param num 增加的易拉罐的数量
      */
     void addCans(Integer userId, Integer num);
+
+    /**
+     * 检查本日是否登录过
+     * @return 未登录过返回 true; 登录过返回 false
+     */
+    boolean isFirstLoginToday();
 }

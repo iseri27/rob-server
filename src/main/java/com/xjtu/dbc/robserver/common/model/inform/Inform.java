@@ -11,11 +11,12 @@ import java.util.Date;
 public class Inform {
     private Integer reportid;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date submittime;
     private String reason;
-    private Integer userid;
-    private Integer articleid;
-
+    private String username;
+    private String title;
+    private String content;
+    private Integer articletype;
 }

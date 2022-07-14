@@ -40,12 +40,14 @@ public class ModuleVO {
     private String request;
     private Boolean available;
     private List<ModuleVO> children;
+    private Integer moduleStatus;
 
     public ModuleVO(Module module) {
         this.key = module.getModuleid();
         this.moduleName = module.getModulename();
         this.url = module.getUrl();
         this.request = module.getRequest();
+        this.moduleStatus = module.getModulestatus();
         this.available = module.getModulestatus() == Constants.MODULE_STATUS_NORMAL;
         this.children =  new ArrayList<>();
     }

@@ -1,16 +1,22 @@
 package com.xjtu.dbc.robserver.question.answer.impl;
 
-import com.xjtu.dbc.robserver.blog.reply.BlogReplyService;
+
+import com.xjtu.dbc.robserver.common.Constants;
+import com.xjtu.dbc.robserver.common.Utils;
+import com.xjtu.dbc.robserver.common.page.PageParam;
+import com.xjtu.dbc.robserver.common.page.QueryAction;
 import com.xjtu.dbc.robserver.question.answer.QuestionAnswerService;
 import com.xjtu.dbc.robserver.question.answer.dao.QuestionAnswerDao;
 import com.xjtu.dbc.robserver.question.answer.entity.AnswerDetailsDto;
 import com.xjtu.dbc.robserver.question.answer.entity.AnswerDto;
 import com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto;
+import com.xjtu.dbc.robserver.question.create.entity.QuestionCreateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service @Transactional
 public class QuestionAnswerServiceImpl implements QuestionAnswerService {
@@ -18,15 +24,38 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     @Resource
     private QuestionAnswerDao questionAnswerDao;
 
-
     @Override
-    public List<QuestionAnswerListDto> getAnswerList(Integer questionid) {
-        return questionAnswerDao.getAllAnswerList(questionid);
+    public Map<String, Object> getAnswerList(PageParam pageParam, Integer questionid,Integer userid) {
+        class queryAction implements QueryAction<QuestionAnswerListDto> {
+            @Override
+            public List<QuestionAnswerListDto> execute() {
+                List<QuestionAnswerListDto> questionAnswerList = questionAnswerDao.getAllAnswerList(questionid);
+                for (QuestionAnswerListDto questionAnswerListDto: questionAnswerList) {
+                    questionAnswerListDto.setVote_type(questionAnswerDao.getVoteTypeByU_A_id(userid,questionAnswerListDto.getAnswerid()));
+                }
+                return questionAnswerList;
+            }
+        }
+
+        queryAction query = new queryAction();
+        return Utils.getPage(pageParam, query);
     }
 
     @Override
-    public List<QuestionAnswerListDto> getGoodAnswerList(Integer questionid) {
-        return questionAnswerDao.getGoodAnswerList(questionid);
+    public Map<String, Object> getGoodAnswerList(PageParam pageParam, Integer questionid,Integer userid) {
+        class queryAction implements QueryAction<QuestionAnswerListDto> {
+            @Override
+            public List<QuestionAnswerListDto> execute() {
+                List<QuestionAnswerListDto> questionAnswerList = questionAnswerDao.getGoodAnswerList(questionid);
+                for (QuestionAnswerListDto questionAnswerListDto: questionAnswerList) {
+                    questionAnswerListDto.setVote_type(questionAnswerDao.getVoteTypeByU_A_id(userid,questionAnswerListDto.getAnswerid()));
+                }
+                return questionAnswerList;
+            }
+        }
+
+        queryAction query = new queryAction();
+        return Utils.getPage(pageParam, query);
     }
 
     @Override
@@ -37,5 +66,15 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     @Override
     public void createAnswer(AnswerDto answerDto) {
         questionAnswerDao.createAnswer(answerDto);
+    }
+
+    @Override
+    public int getVoteTypeByU_A_id(Integer userid, Integer articleid) {
+        if(questionAnswerDao.getVoteTypeByU_A_id(userid,articleid) != null){
+            return questionAnswerDao.getVoteTypeByU_A_id(userid,articleid);
+        }
+        else{
+            return 0;
+        }
     }
 }

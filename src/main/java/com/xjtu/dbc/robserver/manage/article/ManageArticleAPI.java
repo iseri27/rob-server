@@ -2,12 +2,10 @@ package com.xjtu.dbc.robserver.manage.article;
 
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.model.article.Article;
-import com.xjtu.dbc.robserver.common.model.inform.Inform;
 import com.xjtu.dbc.robserver.common.model.inform.InformDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,7 +41,7 @@ public class ManageArticleAPI {
 
     @GetMapping("/getArticle/{reportid}")
     public Result getType(@PathVariable("reportid") Integer reportid) {
-        Article article = manageArticleService.getType(reportid);
+        Article article = manageArticleService.getArticle(reportid);
         return Result.success("获取article信息成功", article);
     }
 }

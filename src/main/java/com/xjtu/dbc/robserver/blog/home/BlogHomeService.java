@@ -1,6 +1,8 @@
 package com.xjtu.dbc.robserver.blog.home;
 
 import com.xjtu.dbc.robserver.blog.home.entity.BlogDto;
+import com.xjtu.dbc.robserver.blog.home.entity.BlogVO;
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 
@@ -38,4 +40,10 @@ public interface BlogHomeService {
      */
     List<Category> getCategoryList();
 
+    /**
+     * 获取所有博客的列表
+     * @param userId 用户 ID
+     * @return 博客列表
+     */
+    List<BlogVO> getRssBlogList(Integer userId);
 }

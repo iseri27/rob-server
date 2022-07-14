@@ -6,6 +6,7 @@ import com.xjtu.dbc.robserver.blog.home.entity.BlogDto;
 import com.xjtu.dbc.robserver.blog.home.entity.BlogVO;
 import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Utils;
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import com.xjtu.dbc.robserver.common.page.QueryAction;
@@ -97,5 +98,17 @@ public class BlogHomeServiceImpl implements BlogHomeService {
     @Override
     public List<Category> getCategoryList() {
         return blogHomeDao.getCategoryList();
+    }
+
+    /**
+     * 获取所有博客的列表
+     *
+     * @param userId 用户 ID
+     * @return 博客列表
+     */
+    @Override
+    public List<BlogVO> getRssBlogList(Integer userId) {
+        List<BlogVO> blogVOList = blogHomeDao.getArticleListOfMyself(userId, Constants.ARTICLE_TYPE_BLOG);
+        return blogVOList;
     }
 }

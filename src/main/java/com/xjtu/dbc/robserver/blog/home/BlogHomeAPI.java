@@ -1,19 +1,23 @@
 package com.xjtu.dbc.robserver.blog.home;
 
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Content;
+import com.rometools.rome.feed.rss.Item;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.WireFeedOutput;
 import com.xjtu.dbc.robserver.blog.home.entity.BlogDto;
+import com.xjtu.dbc.robserver.blog.home.entity.BlogVO;
 import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
+import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.category.Category;
+import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.common.page.PageParam;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/blog/home")
@@ -93,6 +97,61 @@ public class BlogHomeAPI {
         List<Category> categoryList = blogHomeService.getCategoryList();
         return Result.successData(categoryList);
     }
-    public static int HISTORY_BROWSE = 701;
+
+    @GetMapping("/rss")
+    public String getRssFeed(@RequestParam("userId") Integer userId) {
+        User user = commonService.getUserById(userId);
+        String userName = user.getUsername();
+        List<BlogVO> blogList = blogHomeService.getRssBlogList(userId);
+
+        Channel channel = new Channel("rss_2.0");
+        channel.setTitle("ROB Blog -- " + userName);
+        channel.setLink("http://localhost:3000");
+        channel.setDescription("红橙蓝博客系统");
+        channel.setEncoding("utf-8");
+        channel.setLanguage("zh_cn");
+        // 最后生成时间
+        channel.setLastBuildDate(new Date());
+        // 在刷新当前 rss 在缓存中可以保存多长时间（分钟）
+        channel.setTtl(5);
+        // 设置生成时间
+        channel.setPubDate(new Date());
+
+        List<Item> itemList = new ArrayList<>();
+
+        for (BlogVO blog: blogList) {
+            Item item = new Item();
+            item.setAuthor(userName);
+            item.setTitle(blog.getTitle());
+            item.setPubDate(blog.getCreatetime());
+
+            // 设置分类
+            List<com.rometools.rome.feed.rss.Category> categoryList = new ArrayList<>();
+            com.rometools.rome.feed.rss.Category category = new com.rometools.rome.feed.rss.Category();
+            category.setValue(blog.getCategoryname());
+            item.setCategories(categoryList);
+
+            // 设置内容
+            Content content = new Content();
+            content.setType(blog.getContent());
+            item.setContent(content);
+
+            itemList.add(item);
+        }
+
+        channel.setItems(itemList);
+
+        WireFeedOutput out = new WireFeedOutput();
+        String xml = null;
+        try {
+            xml = out.outputString(channel);
+        } catch (FeedException e) {
+            e.printStackTrace();
+        }
+
+        return xml;
+
+//        return Result.successData(xml);
+    }
 
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjtu.dbc.robserver.notice.dao.NoticeDao">
+    <select id="getNoticeByType" resultType="com.xjtu.dbc.robserver.notice.entity.Notice">
+        SELECT
+            *
+        FROM
+            notice
+        WHERE
+            receiverid = #{userId}
+            AND msgtype = #{type};
+    </select>
+    <update id="updateUnReadNum">
+        UPDATE message
+        SET message.msgstatus = 1
+        WHERE
+            receiverid = #{userId}
+            AND msgtype = #{type};
+    </update>
+    <insert id="sendNotice">
+        INSERT INTO message ( msgcontent, senderid, receiverid, msgstatus, msgtype, message.time, message.articleid )
+        VALUES
+            ( #{msgcontent}, #{senderid}, (select article.authorid from article where articleid = #{articleid}), #{msgstatus}, #{msgtype}, #{time}, #{articleid} )
+    </insert>
+
+</mapper>

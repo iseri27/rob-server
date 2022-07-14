@@ -1,15 +1,10 @@
 package com.xjtu.dbc.robserver.manage.module;
 
-import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Result;
-import com.xjtu.dbc.robserver.common.model.module.Module;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleDto;
 import com.xjtu.dbc.robserver.manage.module.entity.ModuleVO;
-import io.lettuce.core.ConnectionState;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.io.ResolverUtil;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

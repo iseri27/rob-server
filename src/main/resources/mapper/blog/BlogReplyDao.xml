@@ -10,6 +10,12 @@
         order by replyid desc
     </select>
 
+    <select id="getReplytouserid" resultType="java.lang.Integer">
+        select authorid
+        from article
+        where articleid = #{replyid}
+    </select>
+
     <insert id="insertReply">
         INSERT INTO article(articletype, content, createtime, lastmodifytime, replyto, authorid, rootid)
         VALUES (303, #{content}, #{createtime}, #{createtime}, #{replyto}, #{authorid}, #{rootid});
@@ -20,4 +26,15 @@
         from article, userlist, userlist_has_user
         where articleid = #{replyto} and authorid = ownerid and userlist.userlisttype = 602 and userlist.userlistid = userlist_has_user.userlistid and userid = #{myid}
     </select>
+
+    <select id="isMyArticle" resultType="java.lang.Integer">
+        select count(*)
+        from article
+        where articleid = #{replyto} and authorid = #{myid}
+    </select>
+
+    <delete id="delReply">
+        delete from article
+        where articleid = #{replyid}
+    </delete>
 </mapper>

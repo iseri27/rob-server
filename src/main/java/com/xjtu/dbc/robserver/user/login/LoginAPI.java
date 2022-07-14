@@ -32,12 +32,14 @@ public class LoginAPI {
         if (cnt == 1) {
             System.out.println("Client Token = " + userId);
             String token = TokenUtils.loginSign(Integer.toString(userId), loginDto.getUserpwd());
+            if (loginService.isFirstLoginToday()) {
+                // 为用户增加经验
+                loginService.addExp(userId, 10);
+                // 为用户增加代币
+                loginService.addCans(userId, 1);
+            }
             // 添加历史记录
             commonService.addHistory(userId, Constants.HISTORY_LOGIN, null);
-            // 为用户增加经验
-            loginService.addExp(userId, 10);
-            // 为用户增加代币
-            loginService.addCans(userId, 1);
             return Result.success("登录成功", token);
         } else {
             return Result.fail(Result.ERR_CODE_BUSINESS, "帐号或密码错误");

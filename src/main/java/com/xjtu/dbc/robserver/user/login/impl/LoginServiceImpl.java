@@ -1,5 +1,7 @@
 package com.xjtu.dbc.robserver.user.login.impl;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.xjtu.dbc.robserver.level.dao.LevelDao;
 import com.xjtu.dbc.robserver.user.login.LoginService;
 import com.xjtu.dbc.robserver.user.login.dao.LoginDao;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service @Transactional
 public class LoginServiceImpl implements LoginService {
@@ -68,5 +71,22 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public void addCans(Integer userId, Integer num) {
         levelDao.updateCans(userId, num);
+    }
+
+    /**
+     * 检查本日是否登录过
+     *
+     * @return 未登录过返回 true; 登录过返回 false
+     */
+    @Override
+    public boolean isFirstLoginToday() {
+        // 获取当前时间
+        DateTime currentTime = DateUtil.date();
+        // 获取今天的起始时间
+        DateTime beginOfToday = DateUtil.beginOfDay(currentTime);
+        // 搜索历史
+        Integer cnt = loginDao.getLoginHistoryCountOfToday(beginOfToday);
+
+        return false;
     }
 }

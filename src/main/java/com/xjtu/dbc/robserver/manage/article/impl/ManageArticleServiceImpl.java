@@ -35,7 +35,7 @@ public class ManageArticleServiceImpl implements ManageArticleService {
     }
 
     @Override
-    public Article getType(Integer reportid) {
-        return manageArticleDao.getType(reportid);
+    public Article getArticle(Integer reportid) {
+        return manageArticleDao.getArticle(reportid);
     }
 }

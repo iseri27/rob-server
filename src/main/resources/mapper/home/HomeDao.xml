@@ -14,15 +14,18 @@
             userid = #{userid}
     </select>
 
-    <select id="getUnReadNum" resultType="java.lang.Integer">
+    <select id="getUnReadNum" resultType="com.xjtu.dbc.robserver.user.home.entity.UnReadCount">
         SELECT
-            count( msgid ) count
+            count( message.msgid ) countSum,
+            count( CASE WHEN message.msgtype = 1102 THEN 1 ELSE NULL END ) countLike,
+            count( CASE WHEN message.msgtype = 1103 THEN 1 ELSE NULL END ) countFollow,
+            count( CASE WHEN message.msgtype = 1104 THEN 1 ELSE NULL END ) countAnswer,
+            count( CASE WHEN message.msgtype = 1105 THEN 1 ELSE NULL END ) countAudit
         FROM
             message
         WHERE
-            message.msgstatus = 0
-            AND message.receiverid = #{userId}
-
+            message.receiverid = 1
+            AND message.msgstatus = 0
     </select>
 
 </mapper>

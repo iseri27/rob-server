@@ -24,9 +24,10 @@
         where useremail = #{useremail}
     </select>
 
-    <!-- 添加用户登录记录 -->
-    <insert id="addLoginHistory">
-        insert into history (historytime, userid, historytype, articleid)
-        values (now(), #{userId}, #{historyType}, null);
-    </insert>
+    <!-- 获取今日登录数量 -->
+    <select id="getLoginHistoryCountOfToday" resultType="java.lang.Integer">
+        select count(*)
+        from history
+        where historytype = 700 and historytime &gt; #{beginOfToday}
+    </select>
 </mapper>

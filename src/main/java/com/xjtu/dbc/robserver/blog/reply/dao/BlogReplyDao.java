@@ -11,4 +11,10 @@ public interface BlogReplyDao {
     List<ReplyDto> getReplyList(int articleid);
 
     Integer ifPullBlack(Integer myid, Integer replyto);
+
+    Integer isMyArticle(Integer replyto, Integer myid);
+
+    void delReply(Integer replyid);
+
+    Integer getReplytouserid(Integer replyto);
 }

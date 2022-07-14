@@ -60,9 +60,12 @@ public class Constants {
     public static final int MSG_TYPE = 11;
     public static final int MSG_CHAT = 1101;
     public static final int MSG_LIKE  = 1102;
-    public static final int MSG_REWARD = 1103;
+    public static final int MSG_ANSWER = 1103;
     public static final int MSG_FOLLOW = 1104;
     public static final int MSA_EXAMINE = 1105;
+
+    public static final String[]MSG_CONTENT = {"点赞收藏了你","回答了你的悬赏","关注了你","审核了你的文章"};
+
 
     // 模块状态
     public static final int MODULE_STATUS = 12;

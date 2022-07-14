@@ -26,7 +26,7 @@
 
     <!-- 获取推荐的博客 -->
     <select id="getArticleListOfRecommend" resultType="com.xjtu.dbc.robserver.blog.home.entity.BlogVO">
-        select *
+        select distinct authorid, authorname, authoravatar, articleid, title , content, createtime, lastmodifytime, categoryid, categoryname
         from user_follow_article
         <where>
             <if test="userId      != null">     authorid      != #{userId}      </if>

@@ -63,7 +63,7 @@ public class DynamicHomeAPI {
 
         Integer userid = Userid;
         Integer loginid = Loginid;
-        System.out.println("测试输入数据: "+userid+" "+loginid+" "+dynamicHomeService.is_in_blacklist(userid,loginid));
+
 
 
         if( dynamicHomeService.is_in_blacklist(userid,loginid)){

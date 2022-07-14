@@ -12,5 +12,5 @@ public interface ManageArticleService {
 
     void ban(Integer reportid);
 
-    Article getType(Integer reportid);
+    Article getArticle(Integer reportid);
 }

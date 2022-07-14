@@ -20,6 +20,10 @@ public class Result {
 
     public static final int ERR_CODE_UNREGISTER = 540;
 
+    public static final int ERR_CODE_ALREADYREWARD = 550;
+
+    public static final int ERR_CODE_NOTENOUGHCOINS = 555;
+
     /**
      * 系统错误
      */

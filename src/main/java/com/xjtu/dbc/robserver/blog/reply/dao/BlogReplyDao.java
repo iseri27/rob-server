@@ -9,4 +9,6 @@ public interface BlogReplyDao {
     void insertReply(Reply dto);
 
     List<ReplyDto> getReplyList(int articleid);
+
+    Integer ifPullBlack(Integer myid, Integer replyto);
 }

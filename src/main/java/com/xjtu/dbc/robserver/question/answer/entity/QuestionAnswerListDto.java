@@ -19,6 +19,7 @@ public class QuestionAnswerListDto {
     private Integer like_num;
     private Integer dislike_num;
     private Integer comment_num;
+    private Integer vote_type;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "GMT+8")

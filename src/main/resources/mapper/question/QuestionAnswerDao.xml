@@ -25,9 +25,16 @@
 	    where answer_like.answerid = #{answerid}
     </select>
 
+    <!-- 创建回答 -->
     <insert id="createAnswer">
          insert into article (articleid, articletype, articlestatus, title, content, cost, createtime,lastmodifytime,authorid,categoryid,rootid,replyto)
         values(#{articleid}, 304, #{articlestatus}, #{title}, #{content}, 0, now(),now(),#{authorid},null,null,#{replyto})
     </insert>
 
+    <!-- 获取用户对动态的赞踩状态-->
+    <select id="getVoteTypeByU_A_id" resultType="java.lang.Integer">
+        select votetype
+        from vote
+        where userid =  #{userid} and articleid = #{articleid}
+    </select>
 </mapper>

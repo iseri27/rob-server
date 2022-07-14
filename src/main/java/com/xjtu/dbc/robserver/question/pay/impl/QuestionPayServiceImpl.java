@@ -20,13 +20,13 @@ public class QuestionPayServiceImpl implements QuestionPayService {
     }
 
     @Override
-    public void payQuestion(int answerid) {
-        questionPayDao.payQuestion();
+    public void payQuestion(int questionid) {
+        questionPayDao.payQuestion(questionid);
 
     }
 
     @Override
     public void setGoodAnswer(int answerid) {
-        questionPayDao.setGoodAnswer();
+        questionPayDao.setGoodAnswer(answerid);
     }
 }

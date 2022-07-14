@@ -1,5 +1,7 @@
 package com.xjtu.dbc.robserver.user.login.dao;
 
+import cn.hutool.core.date.DateTime;
+
 public interface LoginDao {
     /**
      * 根据用户 ID 与密码获取用户数量
@@ -24,9 +26,10 @@ public interface LoginDao {
     Integer getUserIdByEmail(String useremail);
 
     /**
-     * 添加登录历史
-     * @param userId 用户 ID
+     * 获取今日的登录历史数量
+     * @param beginOfToday 今日开始时间
+     * @return 数量
      */
-    void addHistory(Integer userId);
+    Integer getLoginHistoryCountOfToday(DateTime beginOfToday);
 
 }

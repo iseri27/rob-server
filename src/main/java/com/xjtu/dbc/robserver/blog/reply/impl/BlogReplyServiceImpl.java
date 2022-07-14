@@ -23,8 +23,34 @@ public class BlogReplyServiceImpl implements BlogReplyService {
     @Override
     public List<ReplyDto> getReplyList(int articleid){
         List<ReplyDto> replyDtoList = replyDao.getReplyList(articleid);
-
+        for (ReplyDto reply: replyDtoList) {
+            reply.setReplytouserid(replyDao.getReplytouserid(reply.getReplyto()));
+        }
         return replyDtoList;
+    }
+
+    @Override
+    public Integer ifPullBlack(Integer myid, Integer replyto) {
+        return replyDao.ifPullBlack(myid, replyto);
+    }
+
+    @Override
+    public boolean cannotDelReply(Reply dto) {
+        if(replyDao.isMyArticle(dto.getReplyid(),dto.getAuthorid()) > 0){
+            return false;
+        }
+        if(replyDao.isMyArticle(dto.getReplyto(),dto.getAuthorid()) > 0){
+            return false;
+        }
+        if(replyDao.isMyArticle(dto.getRootid(),dto.getAuthorid()) > 0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void delReply(Integer replyid) {
+        replyDao.delReply(replyid);
     }
 
 }

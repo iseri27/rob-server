@@ -62,6 +62,8 @@ public class BlogHomeAPI {
         }
 
         Integer userId = TokenUtils.getUserInfo(token, commonService).getUserid();
+
+
         Map<String, Object> blogListPage = blogHomeService.getMyBlogList(pageParam, userId);
 
         return Result.successData(blogListPage);

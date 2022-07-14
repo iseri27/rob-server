@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter@Setter
 public class PayDto {
-    private int Answerid;
+    private int answerid;
     private int questionid;
+    private int authorid;
     private int cost;
 }

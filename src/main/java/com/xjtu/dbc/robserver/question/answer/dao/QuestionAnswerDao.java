@@ -21,4 +21,6 @@ public interface QuestionAnswerDao {
     void createAnswer(AnswerDto answerDto);
 
     List<QuestionAnswerListDto> getGoodAnswerList(Integer questionid);
+
+    Integer getVoteTypeByU_A_id(Integer userid, Integer articleid);
 }

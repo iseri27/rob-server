@@ -87,4 +87,11 @@
         from article
         where articletype = 304 or 305 and replyto = #{questionid}
     </select>
+
+    <!-- 获取用户对动态的赞踩状态-->
+    <select id="getVoteTypeByU_A_id" resultType="java.lang.Integer">
+        select votetype
+        from vote
+        where userid =  #{userid} and articleid = #{questionid}
+    </select>
 </mapper>

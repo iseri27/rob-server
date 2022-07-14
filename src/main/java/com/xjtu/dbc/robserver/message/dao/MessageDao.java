@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.message.dao;
 
 import com.xjtu.dbc.robserver.message.entity.ChatFriend;
+import com.xjtu.dbc.robserver.message.entity.MessageDto;
 
 import java.util.List;
 
@@ -10,6 +11,10 @@ import java.util.List;
  * @date 2022/7/10 16:29
  */
 public interface MessageDao {
-    List<ChatFriend> getChatFriendList(int userId);
-    void startChat(int myId,int friendId);
+    List<ChatFriend> getChatFriendList(Integer userId);
+    void startChat(Integer myId,Integer friendId);
+    void updateUnRead(Integer myId,Integer friendId);
+    void insertMessage(MessageDto messageDto);
+    List<MessageDto> getMessageHistory(Integer myId,Integer friendId);
+
 }

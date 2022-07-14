@@ -16,5 +16,5 @@ public interface ManageArticleDao {
 
     void updateArticleStatus(Integer reportid, int status);
 
-    Article getType(Integer reportid);
+    Article getArticle(Integer reportid);
 }

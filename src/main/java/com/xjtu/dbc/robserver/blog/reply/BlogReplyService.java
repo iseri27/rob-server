@@ -8,4 +8,10 @@ public interface BlogReplyService {
     void reply(Reply dto);
 
     List<ReplyDto> getReplyList(int articleid);
+
+    Integer ifPullBlack(Integer myid, Integer replyto);
+
+    boolean cannotDelReply(Reply dto);
+
+    void delReply(Integer replyid);
 }

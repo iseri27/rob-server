@@ -4,6 +4,7 @@ import com.xjtu.dbc.robserver.common.model.module.Module;
 import com.xjtu.dbc.robserver.user.home.HomeService;
 import com.xjtu.dbc.robserver.user.home.dao.HomeDao;
 import com.xjtu.dbc.robserver.user.home.entity.Menu;
+import com.xjtu.dbc.robserver.user.home.entity.UnReadCount;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public Integer getUnReadNum(Integer userid) {
+    public UnReadCount getUnReadNum(Integer userid) {
         return homeDao.getUnReadNum(userid);
     }
 }

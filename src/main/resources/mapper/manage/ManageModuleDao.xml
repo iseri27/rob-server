@@ -7,7 +7,7 @@
     <select id="getModuleIdByPath" resultType="java.lang.Integer">
         select *
         from robdb.module m
-        where #{path} = m.request or #{path} regexp concat(m.request , '/[a-z]+$') or #{path} = m.request;
+        where #{path} = m.request or #{path} regexp concat(m.request , '/[a-z]+$') or #{path} = m.request
     </select>
 
     <!-- 获取某一模块的父模块的 ID -->
@@ -35,5 +35,25 @@
         set modulestatus = #{moduleStatus}
         where moduleid = #{moduleId} or parentid = #{moduleId}
     </update>
+    <!-- 新增模块 -->
+    <insert id="addModule">
+        insert into module (modulename, url, request, parentid, modulestatus)
+        values(#{modulename}, #{url}, #{request}, #{parentid}, #{modulestatus})
+    </insert>
 
+    <!-- 修改模块 -->
+    <update id="updateModule">
+        update module
+        <set>
+            <if test="modulename != null">modulename = #{modulename},</if>
+            <if test="url != null">url = #{url}</if>
+            <if test="request != null">request = #{request}</if>
+        </set>
+    </update>
+
+    <!-- 删除模块 -->
+    <delete id="deleteModule">
+        delete from module
+        where moduleid = #{moduleId}
+    </delete>
 </mapper>

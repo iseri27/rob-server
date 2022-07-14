@@ -5,13 +5,10 @@
 <mapper namespace="com.xjtu.dbc.robserver.message.dao.MessageDao">
     <select id="startChat" >
         INSERT INTO userlist_has_user SELECT
-            (SELECT DISTINCT chatlistid
-            FROM chatlist WHERE myid = #{myId}), #{friendId}
-        WHERE NOT EXISTS
-            (SELECT *
-            FROM chatlist
-            WHERE chatlist.myid = #{myId}
-                    AND chatlist.friendid = #{friendId} )
+        ( SELECT userlist.userlistid FROM userlist WHERE userlist.userlisttype = 603 AND userlist.ownerid = {myId} ),
+        1
+        WHERE
+        NOT EXISTS ( SELECT * FROM chatlist WHERE chatlist.myid = {myId} AND chatlist.friendid = {yourId} )
     </select>
 
     <select id="getChatFriendList" resultType="com.xjtu.dbc.robserver.message.entity.ChatFriend">
@@ -19,7 +16,7 @@
             u.userid id,
             u.username name,
             u.useravatar avatar,
-            (select COUNT(m.msgid) from message m where m.senderid = friendid and m.receiverid = myid)unReadNum
+            (select COUNT(m.msgid) from message m where m.senderid = friendid and m.receiverid = myid and msgstatus = 0)unReadNum
         FROM
             chatlist
             JOIN user u ON chatlist.friendid = u.userid
@@ -27,4 +24,31 @@
             myid = #{userId}
         ORDER BY unReadNum DESC
     </select>
+
+    <update id="updateUnRead" >
+        UPDATE message m
+        SET m.msgstatus = 1
+        WHERE
+            m.senderid = #{friendId}
+        AND m.receiverid = #{myId}
+    </update>
+
+    <insert id="insertMessage">
+        INSERT INTO message ( msgcontent, senderid, receiverid, msgstatus, msgtype, message.time )
+        VALUES
+        ( #{msgcontent}, #{senderid}, #{receiverid}, #{msgstatus}, #{msgtype}, #{time} )
+    </insert>
+
+    <select id="getMessageHistory" resultType="com.xjtu.dbc.robserver.message.entity.MessageDto">
+        SELECT
+            *
+        FROM
+            message
+        WHERE
+            ( message.senderid = #{myId} AND receiverid = #{friendId} )
+            OR ( message.senderid = #{friendId} AND message.receiverid = #{myId} )
+        ORDER BY message.time
+    </select>
+
+
 </mapper>

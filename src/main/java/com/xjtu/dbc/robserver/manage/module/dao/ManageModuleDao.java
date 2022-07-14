@@ -1,6 +1,7 @@
 package com.xjtu.dbc.robserver.manage.module.dao;
 
 import com.xjtu.dbc.robserver.common.model.module.Module;
+import com.xjtu.dbc.robserver.manage.module.entity.ModuleDto;
 
 import java.util.List;
 
@@ -39,4 +40,22 @@ public interface ManageModuleDao {
      * @param moduleStatus 模块状态
      */
     void setModuleStatus(Integer moduleId, Integer moduleStatus);
+
+    /**
+     * 新增模块
+     * @param moduleDto 模块参数
+     */
+    void addModule(ModuleDto moduleDto);
+
+    /**
+     * 修改模块
+     * @param moduleDto 模块参数
+     */
+    void updateModule(ModuleDto moduleDto);
+
+    /**
+     * 删除模块
+     * @param moduleId
+     */
+    void deleteModule(Integer moduleId);
 }

@@ -2,6 +2,7 @@ package com.xjtu.dbc.robserver.user.home.dao;
 
 import com.xjtu.dbc.robserver.common.model.module.Module;
 import com.xjtu.dbc.robserver.user.home.entity.Menu;
+import com.xjtu.dbc.robserver.user.home.entity.UnReadCount;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
  */
 public interface HomeDao {
     List<Menu> getMenusByUserId(Integer userid);
-    Integer getUnReadNum(Integer userid);
+    UnReadCount getUnReadNum(Integer userid);
 }

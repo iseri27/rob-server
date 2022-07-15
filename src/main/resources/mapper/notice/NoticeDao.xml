@@ -10,7 +10,9 @@
             notice
         WHERE
             receiverid = #{userId}
-            AND msgtype = #{type};
+            AND msgtype = #{type}
+        ORDER BY notice.msgid
+        DESC
     </select>
     <update id="updateUnReadNum">
         UPDATE message

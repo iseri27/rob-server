@@ -1,7 +1,7 @@
 package com.xjtu.dbc.robserver.question.home;
 
+import com.github.pagehelper.PageInfo;
 import com.xjtu.dbc.robserver.common.CommonService;
-import com.xjtu.dbc.robserver.common.CurrentUser;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.common.model.category.Category;
@@ -41,16 +41,35 @@ public class QuestionHomeAPI {
             if(selectid == 1){
                 //获取全部问题
                 Map<String, Object> questionListPage = questionHomeService.getAllQuestionList(pageParam,cid, userid);
+                List<QuestionHomeListDto> questionHomeListDtoList = (List<QuestionHomeListDto>) questionListPage.get("list");
+                for (QuestionHomeListDto questionHomeListDto: questionHomeListDtoList) {
+                    if(questionHomeListDto.getQuestiontitle() != null){
+                        questionHomeListDto.setQuestiontitle(sensitiveService.filter(questionHomeListDto.getQuestiontitle(),'*'));
+                    }
+                }
                 return Result.successData(questionListPage);
             }
             else if(selectid == 2){
                 //获取未解决问题
+
                 Map<String, Object> questionListPage = questionHomeService.getNotSolveQuestionList(pageParam,cid, userid);
+                List<QuestionHomeListDto> questionHomeListDtoList = (List<QuestionHomeListDto>) questionListPage.get("list");
+                for (QuestionHomeListDto questionHomeListDto: questionHomeListDtoList) {
+                    if(questionHomeListDto.getQuestiontitle() != null){
+                        questionHomeListDto.setQuestiontitle(sensitiveService.filter(questionHomeListDto.getQuestiontitle(),'*'));
+                    }
+                }
                 return Result.successData(questionListPage);
             }
             else{
                 //获取已解决问题
                 Map<String, Object> questionListPage = questionHomeService.getSolveQuestionList(pageParam,cid, userid);
+                List<QuestionHomeListDto> questionHomeListDtoList = (List<QuestionHomeListDto>) questionListPage.get("list");
+                for (QuestionHomeListDto questionHomeListDto: questionHomeListDtoList) {
+                    if(questionHomeListDto.getQuestiontitle() != null){
+                        questionHomeListDto.setQuestiontitle(sensitiveService.filter(questionHomeListDto.getQuestiontitle(),'*'));
+                    }
+                }
                 return Result.successData(questionListPage);
             }
         }catch (Exception e) {
@@ -99,6 +118,12 @@ public class QuestionHomeAPI {
             int userid = TokenUtils.getUserInfo(token,commonService).getUserid();
             String string = str;
             Map<String, Object> questionListPage = questionHomeService.searchQuestionList(pageParam,string,userid);
+            List<QuestionHomeListDto> questionHomeListDtoList = (List<QuestionHomeListDto>) questionListPage.get("list");
+            for (QuestionHomeListDto questionHomeListDto: questionHomeListDtoList) {
+                if(questionHomeListDto.getQuestiontitle() != null){
+                    questionHomeListDto.setQuestiontitle(sensitiveService.filter(questionHomeListDto.getQuestiontitle(),'*'));
+                }
+            }
             return Result.successData(questionListPage);
 
         }catch(Exception e){

@@ -16,6 +16,7 @@ public class DynamicHomeDto {
     private String userabout;
     private String useremail;
     private Integer roleid;
+    private Integer userexp;
     private Integer userstatus;
 
     private Integer follow_num; //本主页用户关注的人数
@@ -133,4 +134,13 @@ public class DynamicHomeDto {
     public void setUserabout(String userabout) {
         this.userabout = userabout;
     }
+
+    public Integer getUserexp() {
+        return userexp;
+    }
+
+    public void setUserexp(Integer userexp) {
+        this.userexp = userexp;
+    }
+
 }

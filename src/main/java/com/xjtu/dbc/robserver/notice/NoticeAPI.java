@@ -59,7 +59,9 @@ public class NoticeAPI {
         message.setMsgtype(type);
         message.setMsgcontent(Constants.MSG_CONTENT[type-1102]);//获取系统通知内容
         message.setMsgstatus(0);//设置为未读
+        log.info(message.toString());
         noticeService.sendNotice(message);
+
         return Result.success("发送通知成功", message);
 
     }

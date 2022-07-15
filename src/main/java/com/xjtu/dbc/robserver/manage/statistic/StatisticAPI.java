@@ -106,6 +106,17 @@ public class StatisticAPI {
     @GetMapping("/qa/qcategory")
     public Result getQuestionCategory() {
         List<QuestionCategory> questionCategories = statisticService.getQuestionCategory();
-        return Result.success("获取博客种类数成功", questionCategories);
+        return Result.success("获取问题分区数成功", questionCategories);
+    }
+
+    /**
+     * 获取回答分区与数量
+     *
+     * @return List[分区, 数量]
+     */
+    @GetMapping("/qa/acategory")
+    public Result getAnswerCategory() {
+       List<AnswerCategory> answerCategories = statisticService.getAnswerCategory();
+        return Result.success("获取回答分区数成功", answerCategories);
     }
 }

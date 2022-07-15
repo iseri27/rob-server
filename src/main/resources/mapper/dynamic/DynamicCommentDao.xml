@@ -10,6 +10,7 @@
     SELECT *
     FROM article JOIN user on user.userid = article.authorid
 	WHERE  rootid = #{articleid}  and articletype = 303
+    ORDER BY article.createtime DESC
     </select>
 
     <!-- 判断是否被回复的文本的作者拉入黑名单-->

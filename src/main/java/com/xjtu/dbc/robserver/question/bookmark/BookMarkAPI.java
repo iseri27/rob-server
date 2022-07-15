@@ -1,7 +1,9 @@
 package com.xjtu.dbc.robserver.question.bookmark;
 
+import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.Result;
 
+import com.xjtu.dbc.robserver.common.TokenUtils;
 import com.xjtu.dbc.robserver.question.bookmark.entity.BookmarkDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ import java.util.List;
 public class BookMarkAPI {
     @Resource
     BookmarkService bookmarkService;
+
+    @Resource
+    CommonService commonService;
 
     @PostMapping("")
     public Result report(@RequestBody BookmarkDto bookmarkDto) {
@@ -27,8 +32,9 @@ public class BookMarkAPI {
     }
 
     @GetMapping("/info")
-    public Result ifBookmark(@RequestParam("Userid") int Userid,@RequestParam("Articleid") int Articleid){
+    public Result ifBookmark(@RequestParam("Articleid") int Articleid,@RequestHeader("Token") String token){
         try{
+            int Userid = TokenUtils.getUserInfo(token,commonService).getUserid();
             BookmarkDto dto = new BookmarkDto();
             dto.setUserid(Userid);
             dto.setArticleid(Articleid);

@@ -35,9 +35,9 @@ public class QuestionAnswerAPI {
     private PersonalService personalService;
 
     @GetMapping("/alist")
-    public Result getAList(PageParam pageParam,@RequestParam("qid") int qid,@RequestParam("selectid") int selectid,@RequestParam("uid") int uid){
+    public Result getAList(PageParam pageParam,@RequestParam("qid") int qid,@RequestParam("selectid") int selectid,@RequestHeader("Token") String token){
         try{
-            int userid = uid;
+            int userid = TokenUtils.getUserInfo(token,commonService).getUserid();
             int questionid = qid;
             int sid = selectid;
             System.out.println("红红火火恍恍惚惚");
@@ -70,10 +70,10 @@ public class QuestionAnswerAPI {
     }
 
     @GetMapping("/detail")
-    public Result getAnswerDetails(@RequestParam("aid") int aid,@RequestParam("uid") int uid) {
+    public Result getAnswerDetails(@RequestParam("aid") int aid,@RequestHeader("Token") String token) {
         try{
             int answerid = aid;
-            int userid = uid;
+            int userid = TokenUtils.getUserInfo(token,commonService).getUserid();
             AnswerDetailsDto answerDetailsDto= questionAnswerService.getAnswerDetails(answerid);
             answerDetailsDto.setVote_type(questionAnswerService.getVoteTypeByU_A_id(userid,answerid));
             answerDetailsDto.setAnswertitle(sensitiveService.filter(answerDetailsDto.getAnswertitle(),'*'));

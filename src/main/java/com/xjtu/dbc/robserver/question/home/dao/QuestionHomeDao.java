@@ -62,4 +62,6 @@ public interface QuestionHomeDao {
      *获取点赞类型
      */
     Integer getVoteTypeByU_A_id(int userid, Integer questionid);
+
+    List<QuestionHomeListDto> searchQuestionList(String string);
 }

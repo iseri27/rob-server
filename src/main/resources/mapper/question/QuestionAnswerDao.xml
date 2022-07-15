@@ -8,14 +8,14 @@
     <select id="getAllAnswerList" resultType="com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto">
     select *
     from answer_like
-	where answer_like.replyto = #{questionid}
+	where answer_like.replyto = #{questionid}  and answer_like.answerstatus = 402
     </select>
 
-    <!-- 获取全部回答列表-->
+    <!-- 获取优质回答列表-->
     <select id="getGoodAnswerList" resultType="com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto">
     select *
     from answer_like
-	where answer_like.replyto = #{questionid} and answer_like.type = 305
+	where answer_like.replyto = #{questionid} and answer_like.type = 305  and answer_like.answerstatus = 402
     </select>
 
     <!--获取回答详情-->

@@ -9,7 +9,7 @@
     <select id="getCommentList" resultType="com.xjtu.dbc.robserver.question.comment.entity.CommentDto">
     SELECT *
     FROM article JOIN user on user.userid = article.authorid
-	WHERE  rootid = #{articleid}  and articletype = 303
+	WHERE  rootid = #{articleid}  and articletype = 303   and article.articlestatus = 402
     </select>
 
     <!-- 判断是否被回复的文本的作者拉入黑名单-->

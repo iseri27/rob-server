@@ -105,7 +105,7 @@ public class RegisterAPI {
         // 为用户创建收藏夹
         registerService.createBookmark(userId);
 
-        return Result.success("注册成功，您的 ID 是 " + userId, userId);
+        return Result.success("注册成功！", userId);
     }
 
     private Result checkUserInfo(RegisterDto registerDto) {

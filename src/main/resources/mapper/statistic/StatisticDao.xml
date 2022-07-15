@@ -99,4 +99,18 @@
         GROUP BY
             article.categoryid)
     </select>
+
+
+    <select id="getAnswerCategory" resultType="com.xjtu.dbc.robserver.manage.statistic.entity.AnswerCategory">
+        SELECT category.categoryname category,
+            count( article.articleid ) num
+        FROM
+            article
+            JOIN article b on article.replyto = b.articleid
+            JOIN category ON b.categoryid = category.categoryid
+        WHERE
+            article.articletype = 304 or article.articletype = 305
+        GROUP BY
+            b.categoryid
+    </select>
 </mapper>

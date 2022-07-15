@@ -4,7 +4,7 @@ import com.xjtu.dbc.robserver.common.CommonService;
 import com.xjtu.dbc.robserver.common.CurrentUser;
 import com.xjtu.dbc.robserver.common.Result;
 import com.xjtu.dbc.robserver.common.TokenUtils;
-import com.xjtu.dbc.robserver.common.model.user.User;
+
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import com.xjtu.dbc.robserver.manage.sensitive.SensitiveService;
 import com.xjtu.dbc.robserver.question.answer.entity.AnswerDto;
@@ -31,9 +31,6 @@ public class QuestionAnswerAPI {
     @Resource
     private SensitiveService sensitiveService;
 
-    @Resource
-    private PersonalService personalService;
-
     @GetMapping("/alist")
     public Result getAList(PageParam pageParam,@RequestParam("qid") int qid,@RequestParam("selectid") int selectid,@RequestHeader("Token") String token){
         try{
@@ -42,24 +39,23 @@ public class QuestionAnswerAPI {
             int sid = selectid;
             System.out.println("红红火火恍恍惚惚");
             if(sid == 1){
-
-//                List<QuestionAnswerListDto> listDto = questionAnswerService.getAnswerList(questionid);
-//                for(int i=0; i<listDto.size();i++){
-//                    System.out.println(233333333);
-//                    listDto.get(i).setVote_type(questionAnswerService.getVoteTypeByU_A_id(userid,listDto.get(i).getAnswerid()));
-//                }
-//                return Result.success("获取回答列表成功",listDto);
                 Map<String, Object> answerListPage = questionAnswerService.getAnswerList(pageParam,questionid, userid);
-
+                List<QuestionAnswerListDto> questionAnswerList = (List<QuestionAnswerListDto>) answerListPage.get("list");
+                for (QuestionAnswerListDto questionAnswerListDto: questionAnswerList) {
+                    if(questionAnswerListDto.getAnswertitle() != null){
+                        questionAnswerListDto.setAnswertitle(sensitiveService.filter(questionAnswerListDto.getAnswertitle(),'*'));
+                    }
+                }
                 return Result.successData(answerListPage);
             }
             else{
-//                List<QuestionAnswerListDto> listDto = questionAnswerService.getGoodAnswerList(questionid);
-//                for(int i=0; i<listDto.size();i++) {
-//                    listDto.get(i).setVote_type(questionAnswerService.getVoteTypeByU_A_id(userid, listDto.get(i).getAnswerid()));
-//                }
-//                return Result.success("获取优质回答列表成功",listDto);
                 Map<String, Object> answerListPage = questionAnswerService.getGoodAnswerList(pageParam,questionid, userid);
+                List<QuestionAnswerListDto> questionAnswerList = (List<QuestionAnswerListDto>) answerListPage.get("list");
+                for (QuestionAnswerListDto questionAnswerListDto: questionAnswerList) {
+                    if(questionAnswerListDto.getAnswertitle() != null){
+                        questionAnswerListDto.setAnswertitle(sensitiveService.filter(questionAnswerListDto.getAnswertitle(),'*'));
+                    }
+                }
                 return Result.successData(answerListPage);
 
             }

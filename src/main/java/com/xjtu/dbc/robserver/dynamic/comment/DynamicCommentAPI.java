@@ -1,13 +1,18 @@
 package com.xjtu.dbc.robserver.dynamic.comment;
 
 
+import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Result;
+import com.xjtu.dbc.robserver.common.TokenUtils;
+import com.xjtu.dbc.robserver.common.model.message.Message;
 import com.xjtu.dbc.robserver.dynamic.comment.entity.DynamicCommentDto;
 import com.xjtu.dbc.robserver.dynamic.home.DynamicHomeService;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeDto;
 import com.xjtu.dbc.robserver.dynamic.home.entity.DynamicHomeListDto;
 import com.xjtu.dbc.robserver.dynamic.report.DynamicReportService;
 import com.xjtu.dbc.robserver.dynamic.report.entity.DynamicReportDto;
+import com.xjtu.dbc.robserver.manage.sensitive.SensitiveService;
+import com.xjtu.dbc.robserver.notice.NoticeService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,6 +28,9 @@ public class DynamicCommentAPI {
     @Resource
     private DynamicHomeService dynamicHomeService;
 
+    @Resource
+    private SensitiveService sensitiveService;
+
     /**
      * 获取评论列表
      * @param num
@@ -36,6 +44,7 @@ public class DynamicCommentAPI {
 
 
         for(int i=0; i<listDto.size();i++){
+            listDto.get(i).setContent(sensitiveService.filter(listDto.get(i).getContent(), '*'));
             listDto.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto.get(i).getArticleid()));       //获取每条评论的点赞数
             listDto.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto.get(i).getArticleid()));        //获取每条评论的点踩数
             listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 null:未投票  800:赞  801:踩
@@ -74,6 +83,7 @@ public class DynamicCommentAPI {
         dynamicCommentDto.setArticlestatus(402);  //评论的状态设置为402
 
         dynamicCommentService.addComment(dynamicCommentDto);
+
         return Result.success("发布评论成功!", dynamicCommentDto);
     }
 

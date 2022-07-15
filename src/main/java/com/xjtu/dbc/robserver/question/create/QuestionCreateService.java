@@ -1,71 +1,84 @@
 package com.xjtu.dbc.robserver.question.create;
 
-import com.xjtu.dbc.robserver.question.create.entity.QuestionCreateDto;
-import com.xjtu.dbc.robserver.question.create.entity.QuestionTagDto;
-import com.xjtu.dbc.robserver.question.create.entity.QuestionTagListDto;
+
+import com.xjtu.dbc.robserver.common.model.tag.Tag;
+import com.xjtu.dbc.robserver.question.create.entity.QuestionPublishDto;
 
 import java.util.List;
 
 public interface QuestionCreateService {
 
     /**
-     * 发布悬赏
-     * @param questionCreateDto {悬赏ID,悬赏内容, 时间, 用户ID,Tag列表,悬赏易拉罐数量 }
-     * @return 悬赏的 ID
+     * 通过用户 ID 获取所有的 tag 列表
+     * @param myId 用户 ID
+     * @return Tag 列表
      */
-    void createQuestion(QuestionCreateDto questionCreateDto);
-
-
-    /**
-     * 修改悬赏
-     * @param questionCreateDto {悬赏ID,悬赏内容, 时间, 用户ID,Tag列表,悬赏易拉罐数量 }
-     * @return 悬赏的 ID
-     */
-    void modifyQuestion(QuestionCreateDto questionCreateDto);
+    List<Tag> getAllTagListByUserId(Integer myId);
 
     /**
-     * 按Id查找悬赏
-     * @param questionId {问题ID}
-     * @return 悬赏的 ID
+     * 新建博客
+     * @param questionPublishDto 博客参数
      */
-    QuestionCreateDto findQuestionById(int questionId);
+    void addQuestion(QuestionPublishDto questionPublishDto);
 
     /**
-     * 保存草稿箱的草稿
-     * @param questionCreateDto {悬赏ID,悬赏内容, 时间, 用户ID,Tag列表,悬赏易拉罐数量 }
-     * @return 悬赏的 ID
+     * 新建回答
+     * @param questionPublishDto 博客参数
      */
-    void saveQuestion(QuestionCreateDto questionCreateDto);
+    void addAnswer(QuestionPublishDto questionPublishDto);
 
     /**
-     * 删除草稿箱的草稿
-     * @param questionid 问题id
+     * 为博客添加 Tag
+     * @param myId 用户 ID
+     * @param questionPublishDto 博客参数
      */
-    void deleteQuestionById(int questionid);
+    void addTagForQuestion(Integer myId, QuestionPublishDto questionPublishDto);
 
     /**
-     * 删除草稿箱的草稿
-     * @param userid 当前用户id
+     * 更新博客
+     * @param dto 博客参数
      */
-    int selectTagNum(int userid);
+    void updateQuestionByArticleId(QuestionPublishDto dto);
 
     /**
-     *为悬赏添加标签
+     * 获取已存在的博客的参数
+     * @param articleId 博客 ID
+     * @return 博客的各项参数
      */
-    void connectTag(QuestionTagDto questionTagDto);
+    QuestionPublishDto getQuestionPublishDtoByArticleId(Integer articleId);
 
     /**
-     *删除悬赏标签
+     * 获取用户的状态
+     * @param authorId 用户 ID
+     * @return 用户状态
      */
-    void disconnectTag(QuestionTagDto questionTagDto);
+    Integer getUserStatus(Integer authorId);
 
     /**
-     *获取当前悬赏的标签数量
+     * 获取博客的状态
+     * @param articleId 博客 ID
+     * @return 博客状态
      */
-    int getQuestionTagNum(int questionid);
+    Integer getArticleStatus(Integer articleId);
 
     /**
-     *根据悬赏id获取tag表
+     * 新增 Tag
+     * @param tag
      */
-    List<QuestionTagListDto> getQuestionTagListById(int questionid);
+    void addTag(Tag tag);
+
+    /**
+     * 查询拥有该名字的 tag 的数量
+     * @param tagName tag 的名字
+     * @param userId 用户 ID
+     * @return tag 的数量
+     */
+    Integer getTagCount(String tagName, Integer userId);
+
+    /**
+     * 更新博客的 tag
+     * @param tags 标签列表
+     * @param articleId 博客各项参数
+     */
+    void updateQuestionTag(List<Integer> tags, Integer articleId);
 }

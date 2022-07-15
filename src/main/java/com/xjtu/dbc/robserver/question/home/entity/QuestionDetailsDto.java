@@ -25,6 +25,7 @@ public class QuestionDetailsDto {
     private String authoravatar;
     private Integer answer_num;
     private Integer vote_type;
+    private String categoryname;
 
     @JsonFormat(pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd  HH:mm:ss")

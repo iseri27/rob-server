@@ -42,4 +42,14 @@ public class CommentServiceImpl implements CommentService {
     public Integer getMaxCommentId() {
         return commentDao.getMaxCommentId();
     }
+
+    @Override
+    public Boolean is_in_blacklist(Integer authorid, Integer articleid) {
+        if( commentDao.is_in_blacklist(authorid,articleid) >=1){
+            return  true;
+        }
+        else{
+            return false;
+        }
+    }
 }

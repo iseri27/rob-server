@@ -34,4 +34,6 @@ public interface QuestionAnswerService {
      * @return 该动态的点赞点踩类型
      */
     int getVoteTypeByU_A_id(Integer userid,Integer aticleid);
+
+    Integer getRelationship(Integer myid, Integer userid);
 }

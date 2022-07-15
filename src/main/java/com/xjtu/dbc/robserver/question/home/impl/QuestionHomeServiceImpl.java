@@ -4,7 +4,6 @@ import com.xjtu.dbc.robserver.common.Utils;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import com.xjtu.dbc.robserver.common.page.QueryAction;
-import com.xjtu.dbc.robserver.question.answer.dao.QuestionAnswerDao;
 import com.xjtu.dbc.robserver.question.home.QuestionHomeService;
 import com.xjtu.dbc.robserver.question.home.dao.QuestionHomeDao;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
@@ -114,5 +113,24 @@ public class QuestionHomeServiceImpl implements QuestionHomeService {
     @Override
     public Integer getAnswerNum(int questionid) {
         return questionHomeDao.countAnswer(questionid);
+    }
+
+    @Override
+    public Map<String, Object> searchQuestionList(PageParam pageParam, String string, int userid) {
+        class queryAction implements QueryAction<QuestionHomeListDto> {
+            @Override
+            public List<QuestionHomeListDto> execute() {
+                List<QuestionHomeListDto> questionList = questionHomeDao.searchQuestionList(string);
+                System.out.println(questionList);
+                for (QuestionHomeListDto questionHomeListDto: questionList) {
+                    System.out.println("test");
+                    questionHomeListDto.setVote_type(questionHomeDao.getVoteTypeByU_A_id(userid,questionHomeListDto.getQuestionid()));
+                    questionHomeListDto.setTaglist(questionHomeDao.getTagListByQuestionid(questionHomeListDto.getQuestionid()));
+                }
+                return questionList;
+            }
+        }
+        queryAction query = new queryAction();
+        return Utils.getPage(pageParam, query);
     }
 }

@@ -4,75 +4,115 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xjtu.dbc.robserver.question.create.dao.QuestionCreateDao">
 
-    <!-- 创建问题 -->
-    <insert id="createQuestion">
-        insert into article (articleid, articletype, articlestatus, title, content, cost, createtime,lastmodifytime,authorid,categoryid,rootid)
-        values(#{questionid}, 302, #{questionstatus}, #{questiontitle}, #{questioncontent}, #{cost}, now(),now(),#{authorid},null,null)
+    <!-- 添加新的悬赏 -->
+    <insert id="addQuestion" useGeneratedKeys="true" keyColumn="articleid" keyProperty="articleid">
+        INSERT INTO
+            article (
+                articletype  , articlestatus    ,
+                title        , content          , cost         ,
+                createtime   , lastmodifytime   , replyto      ,
+                authorid     , categoryid       , rootid
+            )
+        VALUES (
+                302          , #{articlestatus} ,
+                #{title}     , #{content}       , #{cost}         ,
+                now()        , now()            , #{replyto}      ,
+                #{authorid}  , #{categoryid}    , #{rootid}
+            )
     </insert>
 
-    <!-- 修改问题 -->
-    <update id="modifyQuestion">
-        update article
-        <set>
-            articlestatus = #{questionstatus},
-            title = #{questiontitle},
-            content = #{questioncontent},
-            cost = #{cost},
-            lastmodifytime = now()
-        </set>
-        where articleid = #{questionid}
+    <!-- 添加新回答 -->
+    <insert id="addAnswer" useGeneratedKeys="true" keyColumn="articleid" keyProperty="articleid">
+        INSERT INTO
+            article (
+                articletype  , articlestatus    ,
+                title        , content          , cost         ,
+                createtime   , lastmodifytime   , replyto      ,
+                authorid     , categoryid       , rootid
+            )
+        VALUES (
+                304          , #{articlestatus} ,
+                #{title}     , #{content}       , #{cost}         ,
+                now()        , now()            , #{replyto}      ,
+                #{authorid}  , #{categoryid}    , #{rootid}
+            )
+    </insert>
+
+
+
+
+
+    <!-- 查询悬赏拥有的 Tag -->
+    <select id="getTagListByArticleId" resultType="java.lang.Integer">
+        select tagid
+        from article_has_tag
+        where articleid=#{articleid}
+    </select>
+
+    <!-- 获取用户拥有的 tag -->
+    <select id="getTagListByUserId" resultType="com.xjtu.dbc.robserver.common.model.tag.Tag">
+        select *
+        from tag
+        where ownerid = #{userId}
+    </select>
+
+    <!-- 新建 tag -->
+    <insert id="addTag">
+        INSERT INTO tag(tagname, ownerid)
+        VALUES (#{tagname}, #{ownerid})
+    </insert>
+
+    <!-- 更新悬赏 -->
+    <update id="updateQuestionById">
+        UPDATE article
+        SET
+        <if test="articlestatus != null">
+            articlestatus  = #{articlestatus},
+        </if>
+        title          = #{title},
+        content        = #{content},
+        lastmodifytime = now(),
+        categoryid     = #{categoryid}
+        WHERE articleid    = #{articleid}
     </update>
 
-    <!-- 通过id查找问题 -->
-    <select id="findQuestionById" resultType="com.xjtu.dbc.robserver.question.create.entity.QuestionCreateDto">
-        select  content questioncontent,
-                title questiontitle,
-                cost cost,
-                articlestatus questionstatus,
-                createtime createtime,
-                lastmodifytime lastmodifytime,
-                categoryid categoryid,
-                rootid rootid
-        from article
-        where articleid = #{questionid} and articletype = 302
-    </select>
-
-    <!-- 通过id删除 -->
-    <delete id="deleteQuestionById">
-        delete from article
-        WHERE articleid = #{questiontitle} AND articletype = 302
+    <!-- 为悬赏删除标签 -->
+    <delete id="deleteTagForQuestion">
+        delete from article_has_tag
+        where articleid = #{articleId} and tagid = #{tagId}
     </delete>
 
-    <!--查询拥有tag个数-->
-    <select id="selectTagNum" resultType="java.lang.Integer">
-        select count(tagid)
-        from tag
-        where ownerid = #{userid}
-    </select>
-
-    <!--为悬赏添加tag-->
-    <insert id="connectTag">
-        insert into article_has_tag(articleid,tagid)
-        values(#{questionid},#{tagid})
+    <!-- 为悬赏添加 tag -->
+    <insert id="addTagForQuestion">
+        INSERT INTO article_has_tag(articleid, tagid)
+        VALUES (#{articleId}, #{tagId})
     </insert>
 
-    <!--删除悬赏tag-->
-    <delete id="disconnectTag">
-        delete from article_has_tag
-        where articleid=#{questionid} and tagid=#{tagid}
-    </delete>
-
-    <!-- 查询当前悬赏的tag数量 -->
-    <select id="getQuestionTagNum" resultType="java.lang.Integer">
-        select count(tagid)
-        from article_has_tag
-        where articleid=#{questionid}
+    <!-- 获取已经存在的待编辑的悬赏的标题内容等 -->
+    <select id="getQuestionPublishDtoById" resultType="com.xjtu.dbc.robserver.question.create.entity.QuestionPublishDto">
+        select *
+        from article
+        where articleid = #{articleid}
     </select>
 
-    <!-- 查询悬赏的tag列表 -->
-    <select id="getQuestionTagListById" resultType="com.xjtu.dbc.robserver.question.create.entity.QuestionTagListDto">
-        seletct articleid questionid,tagid tagid,tagname tagname
-        from tag, article_has_tag
-        where articleid = #{questionid}
+    <!-- 获取用户 (作者) 的状态 -->
+    <select id="getUserStatusByAuthorId" resultType="java.lang.Integer">
+        select userstatus
+        from user
+        where userid = #{authorid}
+    </select>
+
+    <!-- 获取悬赏的状态-->
+    <select id="getArticleStatus" resultType="java.lang.Integer">
+        select articlestatus
+        from article
+        where articleid = #{articleid}
+    </select>
+
+    <!-- 获取某用户创建的某名字的 tag 的数量 -->
+    <select id="getTagCountByTagNameAndUserId" resultType="java.lang.Integer">
+        SELECT COUNT(tagid)
+        FROM tag
+        WHERE tagname = #{tagName} and ownerid = #{userId}
     </select>
 </mapper>

@@ -1,7 +1,6 @@
 package com.xjtu.dbc.robserver.question.answer.impl;
 
 
-import com.xjtu.dbc.robserver.common.Constants;
 import com.xjtu.dbc.robserver.common.Utils;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import com.xjtu.dbc.robserver.common.page.QueryAction;
@@ -10,7 +9,6 @@ import com.xjtu.dbc.robserver.question.answer.dao.QuestionAnswerDao;
 import com.xjtu.dbc.robserver.question.answer.entity.AnswerDetailsDto;
 import com.xjtu.dbc.robserver.question.answer.entity.AnswerDto;
 import com.xjtu.dbc.robserver.question.answer.entity.QuestionAnswerListDto;
-import com.xjtu.dbc.robserver.question.create.entity.QuestionCreateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,5 +74,10 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
         else{
             return 0;
         }
+    }
+
+    @Override
+    public Integer getRelationship(Integer myid, Integer userid) {
+        return questionAnswerDao.getRelationship(myid, userid);
     }
 }

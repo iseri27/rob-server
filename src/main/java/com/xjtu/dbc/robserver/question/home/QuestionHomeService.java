@@ -3,7 +3,6 @@ package com.xjtu.dbc.robserver.question.home;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.page.PageParam;
 import com.xjtu.dbc.robserver.question.home.entity.QuestionDetailsDto;
-import com.xjtu.dbc.robserver.question.home.entity.QuestionHomeListDto;
 
 import java.util.List;
 import java.util.Map;
@@ -61,4 +60,6 @@ public interface QuestionHomeService {
      *获取回答数
      */
     Integer getAnswerNum(int questionid);
+
+    Map<String, Object> searchQuestionList(PageParam pageParam, String string, int userid);
 }

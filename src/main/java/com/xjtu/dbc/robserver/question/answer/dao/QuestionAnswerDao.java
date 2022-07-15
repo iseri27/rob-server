@@ -23,4 +23,6 @@ public interface QuestionAnswerDao {
     List<QuestionAnswerListDto> getGoodAnswerList(Integer questionid);
 
     Integer getVoteTypeByU_A_id(Integer userid, Integer articleid);
+
+    Integer getRelationship(Integer myid, Integer userid);
 }

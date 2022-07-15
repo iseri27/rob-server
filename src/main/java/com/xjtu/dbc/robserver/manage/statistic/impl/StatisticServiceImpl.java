@@ -58,4 +58,9 @@ public class StatisticServiceImpl implements StatisticService {
     public List<QuestionCategory> getQuestionCategory() {
         return statisticDao.getQuestionCategory();
     }
+
+    @Override
+    public List<AnswerCategory> getAnswerCategory() {
+        return statisticDao.getAnswerCategory();
+    }
 }

@@ -1,12 +1,9 @@
 package com.xjtu.dbc.robserver.manage.statistic.entity;
 
-import lombok.Data;
-
 /**
  * @author yjq
  * @version 1.0
- * @date 2022/7/13 11:36
+ * @date 2022/7/15 8:37
  */
-@Data
-public class QuestionCategory extends Category{
+public class AnswerCategory extends Category {
 }

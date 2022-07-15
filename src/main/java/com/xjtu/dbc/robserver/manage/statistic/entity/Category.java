@@ -5,8 +5,10 @@ import lombok.Data;
 /**
  * @author yjq
  * @version 1.0
- * @date 2022/7/13 11:36
+ * @date 2022/7/15 8:36
  */
 @Data
-public class QuestionCategory extends Category{
+public class Category {
+    String category;
+    Integer num;
 }

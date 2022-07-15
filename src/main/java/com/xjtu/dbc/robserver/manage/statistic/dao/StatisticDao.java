@@ -20,4 +20,6 @@ public interface StatisticDao {
 
     List<Integer> getQuestionAnswerCount();
     List<QuestionCategory> getQuestionCategory();
+
+    List<AnswerCategory> getAnswerCategory();
 }

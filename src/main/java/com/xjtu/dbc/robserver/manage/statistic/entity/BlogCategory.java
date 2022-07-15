@@ -8,7 +8,6 @@ import lombok.Data;
  * @date 2022/7/13 9:21
  */
 @Data
-public class BlogCategory {
-    String category;
-    Integer num;
+public class BlogCategory extends Category{
+
 }

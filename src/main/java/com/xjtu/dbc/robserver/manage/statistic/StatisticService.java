@@ -20,4 +20,6 @@ public interface StatisticService {
 
     List<Integer> getQuestionAnswerCount();
     List<QuestionCategory> getQuestionCategory();
+
+    List<AnswerCategory> getAnswerCategory();
 }

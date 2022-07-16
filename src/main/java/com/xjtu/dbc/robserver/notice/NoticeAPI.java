@@ -57,7 +57,7 @@ public class NoticeAPI {
         Integer type = noticeDto.getType();//获取类型
         log.info(noticeDto.toString());
         message.setMsgtype(type);
-        message.setMsgcontent(Constants.MSG_CONTENT[type-1102]);//获取系统通知内容
+        message.setMsgcontent(noticeDto.getContent());//设置内容
         message.setMsgstatus(0);//设置为未读
         log.info(message.toString());
         noticeService.sendNotice(message);

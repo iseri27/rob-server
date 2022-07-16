@@ -19,8 +19,12 @@ public class BookMarkAPI {
     @Resource
     CommonService commonService;
 
+    /**
+     * 取消(添加)收藏该文章
+     * @param bookmarkDto{articleid 文章id ，userid 用户id}
+     */
     @PostMapping("")
-    public Result report(@RequestBody BookmarkDto bookmarkDto) {
+    public Result delBookmark(@RequestBody BookmarkDto bookmarkDto) {
         if(bookmarkService.ifBookmark(bookmarkDto)!=0){
             bookmarkService.deleteBookmark(bookmarkDto);
             return Result.success("取消收藏成功!", bookmarkDto);
@@ -31,6 +35,11 @@ public class BookMarkAPI {
         }
     }
 
+    /**
+     * 当前用户是否收藏该文章
+     * @param Articleid 文章id
+     * @return 收藏关系
+     */
     @GetMapping("/info")
     public Result ifBookmark(@RequestParam("Articleid") int Articleid,@RequestHeader("Token") String token){
         try{

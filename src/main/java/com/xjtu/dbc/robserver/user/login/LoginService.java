@@ -41,5 +41,5 @@ public interface LoginService {
      * 检查本日是否登录过
      * @return 未登录过返回 true; 登录过返回 false
      */
-    boolean isFirstLoginToday();
+    boolean isFirstLoginToday(Integer userId);
 }

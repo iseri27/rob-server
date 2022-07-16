@@ -51,9 +51,6 @@ public class CommentAPI {
     }
 
 
-
-
-
     /**
      * 发布用户评论
      * @param commentDto
@@ -61,10 +58,6 @@ public class CommentAPI {
      */
     @PostMapping("publishcomment")
     public Result publishComment(@RequestBody CommentDto commentDto) {
-
-
-
-
         Integer maxId = commentService.getMaxCommentId();
         commentDto.setArticleid(maxId + 1);
         commentDto.setArticletype(303);  //评论所对应的文本类型为303

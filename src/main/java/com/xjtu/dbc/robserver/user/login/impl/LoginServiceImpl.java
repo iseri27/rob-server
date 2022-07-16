@@ -79,14 +79,14 @@ public class LoginServiceImpl implements LoginService {
      * @return 未登录过返回 true; 登录过返回 false
      */
     @Override
-    public boolean isFirstLoginToday() {
+    public boolean isFirstLoginToday(Integer userId) {
         // 获取当前时间
         DateTime currentTime = DateUtil.date();
         // 获取今天的起始时间
         DateTime beginOfToday = DateUtil.beginOfDay(currentTime);
         // 搜索历史
-        Integer cnt = loginDao.getLoginHistoryCountOfToday(beginOfToday);
+        Integer cnt = loginDao.getLoginHistoryCountOfToday(userId, beginOfToday);
 
-        return false;
+        return cnt == 0;
     }
 }

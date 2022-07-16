@@ -61,5 +61,10 @@ public interface QuestionHomeService {
      */
     Integer getAnswerNum(int questionid);
 
+    /**
+     * 获取搜素悬赏列表
+     * @param
+     * @return 列表
+     */
     Map<String, Object> searchQuestionList(PageParam pageParam, String string, int userid);
 }

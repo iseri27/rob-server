@@ -32,7 +32,7 @@ public class LoginAPI {
         if (cnt == 1) {
             System.out.println("Client Token = " + userId);
             String token = TokenUtils.loginSign(Integer.toString(userId), loginDto.getUserpwd());
-            if (loginService.isFirstLoginToday()) {
+            if (loginService.isFirstLoginToday(userId)) {
                 // 为用户增加经验
                 loginService.addExp(userId, 10);
                 // 为用户增加代币

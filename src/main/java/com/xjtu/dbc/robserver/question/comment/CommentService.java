@@ -28,9 +28,9 @@ public interface CommentService {
     Integer getMaxCommentId();
 
     /**
-     * 判断是否在黑名单
-     * @param authorid,articleid
+     * 根据用户的编号与动态的编号来获取该动态的点赞点踩类型
+     * @param authorid,aticleid  用户编编号与动态的编号
+     * @return 该动态的点赞点踩类型
      */
     Boolean is_in_blacklist( Integer authorid,Integer articleid);
-
 }

@@ -30,6 +30,6 @@ public interface LoginDao {
      * @param beginOfToday 今日开始时间
      * @return 数量
      */
-    Integer getLoginHistoryCountOfToday(DateTime beginOfToday);
+    Integer getLoginHistoryCountOfToday(Integer userId, DateTime beginOfToday);
 
 }

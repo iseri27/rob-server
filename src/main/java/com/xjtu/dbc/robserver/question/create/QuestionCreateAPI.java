@@ -201,7 +201,6 @@ public class QuestionCreateAPI {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");
         }
 
-
 //        // 检查是否选择了分区
 //        if (questionPublishDto.getCategoryid() == null) {
 //            return Result.fail(Result.ERR_CODE_BUSINESS, "请选择分区!");

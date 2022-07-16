@@ -16,6 +16,10 @@ public class QuestionReportAPI {
     @Resource
     QuestionReportService questionReportService;
 
+    /**
+     * 新增举报
+     * @param questionReportDto 举报的信息
+     */
     @PostMapping("")
     public Result report(@RequestBody QuestionReportDto questionReportDto) {
 

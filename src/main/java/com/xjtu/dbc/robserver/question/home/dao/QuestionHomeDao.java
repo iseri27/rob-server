@@ -63,5 +63,8 @@ public interface QuestionHomeDao {
      */
     Integer getVoteTypeByU_A_id(int userid, Integer questionid);
 
+    /**
+     *获取搜索悬赏列表
+     */
     List<QuestionHomeListDto> searchQuestionList(String string);
 }

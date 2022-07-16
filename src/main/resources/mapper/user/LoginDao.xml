@@ -28,6 +28,6 @@
     <select id="getLoginHistoryCountOfToday" resultType="java.lang.Integer">
         select count(*)
         from history
-        where historytype = 700 and historytime &gt; #{beginOfToday}
+        where historytype = 700 and historytime &gt; #{beginOfToday} and userid = #{userId}
     </select>
 </mapper>

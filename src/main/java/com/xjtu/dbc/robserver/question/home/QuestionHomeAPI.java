@@ -32,6 +32,11 @@ public class QuestionHomeAPI {
     @Resource
     private SensitiveService sensitiveService;
 
+    /**
+     * 获取悬赏列表(全部，未解决，已解决)
+     * @param
+     * @return 列表
+     */
     @GetMapping("/qlist")
     public Result getQList(PageParam pageParam, @RequestParam("Number") int Number, @RequestParam("Categoryid") int Categoryid,@RequestHeader("Token") String token) {
         try{
@@ -78,6 +83,12 @@ public class QuestionHomeAPI {
         }
     }
 
+
+    /**
+     * 获取悬赏详情
+     * @param qid 悬赏id
+     * @return 悬赏详情
+     */
     @GetMapping("/details")
     public Result getQuestionDetails(@RequestParam("qid") int qid,@RequestHeader("Token") String token) {
         try{
@@ -95,6 +106,11 @@ public class QuestionHomeAPI {
         }
     }
 
+    /**
+     * 获取全部分区列表
+     * @param
+     * @return 分区列表
+     */
     @GetMapping("/category")
     public Result getCategory(){
         try{
@@ -107,11 +123,11 @@ public class QuestionHomeAPI {
 
     }
 
-//    @GetMapping("/preview")//待实现
-//    public Result tagList(QuestionPreviewDto dto){
-//        Map<String,Object> page = questionHomeService.getQuestionList(dto);
-//        return Result.success("查询悬赏成功！",page);
-//    }
+    /**
+     * 获取搜索悬赏列表
+     * @param
+     * @return 悬赏列表
+     */
     @GetMapping("/search")
     public Result search(PageParam pageParam,@RequestParam("str") String str,@RequestHeader("Token") String token){
         try{

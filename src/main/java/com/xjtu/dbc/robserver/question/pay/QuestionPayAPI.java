@@ -22,6 +22,9 @@ public class QuestionPayAPI {
     @Resource
     private LevelService levelService;
 
+    /*
+     * 设置优质回答
+     */
     @PostMapping("")
     public Result payQuestion(@RequestBody PayDto dto, @RequestHeader("Token") String token){
 

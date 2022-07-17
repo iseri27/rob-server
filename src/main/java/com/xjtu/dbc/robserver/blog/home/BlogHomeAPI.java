@@ -14,6 +14,7 @@ import com.xjtu.dbc.robserver.common.model.article.Article;
 import com.xjtu.dbc.robserver.common.model.category.Category;
 import com.xjtu.dbc.robserver.common.model.user.User;
 import com.xjtu.dbc.robserver.common.page.PageParam;
+import com.xjtu.dbc.robserver.manage.sensitive.SensitiveService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,6 +27,8 @@ public class BlogHomeAPI {
     private CommonService commonService;
     @Resource
     private BlogHomeService blogHomeService;
+    @Resource
+    private SensitiveService sensitiveService;
 
     /**
      * 获取用户自己关注的人的的博客
@@ -46,6 +49,15 @@ public class BlogHomeAPI {
         try {
             userId = TokenUtils.getUserInfo(token, commonService).getUserid();
             blogListPage = blogHomeService.getBlogListOfConcernedUser(pageParam, userId);
+            List<BlogVO> blogVOList = (List<BlogVO>) blogListPage.get("list");
+            for (BlogVO blogVO: blogVOList) {
+                if (blogVO.getContent() != null) {
+                    blogVO.setContent(sensitiveService.filter(blogVO.getContent(), '*'));
+                }
+                if (blogVO.getTitle() != null) {
+                    blogVO.setTitle(sensitiveService.filter(blogVO.getTitle(), '*'));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,6 +81,15 @@ public class BlogHomeAPI {
 
 
         Map<String, Object> blogListPage = blogHomeService.getMyBlogList(pageParam, userId);
+        List<BlogVO> blogVOList = (List<BlogVO>) blogListPage.get("list");
+        for (BlogVO blogVO: blogVOList) {
+            if (blogVO.getContent() != null) {
+                blogVO.setContent(sensitiveService.filter(blogVO.getContent(), '*'));
+            }
+            if (blogVO.getTitle() != null) {
+                blogVO.setTitle(sensitiveService.filter(blogVO.getTitle(), '*'));
+            }
+        }
 
         return Result.successData(blogListPage);
     }
@@ -86,6 +107,16 @@ public class BlogHomeAPI {
         }
 
         Map<String, Object> blogListPage = blogHomeService.getRecommendBlogList(blogDto, userId);
+        List<BlogVO> blogVOList = (List<BlogVO>) blogListPage.get("list");
+        for (BlogVO blogVO: blogVOList) {
+            if (blogVO.getContent() != null) {
+                blogVO.setContent(sensitiveService.filter(blogVO.getContent(), '*'));
+            }
+            if (blogVO.getTitle() != null) {
+                blogVO.setTitle(sensitiveService.filter(blogVO.getTitle(), '*'));
+            }
+        }
+
         return Result.successData(blogListPage);
     }
 

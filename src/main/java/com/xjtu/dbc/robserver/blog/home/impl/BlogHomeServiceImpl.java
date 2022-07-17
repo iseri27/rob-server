@@ -80,14 +80,6 @@ public class BlogHomeServiceImpl implements BlogHomeService {
      */
     @Override
     public Map<String, Object> getRecommendBlogList(BlogDto blogDto, Integer userId) {
-//        class queryAction implements  QueryAction<BlogVO> {
-//            @Override
-//            public List<BlogVO> execute() {
-//                return blogHomeDao.getArticleListOfRecommend(userId, blogDto.getCategoryId(), Constants.ARTICLE_TYPE_BLOG);
-//            }
-//        }
-//
-//        queryAction query = new queryAction();
         return Utils.getPage(blogDto, () -> blogHomeDao.getArticleListOfRecommend(userId, blogDto.getCategoryId(), Constants.ARTICLE_TYPE_BLOG));
     }
 

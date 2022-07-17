@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 动态评论模块的API
+ * @author 陈邦昕
+ */
 @RestController
 @RequestMapping("/dynamic/comment")
 public class DynamicCommentAPI {

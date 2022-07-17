@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * 动态图主页模块的API,主要包括获取各种动态信息
+ * 动态主页模块的API,主要包括获取各种动态信息
  * @author 陈邦昕
  */
 @RestController

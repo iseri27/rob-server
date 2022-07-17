@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+
+/**
+ * 动态举报模块的API
+ * @author 陈邦昕
+ */
 @RestController
 @RequestMapping("/dynamic/report")
 public class DynamicReportAPI {

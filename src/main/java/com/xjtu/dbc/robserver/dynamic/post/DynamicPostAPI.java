@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+
+/**
+ * 动态发布页模块的API
+ * @author 陈邦昕
+ */
 @RestController
 @RequestMapping("/dynamic/post")
 public class DynamicPostAPI {

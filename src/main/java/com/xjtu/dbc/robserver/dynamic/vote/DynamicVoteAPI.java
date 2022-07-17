@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 
+/**
+ * 动态点赞模块的API
+ * @author 陈邦昕
+ */
 @RestController
 @RequestMapping("/dynamic/vote")
 public class DynamicVoteAPI {

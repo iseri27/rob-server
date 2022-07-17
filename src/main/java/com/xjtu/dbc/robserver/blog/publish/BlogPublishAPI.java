@@ -83,6 +83,11 @@ public class BlogPublishAPI {
             return Result.fail(Result.ERR_CODE_BUSINESS, "您当前无法发言！");
         }
 
+        // 检查标题是否为空
+        if (blogPublishDto.getTitle() == null || "".equals(blogPublishDto.getTitle())) {
+            return Result.fail(Result.ERR_CODE_BUSINESS, "标题不能为空！");
+        }
+
         // 检查内容是否为空
         if (blogPublishDto.getContent() == null || "".equals(blogPublishDto.getContent())) {
             return Result.fail(Result.ERR_CODE_BUSINESS, "内容不能为空！");

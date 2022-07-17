@@ -103,6 +103,7 @@ public class DynamicHomeServiceImpl implements DynamicHomeService {
 
     @Override
     public int getVoteTypeByU_A_id(Integer userid,Integer articleid){
+        System.out.println("测试输出dao："+userid+" "+articleid +" "+dynamicHomeDao.getVoteTypeByU_A_id(userid,articleid));
         if(dynamicHomeDao.getVoteTypeByU_A_id(userid,articleid) !=null){
             return dynamicHomeDao.getVoteTypeByU_A_id(userid,articleid);
         }

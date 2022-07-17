@@ -44,7 +44,8 @@ public class BlogDetailAPI {
 
                 // 虽然该用户登录了，但并非是这篇随笔的作者
 
-                if (myid!=blog.getAuthorid()) {
+                if (myid!=blog.getAuthorid() && commonService.getUserById(myid).getRoleid()==1001) {
+                    System.out.println(commonService.getUserById(myid).getRoleid());
                     return Result.fail(Result.ERR_CODE_BUSINESS, "不能编辑不属于自己的博客！");
                 }
             }

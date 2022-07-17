@@ -1,8 +1,8 @@
 server:
   port: 8080
 socketio:
-  host: 127.0.0.1
-  port: 10221
+  host: 172.17.8.65
+  port: 10222
   maxFramePayloadLength: 1048576
   maxHttpContextLength: 1048576
   bossCount: 1

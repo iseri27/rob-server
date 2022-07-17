@@ -37,7 +37,7 @@ public class DynamicCommentAPI {
      * @return Result(msg, listDto)
      */
     @GetMapping("")
-    public Result getCommnent(@RequestParam("num") Integer num) {
+    public Result getCommnent(@RequestParam("num") Integer num,Integer Userid) {
         Integer articleid = num;
         System.out.println("测试articleid: "+articleid);
         List<DynamicCommentDto> listDto = dynamicCommentService.getDynamicCommentList(articleid);
@@ -47,7 +47,7 @@ public class DynamicCommentAPI {
             listDto.get(i).setContent(sensitiveService.filter(listDto.get(i).getContent(), '*'));
             listDto.get(i).setLike_num(dynamicHomeService.getLikenumByAriticleid(listDto.get(i).getArticleid()));       //获取每条评论的点赞数
             listDto.get(i).setDislike_num(dynamicHomeService.getDislikenumByAriticleid(listDto.get(i).getArticleid()));        //获取每条评论的点踩数
-            listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 null:未投票  800:赞  801:踩
+            listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(Userid,listDto.get(i).getArticleid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 null:未投票  800:赞  801:踩
         }
 
         //还需要得到用户的粉丝数 动态数

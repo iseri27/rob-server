@@ -97,7 +97,7 @@ public class DynamicHomeAPI {
         for(int i=0; i<listDto.size();i++){
             listDto.get(i).setContent(sensitiveService.filter(listDto.get(i).getContent(), '*'));
             listDto.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
-            listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto.get(i).getUserid(),listDto.get(i).getDynamicid())); // vote_type表示用户赞踩的情况
+            listDto.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(Userid,listDto.get(i).getDynamicid())); // vote_type表示用户赞踩的情况
         }
 
         return Result.success("获取动态主页的动态列表成功!", listDto);
@@ -115,7 +115,7 @@ public class DynamicHomeAPI {
         for(int i=0; i<listDto2.size();i++){
             listDto2.get(i).setContent(sensitiveService.filter(listDto2.get(i).getContent(), '*'));
             listDto2.get(i).setIs_search_visible(1); //初始搜索栏可见值为1，表示可见
-            listDto2.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(listDto2.get(i).getUserid(),listDto2.get(i).getDynamicid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 0:未投票  800:赞  801:踩
+            listDto2.get(i).setVote_type(dynamicHomeService.getVoteTypeByU_A_id(Userid,listDto2.get(i).getDynamicid())); // vote_type表示用户赞踩的情况 其中 vote_type的值为 0:未投票  800:赞  801:踩
         }
 
         return Result.success("获取我的动态主页的动态列表成功!", listDto2);
@@ -141,7 +141,8 @@ public class DynamicHomeAPI {
      * @return Result(msg, detailDto)
      */
     @GetMapping("detail")
-    public Result getDdetail(@RequestParam("articleid") Integer articleid) {
+    public Result getDdetail(@RequestParam("articleid") Integer articleid,Integer Userid) {
+        System.out.println("测试获取uid: "+Userid);
 
         DynamicMyHomeListDto detailDto = dynamicHomeService.getDynamic(articleid);
 
@@ -149,7 +150,7 @@ public class DynamicHomeAPI {
         detailDto.setLike_num(dynamicHomeService.getLikenumByAriticleid(detailDto.getArticleid()));             //获取动态的点赞数
         detailDto.setDislike_num(dynamicHomeService.getDislikenumByAriticleid(detailDto.getArticleid()));     //获取动态的点踩数
         detailDto.setComment_num(dynamicHomeService.getCommentnumByArticleid(detailDto.getArticleid()));      //获取动态的评论数
-        detailDto.setVote_type(dynamicHomeService.getVoteTypeByU_A_id(detailDto.getUserid(),detailDto.getArticleid())); // vote_type表示用户赞踩的情况
+        detailDto.setVote_type(dynamicHomeService.getVoteTypeByU_A_id(Userid,detailDto.getArticleid())); // vote_type表示用户赞踩的情况
 
 
         return Result.success("获取动态的详情的信息成功!", detailDto);
